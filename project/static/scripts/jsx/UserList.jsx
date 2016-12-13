@@ -10,6 +10,8 @@ class User extends React.Component {
     constructor(props) {
         super(props);
 
+        this.savedSession = this.props.session_id;
+
         this.state = {
             isHovering: false
         };
@@ -53,11 +55,14 @@ export default class UserList extends React.Component {
         };
     }
 
-    openEventSource(session_id, admin_token) {
+    openEventSource() {
+        if (this.eventSource)
+            this.closeEventSource();
+
         let url = this.props.baseUrl + "streaming?session_id=";
-        url += session_id;
+        url += this.props.session_id;
         url += "&admin_token=";
-        url += admin_token;
+        url += this.props.admin_token;
 
         this.eventSource = new EventSource(url);
 
@@ -70,7 +75,7 @@ export default class UserList extends React.Component {
     }
 
     // As the server generates Python-esque JSON, we have to fix it.
-    static parseIncomingJSON(data){
+    static parseIncomingJSON(data) {
         data = data.replace(/'/g, '"');
         data = data.replace(/None/g, "null");
         return JSON.parse(data);
@@ -103,20 +108,23 @@ export default class UserList extends React.Component {
             })
     }
 
+    componentWillUnmount() {
+        this.closeEventSource();
+    }
+
     closeEventSource() {
         if (this.eventSource)
             this.eventSource.close();
-        else {
-            this.initialFetch();
-        }
-
     }
 
     render() {
 
-        this.closeEventSource();
-        this.openEventSource(this.props.session_id, this.props.admin_token);
-        console.log("render");
+        // How we know a new session was opened, ergo we need to open an eventSource at this
+        if (this.props.session_id != this.savedSession) {
+            this.openEventSource();
+            this.initialFetch();
+            this.savedSession = this.props.session_id;
+        }
 
         return (
             <ul>

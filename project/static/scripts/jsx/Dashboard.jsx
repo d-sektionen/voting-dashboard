@@ -44,10 +44,10 @@ class Dashboard extends React.Component {
         cookie.save('admin_token', data.admin_token, {path: '/', maxAge: 60 * 60 * 10});
         console.log("Session opened: " + JSON.stringify(data));
 
-        fetch("https://beta.d-sektionen.se/wp-content/themes/d-sektionen_design/includes/" +
+        /*fetch("https://beta.d-sektionen.se/wp-content/themes/d-sektionen_design/includes/" +
             "voting-add-option.php?auth=superSecretAuth1234asdf&session_id=" + data.session_id)
             .then(response => response.json())
-            .then(responseJSON => console.log(responseJSON))
+            .then(responseJSON => console.log(responseJSON))*/
 
     }
 
