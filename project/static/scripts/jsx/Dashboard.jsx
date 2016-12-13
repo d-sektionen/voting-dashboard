@@ -43,6 +43,12 @@ class Dashboard extends React.Component {
         cookie.save('session_id', data.session_id, {path: '/', maxAge: 60 * 60 * 10});
         cookie.save('admin_token', data.admin_token, {path: '/', maxAge: 60 * 60 * 10});
         console.log("Session opened: " + JSON.stringify(data));
+
+        fetch("https://beta.d-sektionen.se/wp-content/themes/d-sektionen_design/includes/" +
+            "voting-add-option.php?auth=superSecretAuth1234asdf&session_id=" + data.session_id)
+            .then(response => response.json())
+            .then(responseJSON => console.log(responseJSON))
+
     }
 
     getAdminHeaders() {
@@ -119,6 +125,8 @@ class Dashboard extends React.Component {
                             <PanelRegistrations
                                 adminHeaders={this.getAdminHeaders()}
                                 baseUrl={baseUrl}
+                                session_id={this.state.session_id}
+                                admin_token={this.state.admin_token}
                             />
                         </Col>
                     </Row>

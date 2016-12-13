@@ -50,13 +50,6 @@ export default class PanelRegistrations extends React.Component {
             {method: "DELETE", headers: this.props.adminHeaders, body: JSON.stringify(data)});
 
     }
-
-    updateUsers() {
-        return fetch(this.props.baseUrl + "registration", {headers: this.props.adminHeaders})
-            .then(response => response.json());
-
-    }
-
     render() {
 
         const addUser = <AddUserForm onSubmit={this.handleNewUserAdded.bind(this)}/>;
@@ -73,7 +66,10 @@ export default class PanelRegistrations extends React.Component {
                     <UserList
                         onRemoveAll={this.removeAllUsersFromSession.bind(this)}
                         onRemove={this.removeUserFromSession.bind(this)}
-                        onUpdate={this.updateUsers.bind(this)}
+                        baseUrl={this.props.baseUrl}
+                        adminHeaders={this.props.adminHeaders}
+                        session_id={this.props.session_id}
+                        admin_token={this.props.admin_token}
                     />
                 </div>
             </Panel>

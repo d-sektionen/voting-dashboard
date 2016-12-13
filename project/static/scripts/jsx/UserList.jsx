@@ -17,6 +17,7 @@ class User extends React.Component {
 
     render() {
 
+
         const voted = this.props.user[2];
 
         const button = <Button
@@ -45,73 +46,78 @@ export default class UserList extends React.Component {
     constructor(props) {
         super(props);
 
+        this.eventSource = null;
+
         this.state = {
             users: [],
-            usersRaw: []
         };
     }
 
-    componentDidMount() {
+    openEventSource(session_id, admin_token) {
+        let url = this.props.baseUrl + "streaming?session_id=";
+        url += session_id;
+        url += "&admin_token=";
+        url += admin_token;
+
+        this.eventSource = new EventSource(url);
+
+        this.eventSource.addEventListener('users', dataRaw => {
+                const data = UserList.parseIncomingJSON(dataRaw.data);
+                const users = data.map(user => [user.liu_id, user.timestamp, user.vote]);
+                this.updateList(users);
+            }
+        );
+    }
+
+    // As the server generates Python-esque JSON, we have to fix it.
+    static parseIncomingJSON(data){
+        data = data.replace(/'/g, '"');
+        data = data.replace(/None/g, "null");
+        return JSON.parse(data);
+    }
+
+    updateList(users) {
+        users.sort();
+
+        let userList = users.map(user => {
+            return (
+                <User
+                    key={user[0]}
+                    user={user}
+                    onRemove={() => this.props.onRemove(user[0])}
+                />
+            );
+        });
 
         this.setState({
-            intervalId: setInterval(this.update.bind(this), 1000)
+            users: userList
         });
     }
 
-    componentWillUnmount() {
-        clearInterval(this.state.intervalId);
+    initialFetch() {
+        fetch(this.props.baseUrl + "registration", {headers: this.props.adminHeaders})
+            .then(response => response.json())
+            .then(responseJSON => {
+                const users = responseJSON.data.users.map(user => [user.liu_id, user.timestamp, user.vote]);
+                this.updateList(users);
+            })
     }
 
-    // Needed some way to detect if there had been a change in which users were to be displayed.
-    newUsers(usersRaw) {
-        if (this.state.usersRaw.length == 0) return true;
-
-        if (this.state.usersRaw.length !== usersRaw.length) return true;
-
-        for (let i in usersRaw) {
-            for (let j in usersRaw[i]) {
-                if (usersRaw[i][j] != this.state.usersRaw[i][j]) {
-                    return true;
-                }
-            }
+    closeEventSource() {
+        if (this.eventSource)
+            this.eventSource.close();
+        else {
+            this.initialFetch();
         }
 
-        return false;
-    }
-
-    update() {
-
-        const usersPromise = this.props.onUpdate();
-        usersPromise.then(responseJson => responseJson.data.users)
-            .then(users => {
-
-                let usersRaw = users.map(user => [user.liu_id, user.timestamp, user.vote]);
-
-                if (!this.newUsers(usersRaw)) return;
-
-                let usersModified = usersRaw.slice();
-                usersModified.sort();
-
-                let userList = usersModified.map(user => {
-
-                    return (
-                        <User
-                            key={user[0]}
-                            user={user}
-                            onRemove={() => this.props.onRemove(user[0])}
-                        />
-                    );
-                });
-
-                this.setState({
-                    users: userList,
-                    usersRaw: usersRaw
-                });
-
-            });
     }
 
     render() {
+
+        this.closeEventSource();
+        this.openEventSource(this.props.session_id, this.props.admin_token);
+        console.log("render");
+
         return (
             <ul>
                 <FlipMove
