@@ -44,6 +44,7 @@ class Dashboard extends React.Component {
         cookie.save('admin_token', data.admin_token, {path: '/', maxAge: 60 * 60 * 10});
         console.log("Session opened: " + JSON.stringify(data));
 
+        // TODO Re-enable this
         /*fetch("https://beta.d-sektionen.se/wp-content/themes/d-sektionen_design/includes/" +
             "voting-add-option.php?auth=superSecretAuth1234asdf&session_id=" + data.session_id)
             .then(response => response.json())
@@ -114,11 +115,10 @@ class Dashboard extends React.Component {
                             <PanelVoting
                                 onNewVote={this.handleNewVote.bind(this)}
                                 vote_code={this.state.vote_code}
-                                question={this.state.question}
-                                alternatives={this.state.alternatives}
                                 adminHeaders={this.getAdminHeaders()}
                                 baseUrl={baseUrl}
-                                configured={!!this.state.vote_code}
+                                session_id={this.state.session_id}
+                                admin_token={this.state.admin_token}
                             />
                         </Col>
                         <Col xs={12} md={3}>

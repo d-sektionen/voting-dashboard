@@ -58,7 +58,7 @@ export default class VoteVisualizer extends React.Component {
                         <FlipMove
                             staggerDelayBy={300}
                             enterAnimation="none"
-                            disableAllAnimations={!this.props.disableAnimations}
+                            disableAllAnimations={this.props.disableAllAnimations}
                         >
                             {listVisualization}
                         </FlipMove>

@@ -49,6 +49,7 @@ export default class UserList extends React.Component {
         super(props);
 
         this.eventSource = null;
+        this.savedSession = null;
 
         this.state = {
             users: [],

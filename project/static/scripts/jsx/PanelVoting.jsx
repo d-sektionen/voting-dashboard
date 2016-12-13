@@ -14,7 +14,8 @@ export default class PanelVoting extends React.Component {
     constructor(props) {
         super(props);
 
-        this.disableAnimations = false;
+        this.eventSource = null;
+        this.savedVoteCode = null;
 
         this.state = {
             showVoteConfig: false,
@@ -33,7 +34,8 @@ export default class PanelVoting extends React.Component {
         this.props.onNewVote(vote_code, question, alternatives);
 
         this.setState({
-            showVoteConfig: false
+            showVoteConfig: false,
+            question: question || this.state.question
         });
     }
 
@@ -49,72 +51,70 @@ export default class PanelVoting extends React.Component {
         });
     }
 
-    componentDidMount() {
-        this.update();
+    openEventSource() {
+        if (this.eventSource) this.closeEventSource();
 
-        this.setState({
-            intervalId: setInterval(this.update.bind(this), 2000)
-        });
-    }
+        let url = this.props.baseUrl + "streaming?session_id=";
+        url += this.props.session_id;
+        url += "&admin_token=";
+        url += this.props.admin_token;
 
-    componentWillUnmount() {
-        clearInterval(this.state.intervalId);
-    }
+        this.eventSource = new EventSource(url);
 
-    newData(alternatives) {
+        this.eventSource.addEventListener('votes', dataRaw => {
+                const votes = PanelVoting.parseIncomingJSON(dataRaw.data);
 
-        if (alternatives && !this.state.alternatives) return true;
+                let alternatives = [];
 
-        if (alternatives.length !== this.state.alternatives.length) {
-            return true;
-        }
-
-        for (let i in alternatives) {
-            for (let j in alternatives[i]) {
-                if (alternatives[i][j] !== this.state.alternatives[i][j]) {
-                    return true;
+                for (let key in votes) {
+                    alternatives.push([key, votes[key]]);
                 }
+
+                this.updateVotes(alternatives);
             }
-        }
-
-        return false;
-
+        );
     }
 
-    update() {
+    updateVotes(alternatives) {
+        this.setState({
+            alternatives: alternatives
+        });
 
-        if (!this.props.configured) return;
+        this.newData = true;
+    }
 
+    // As the server generates Python-esque JSON, we have to fix it.
+    static parseIncomingJSON(data) {
+        data = data.replace(/'/g, '"');
+        data = data.replace(/None/g, "null");
+        return JSON.parse(data);
+    }
+
+    initialFetch() {
         fetch(this.props.baseUrl + "vote",
             {method: "GET", headers: this.props.adminHeaders})
             .then(response => response.json())
             .then(responseJSON => {
-                if (!responseJSON) return;
 
-                let newVoteStarted = false;
-
-                if (responseJSON.data.vote_code !== this.props.vote_code) {
-                    // Vote was recreated somewhere else
-                    // Pass data to parent as if we created the vote
-                    newVoteStarted = true;
-                    this.props.onNewVote(responseJSON.vote_code, responseJSON.data.question, responseJSON.data.alternatives)
-                }
+                const votes = responseJSON.data.votes;
 
                 let alternatives = [];
 
-                for (let key in responseJSON.data.votes) {
-                    alternatives.push([key, responseJSON.data.votes[key]]);
+                for (let key in votes){
+                    alternatives.push([key, votes[key]]);
                 }
 
-                // Makes sure we only update if there's new vote-data to display.
-                this.disableAnimations = !(!this.newData(alternatives) || newVoteStarted);
-
-                this.setState({
-                    question: responseJSON.data.question,
-                    alternatives: alternatives
-                });
-
+                this.updateVotes(alternatives);
             });
+    }
+
+    closeEventSource() {
+        if (this.eventSource)
+            this.eventSource.close();
+    }
+
+    componentWillUnmount() {
+        this.closeEventSource();
     }
 
     render() {
@@ -122,7 +122,14 @@ export default class PanelVoting extends React.Component {
         let showVoteCodeButton = null;
         let voteVis = null;
 
-        if (this.props.configured) {
+        if (this.props.vote_code) {
+
+            if (this.props.vote_code != this.savedVoteCode) {
+                this.openEventSource();
+                this.initialFetch();
+                this.savedVoteCode = this.props.vote_code;
+            }
+
             showVoteCodeButton = <Button
                 onClick={this.handleShowVoteCode.bind(this)}
                 bsStyle="info"
@@ -132,7 +139,12 @@ export default class PanelVoting extends React.Component {
                 <Glyphicon glyph="eye-open"/> Vote Code
             </Button>;
 
-            voteVis = <VoteVisualizer alternatives={this.state.alternatives} disableAnimations={this.disableAnimations}/>;
+            voteVis =
+                <VoteVisualizer alternatives={this.state.alternatives}
+                                disableAllAnimations={!this.newData}
+                />;
+
+            this.newData = false;
         }
 
         return (
