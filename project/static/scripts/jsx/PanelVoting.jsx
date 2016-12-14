@@ -83,6 +83,12 @@ export default class PanelVoting extends React.Component {
         this.newData = true;
     }
 
+    setQuestion(question) {
+        this.setState({
+            question: question
+        });
+    }
+
     // As the server generates Python-esque JSON, we have to fix it.
     static parseIncomingJSON(data) {
         data = data.replace(/'/g, '"');
@@ -105,6 +111,7 @@ export default class PanelVoting extends React.Component {
                 }
 
                 this.updateVotes(alternatives);
+                this.setQuestion(responseJSON.data.question);
             });
     }
 

@@ -18,6 +18,10 @@ const baseUrl = "http://127.0.0.1:5001/api/voting/";
 class Dashboard extends React.Component {
 
     constructor(props) {
+        /*cookie.remove("session_id", {path: '/'});
+        cookie.remove("vote_code", {path: '/'});
+        cookie.remove("admin_token", {path: '/'});*/
+
         super(props);
 
         this.state = {
