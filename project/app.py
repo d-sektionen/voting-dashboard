@@ -4,8 +4,7 @@ import time
 app = Flask(__name__)
 
 
-# Ugly fix until I come up with something better.
-@app.route('/wp-content/d-sektionen_voting')
+@app.route('/')
 def index():
     return render_template('index.html')
 
