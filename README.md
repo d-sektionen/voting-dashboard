@@ -3,14 +3,12 @@ En frontend-implementation av D-Cide som är menad att användas under sektionsm
 
 ##Installation
 
-**OBS: projektet kräver python 3.4+.**
+1. `npm install` för att installera alla node.js-packages.
 
-1. Starta en ball liten `virtualenv` om det är så du rullar.
+1. `gulp` för att kompilera jsx till vanlig javascript. Genererar filen `/js/bundle.js`
 
-1. Ståendes i root, kör:
+    **OBS:** Detta kanske inte funkar, beroende på om `gulp` tidigare installerats eller inte. Om inte, kör `npm install -g gulp` för att installera `gulp` globalt.
 
-	`pip install -r requirements.txt`
+1. ???
 
-	`npm install`
-
-1. Starta servern med python app.py
+1. Done
