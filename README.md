@@ -3,7 +3,9 @@ En frontend-implementation av D-Cide som är menad att användas under sektionsm
 
 ##Installation
 
-1. Starta en ball liten `virtualenv` om det är så du rullar. **OBS:** kräver python 3.
+**OBS: projektet kräver python 3.4+.**
+
+1. Starta en ball liten `virtualenv` om det är så du rullar.
 
 1. Ståendes i root, kör:
 

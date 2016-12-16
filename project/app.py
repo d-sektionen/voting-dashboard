@@ -13,7 +13,3 @@ def index():
 @app.template_filter('autoversion')
 def autoversion_filter(filename):
     return "{0}?v={1}".format(filename, time.time())
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
