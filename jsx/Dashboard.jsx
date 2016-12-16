@@ -12,8 +12,8 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 const mountNode = document.getElementById('dashboard');
-// const baseUrl = "http://beta.d-sektionen.se/api/voting/";
-const baseUrl = "http://localhost:5001/api/voting/";
+const baseUrl = "https://beta.d-sektionen.se/api/voting/";
+// const baseUrl = "http://localhost:5001/api/voting/";
 
 class Dashboard extends React.Component {
 
@@ -49,10 +49,10 @@ class Dashboard extends React.Component {
         console.log("Session opened: " + JSON.stringify(data));
 
         // TODO Re-enable this
-        /*fetch("https://beta.d-sektionen.se/wp-content/themes/d-sektionen_design/includes/" +
+        fetch("https://beta.d-sektionen.se/wp-content/themes/d-sektionen_design/includes/" +
             "voting-add-option.php?auth=superSecretAuth1234asdf&session_id=" + data.session_id)
             .then(response => response.json())
-            .then(responseJSON => console.log(responseJSON))*/
+            .then(responseJSON => console.log(responseJSON))
 
     }
 
