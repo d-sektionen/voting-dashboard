@@ -8,10 +8,10 @@ var streamify = require('gulp-streamify');
 
 var path = {
     OUT: 'build.js',
-    DEST2: './project/static/scripts',
+    DEST2: '.',
     DEST_BUILD: 'js',
     DEST_DEV: 'js',
-    ENTRY_POINT: './project/static/scripts/jsx/Dashboard.jsx'
+    ENTRY_POINT: './jsx/Dashboard.jsx'
 };
 
 gulp.task('watch', [], function () {
