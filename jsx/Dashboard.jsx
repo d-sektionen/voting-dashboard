@@ -12,15 +12,12 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 const mountNode = document.getElementById('dashboard');
-const baseUrl = "https://beta.d-sektionen.se/api/voting/";
-// const baseUrl = "http://localhost:5001/api/voting/";
+// const baseUrl = "https://beta.d-sektionen.se/api/voting/";
+const baseUrl = "http://localhost:5001/api/voting/";
 
 class Dashboard extends React.Component {
 
     constructor(props) {
-        /*cookie.remove("session_id", {path: '/'});
-        cookie.remove("vote_code", {path: '/'});
-        cookie.remove("admin_token", {path: '/'});*/
 
         super(props);
 
@@ -48,7 +45,6 @@ class Dashboard extends React.Component {
         cookie.save('admin_token', data.admin_token, {path: '/', maxAge: 60 * 60 * 10});
         console.log("Session opened: " + JSON.stringify(data));
 
-        // TODO Re-enable this
         fetch("https://beta.d-sektionen.se/wp-content/themes/d-sektionen_design/includes/" +
             "voting-add-option.php?auth=superSecretAuth1234asdf&session_id=" + data.session_id)
             .then(response => response.json())
@@ -94,7 +90,7 @@ class Dashboard extends React.Component {
                 <SessionOpener
                     onSessionOpened={this.handleSessionOpened.bind(this)}
                     show={newSession}
-                    closeable={!!cookie.load("session_id")}                          // Only allows closing if session exists.
+                    closeable={!!cookie.load("session_id")}                          // Only allow closing if session exists.
                     onClose={this.handleNewSessionButtonCanceled.bind(this)}
                     baseUrl={baseUrl}
                 />

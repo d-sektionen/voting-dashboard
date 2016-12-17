@@ -68,18 +68,11 @@ export default class UserList extends React.Component {
         this.eventSource = new EventSource(url);
 
         this.eventSource.addEventListener('users', dataRaw => {
-                const data = UserList.parseIncomingJSON(dataRaw.data);
+                const data = JSON.parse(dataRaw.data);
                 const users = data.map(user => [user.liu_id, user.timestamp, user.vote]);
                 this.updateList(users);
             }
         );
-    }
-
-    // As the server generates Python-esque JSON, we have to fix it.
-    static parseIncomingJSON(data) {
-        data = data.replace(/'/g, '"');
-        data = data.replace(/None/g, "null");
-        return JSON.parse(data);
     }
 
     updateList(users) {

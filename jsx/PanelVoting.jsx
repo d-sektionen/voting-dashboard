@@ -62,7 +62,7 @@ export default class PanelVoting extends React.Component {
         this.eventSource = new EventSource(url);
 
         this.eventSource.addEventListener('votes', dataRaw => {
-                const votes = PanelVoting.parseIncomingJSON(dataRaw.data);
+                const votes = JSON.parse(dataRaw.data);
 
                 let alternatives = [];
 
@@ -87,13 +87,6 @@ export default class PanelVoting extends React.Component {
         this.setState({
             question: question
         });
-    }
-
-    // As the server generates Python-esque JSON, we have to fix it.
-    static parseIncomingJSON(data) {
-        data = data.replace(/'/g, '"');
-        data = data.replace(/None/g, "null");
-        return JSON.parse(data);
     }
 
     initialFetch() {
