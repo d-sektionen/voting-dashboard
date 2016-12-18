@@ -60,7 +60,7 @@ export default class UserList extends React.Component {
         if (this.eventSource)
             this.closeEventSource();
 
-        let url = this.props.baseUrl + "streaming?session_id=";
+        let url = this.props.baseUrl + "stream?channel=";
         url += this.props.session_id;
         url += "&admin_token=";
         url += this.props.admin_token;
