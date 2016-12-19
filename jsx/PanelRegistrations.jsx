@@ -13,7 +13,9 @@ export default class PanelRegistrations extends React.Component {
         super(props);
         this.hash = "invalidhash";
 
-        this.state = {};
+        this.state = {
+            userLength: 0
+        };
     }
 
     handleNewUserAdded(liu_id) {
@@ -49,6 +51,9 @@ export default class PanelRegistrations extends React.Component {
             .then(dataJSON => {
                 if (dataJSON.data.status === "already updated") return;
                 this.hash = dataJSON.data.hash;
+                this.setState({
+                    userLength: dataJSON.data.users.length
+                });
                 return dataJSON;        // Data is then returned to UserList call for list-updating.
             });
     }
@@ -75,9 +80,11 @@ export default class PanelRegistrations extends React.Component {
 
         const addUser = <AddUserForm onSubmit={this.handleNewUserAdded.bind(this)}/>;
 
+        const registeredText = "Registrerade [" + this.state.userLength + "]";
+
         return (
             <Panel className="panel panel-registrations" footer={addUser}>
-                <h2 className="panel-header">Registrerade
+                <h2 className="panel-header">{registeredText}
                     <Button
                         className="raised users-item-button"
                         bsStyle="danger"
