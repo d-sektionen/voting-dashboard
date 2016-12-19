@@ -14,7 +14,6 @@ import Col from 'react-bootstrap/lib/Col';
 const mountNode = document.getElementById('dashboard');
 const baseUrl = "https://beta.d-sektionen.se/api/voting/";
 // const baseUrl = "http://localhost:5001/api/voting/";
-// const baseUrl = "http://localhost:5001/";
 
 class Dashboard extends React.Component {
 
@@ -27,9 +26,7 @@ class Dashboard extends React.Component {
             session_id: cookie.load("session_id"),
             admin_token: cookie.load("admin_token"),
             vote_code: cookie.load("vote_code"),
-            configured: !!cookie.load("session_id"),
-            question: "",
-            alternatives: []
+            configured: !!cookie.load("session_id")
         };
     }
 
@@ -63,15 +60,12 @@ class Dashboard extends React.Component {
         };
     }
 
-    handleNewVote(vote_code, question, alternatives) {
+    handleNewVote(vote_code) {
         if (vote_code) {            // We can also call this when the vote-creation was canceled (i.e. no vote_code)
             this.setState({
-                vote_code: vote_code,
-                question: question,
-                alternatives: alternatives
+                vote_code: vote_code
             });
             cookie.save('vote_code', vote_code, {path: '/', maxAge: 60 * 60 * 10});
-            console.log("New vote started with vote_code: " + vote_code);
         }
     }
 
@@ -116,6 +110,7 @@ class Dashboard extends React.Component {
                             <PanelVoting
                                 onNewVote={this.handleNewVote.bind(this)}
                                 vote_code={this.state.vote_code}
+                                question={this.state.question}
                                 adminHeaders={this.getAdminHeaders()}
                                 baseUrl={baseUrl}
                                 session_id={this.state.session_id}

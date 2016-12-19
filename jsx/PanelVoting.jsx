@@ -14,7 +14,6 @@ export default class PanelVoting extends React.Component {
     constructor(props) {
         super(props);
 
-        this.savedVoteCode = null;
         this.intervalId = null;
         this.hash = "invalidhash";
 
@@ -30,13 +29,13 @@ export default class PanelVoting extends React.Component {
         });
     }
 
-    handleNewVote(vote_code, question, alternatives) {
+    handleNewVote(vote_code, question) {
+        this.props.onNewVote(vote_code);
 
-        this.props.onNewVote(vote_code, question, alternatives);
 
         this.setState({
             showVoteConfig: false,
-            question: question || this.state.question
+            question: question
         });
     }
 
@@ -66,18 +65,28 @@ export default class PanelVoting extends React.Component {
             .then(dataRaw => dataRaw.json())
             .then(dataJSON => {
 
-                if (dataJSON.data.status === "already updated") return;
-                const votes = dataJSON.data.votes;
+                    if (dataJSON.data.status === "already updated") return;
 
-                let alternatives = [];
+                    console.log(dataJSON);
 
-                for (let key in votes) {
-                    alternatives.push([key, votes[key]]);
+                    if (dataJSON.data.vote_code !== this.props.vote_code || dataJSON.data.question !== this.state.question) {
+                        this.handleNewVote(dataJSON.data.vote_code, dataJSON.data.question)
+                    }
+
+                    this.hash = dataJSON.data.hash;
+
+                    const votes = dataJSON.data.votes;
+                    let alternatives = [];
+
+                    for (let key in votes) {
+                        alternatives.push([key, votes[key]]);
+                    }
+
+                    if (alternatives.length > 0) {
+                        this.updateVotes(alternatives);
+                    }
                 }
-
-                this.updateVotes(alternatives);
-            }
-        );
+            );
     }
 
     updateVotes(alternatives) {
@@ -88,13 +97,7 @@ export default class PanelVoting extends React.Component {
         this.newData = true;
     }
 
-    setQuestion(question) {
-        this.setState({
-            question: question
-        });
-    }
-
-    componentDidMount() {
+    componentDidMount() {
         this.intervalId = setInterval(this.doRequest.bind(this), 3000);
     }
 
@@ -106,13 +109,10 @@ export default class PanelVoting extends React.Component {
 
         let showVoteCodeButton = null;
         let voteVis = null;
+        console.log(this.props.vote_code);
+        console.log(this.state.question);
 
         if (this.props.vote_code) {
-
-            if (this.props.vote_code != this.savedVoteCode) {
-                this.doRequest();
-                this.savedVoteCode = this.props.vote_code;
-            }
 
             showVoteCodeButton = <Button
                 onClick={this.handleShowVoteCode.bind(this)}
