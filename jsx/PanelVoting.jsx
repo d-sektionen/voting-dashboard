@@ -54,7 +54,7 @@ export default class PanelVoting extends React.Component {
     openEventSource() {
         if (this.eventSource) this.closeEventSource();
 
-        let url = this.props.baseUrl + "stream?channel=";
+        let url = this.props.baseUrl + "streaming?session_id=";
         url += this.props.session_id;
         url += "&admin_token=";
         url += this.props.admin_token;
