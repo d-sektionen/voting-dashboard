@@ -57,6 +57,7 @@ export default class UserList extends React.Component {
     }
 
     openEventSource() {
+
         if (this.eventSource)
             this.closeEventSource();
 
