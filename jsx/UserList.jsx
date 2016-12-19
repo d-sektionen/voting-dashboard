@@ -48,32 +48,41 @@ export default class UserList extends React.Component {
     constructor(props) {
         super(props);
 
-        this.eventSource = null;
+        this.intervalId = null;
         this.savedSession = null;
+        this.hash = "invalidhash";
 
         this.state = {
             users: [],
         };
     }
 
-    openEventSource() {
+    componentDidMount() {
+        this.intervalId = setInterval(this.doRequest.bind(this), 3000);
+    }
 
-        if (this.eventSource)
-            this.closeEventSource();
+    componentWillUnmount() {
+        clearInterval(this.intervalId);
+    }
 
-        let url = this.props.baseUrl + "streaming?session_id=";
+    doRequest() {
+
+        let url = this.props.baseUrl + "sync?session_id=";
         url += this.props.session_id;
         url += "&admin_token=";
         url += this.props.admin_token;
+        url += "&hash=";
+        url += this.hash;
+        url += "&type=users";
 
-        this.eventSource = new EventSource(url);
-
-        this.eventSource.addEventListener('users', dataRaw => {
-                const data = JSON.parse(dataRaw.data);
-                const users = data.map(user => [user.liu_id, user.timestamp, user.vote]);
+        fetch(url, {method: "GET"})
+            .then(dataRaw => dataRaw.json())
+            .then(dataJSON => {
+                if (dataJSON.data.status === "already updated") return;
+                this.hash = dataJSON.data.hash;
+                const users = dataJSON.data.users.map(user => [user.liu_id, user.timestamp, user.vote]);
                 this.updateList(users);
-            }
-        );
+            });
     }
 
     updateList(users) {
@@ -94,30 +103,11 @@ export default class UserList extends React.Component {
         });
     }
 
-    initialFetch() {
-        fetch(this.props.baseUrl + "registration", {headers: this.props.adminHeaders})
-            .then(response => response.json())
-            .then(responseJSON => {
-                const users = responseJSON.data.users.map(user => [user.liu_id, user.timestamp, user.vote]);
-                this.updateList(users);
-            })
-    }
-
-    componentWillUnmount() {
-        this.closeEventSource();
-    }
-
-    closeEventSource() {
-        if (this.eventSource)
-            this.eventSource.close();
-    }
-
     render() {
 
         // How we know a new session was opened, ergo we need to open an eventSource at this
         if (this.props.session_id != this.savedSession) {
-            this.openEventSource();
-            this.initialFetch();
+            this.doRequest();
             this.savedSession = this.props.session_id;
         }
 

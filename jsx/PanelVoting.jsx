@@ -14,8 +14,9 @@ export default class PanelVoting extends React.Component {
     constructor(props) {
         super(props);
 
-        this.eventSource = null;
         this.savedVoteCode = null;
+        this.intervalId = null;
+        this.hash = "invalidhash";
 
         this.state = {
             showVoteConfig: false,
@@ -51,18 +52,22 @@ export default class PanelVoting extends React.Component {
         });
     }
 
-    openEventSource() {
-        if (this.eventSource) this.closeEventSource();
-
-        let url = this.props.baseUrl + "streaming?session_id=";
+    doRequest() {
+        let url = this.props.baseUrl + "sync?session_id=";
         url += this.props.session_id;
         url += "&admin_token=";
         url += this.props.admin_token;
+        url += "&hash=";
+        url += this.hash;
+        url += "&type=votes";
 
-        this.eventSource = new EventSource(url);
 
-        this.eventSource.addEventListener('votes', dataRaw => {
-                const votes = JSON.parse(dataRaw.data);
+        fetch(url, {method: "GET"})
+            .then(dataRaw => dataRaw.json())
+            .then(dataJSON => {
+
+                if (dataJSON.data.status === "already updated") return;
+                const votes = dataJSON.data.votes;
 
                 let alternatives = [];
 
@@ -89,32 +94,12 @@ export default class PanelVoting extends React.Component {
         });
     }
 
-    initialFetch() {
-        fetch(this.props.baseUrl + "vote",
-            {method: "GET", headers: this.props.adminHeaders})
-            .then(response => response.json())
-            .then(responseJSON => {
-
-                const votes = responseJSON.data.votes;
-
-                let alternatives = [];
-
-                for (let key in votes){
-                    alternatives.push([key, votes[key]]);
-                }
-
-                this.updateVotes(alternatives);
-                this.setQuestion(responseJSON.data.question);
-            });
-    }
-
-    closeEventSource() {
-        if (this.eventSource)
-            this.eventSource.close();
+    componentDidMount() {
+        this.intervalId = setInterval(this.doRequest.bind(this), 3000);
     }
 
     componentWillUnmount() {
-        this.closeEventSource();
+        clearInterval(this.intervalId);
     }
 
     render() {
@@ -125,8 +110,7 @@ export default class PanelVoting extends React.Component {
         if (this.props.vote_code) {
 
             if (this.props.vote_code != this.savedVoteCode) {
-                this.openEventSource();
-                this.initialFetch();
+                this.doRequest();
                 this.savedVoteCode = this.props.vote_code;
             }
 
