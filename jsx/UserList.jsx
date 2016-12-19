@@ -25,7 +25,7 @@ class User extends React.Component {
         const button = <Button
             bsStyle="danger"
             className="raised users-item-button"
-            onClick={() => this.props.onRemove()}
+            onClick={() => this.props.onRemove(this.props.user[0])}
         >
             <Glyphicon glyph="remove"/>
         </Button>;
@@ -50,7 +50,6 @@ export default class UserList extends React.Component {
 
         this.intervalId = null;
         this.savedSession = null;
-        this.hash = "invalidhash";
 
         this.state = {
             users: [],
@@ -58,31 +57,26 @@ export default class UserList extends React.Component {
     }
 
     componentDidMount() {
-        this.intervalId = setInterval(this.doRequest.bind(this), 3000);
+        this.intervalId = setInterval(this.handleUpdate.bind(this), 3000);
     }
 
     componentWillUnmount() {
         clearInterval(this.intervalId);
     }
 
-    doRequest() {
+    handleUpdate() {
+        const userPromise = this.props.onUpdate();
 
-        let url = this.props.baseUrl + "sync?session_id=";
-        url += this.props.session_id;
-        url += "&admin_token=";
-        url += this.props.admin_token;
-        url += "&hash=";
-        url += this.hash;
-        url += "&type=users";
+        userPromise.then(dataJSON => {
+            if (!dataJSON) return;          // Nothing new, don't update.
+            const users = dataJSON.data.users.map(user => [user.liu_id, user.timestamp, user.vote]);
+            this.updateList(users);
+        });
+    }
 
-        fetch(url, {method: "GET"})
-            .then(dataRaw => dataRaw.json())
-            .then(dataJSON => {
-                if (dataJSON.data.status === "already updated") return;
-                this.hash = dataJSON.data.hash;
-                const users = dataJSON.data.users.map(user => [user.liu_id, user.timestamp, user.vote]);
-                this.updateList(users);
-            });
+    handleRemove(user) {
+        this.props.onRemove(user);
+        this.handleUpdate();
     }
 
     updateList(users) {
@@ -93,7 +87,7 @@ export default class UserList extends React.Component {
                 <User
                     key={user[0]}
                     user={user}
-                    onRemove={() => this.props.onRemove(user[0])}
+                    onRemove={this.handleRemove.bind(this)}
                 />
             );
         });
@@ -107,7 +101,7 @@ export default class UserList extends React.Component {
 
         // How we know a new session was opened, ergo we need to open an eventSource at this
         if (this.props.session_id != this.savedSession) {
-            this.doRequest();
+            this.handleUpdate();
             this.savedSession = this.props.session_id;
         }
 

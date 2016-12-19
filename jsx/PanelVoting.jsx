@@ -67,8 +67,6 @@ export default class PanelVoting extends React.Component {
 
                     if (dataJSON.data.status === "already updated") return;
 
-                    console.log(dataJSON);
-
                     if (dataJSON.data.vote_code !== this.props.vote_code || dataJSON.data.question !== this.state.question) {
                         this.handleNewVote(dataJSON.data.vote_code, dataJSON.data.question)
                     }
@@ -99,6 +97,7 @@ export default class PanelVoting extends React.Component {
 
     componentDidMount() {
         this.intervalId = setInterval(this.doRequest.bind(this), 3000);
+        this.doRequest();
     }
 
     componentWillUnmount() {
@@ -109,8 +108,6 @@ export default class PanelVoting extends React.Component {
 
         let showVoteCodeButton = null;
         let voteVis = null;
-        console.log(this.props.vote_code);
-        console.log(this.state.question);
 
         if (this.props.vote_code) {
 
