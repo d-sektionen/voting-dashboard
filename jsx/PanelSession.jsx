@@ -19,7 +19,8 @@ export default class PanelSession extends React.Component {
         this.state = {
             showToken: false,
             showOfficialSessionConfig: false,
-            superSecretAuth: ""
+            superSecretAuth: "",
+            validAuth: true
         };
     }
 
@@ -42,20 +43,29 @@ export default class PanelSession extends React.Component {
     }
 
     // superSecretAuth1234asdf
-    // TODO Wait for Jesper to fix this call.
     handleSubmitOfficialSession(e) {
         e.preventDefault();
 
-        fetch("https://beta.d-sektionen.se/wp-content/themes/d-sektionen_design/includes/" +
-            "voting-add-option.php?auth=" + this.state.superSecretAuth + "&session_id=" + this.props.session_id,
-            {mode: "no-cors"})
-            .then(response => response.json())
-            .then(responseJSON => console.log(responseJSON));
+        const url = "https://beta.d-sektionen.se/wp-content/themes/d-sektionen_design/includes/" +
+            "voting-add-option.php?auth=" + this.state.superSecretAuth + "&session_id=" + this.props.session_id;
 
-        this.handleHideSetOfficialModal();
+        fetch(url, {mode: "no-cors", method: "GET"})
+            .then(response => response.json())
+            .then(responseJSON => {
+                if (responseJSON.code === 200) {
+                    this.handleHideSetOfficialModal();
+                    this.setState({
+                        validAuth: true
+                    });
+                } else {
+                    this.setState({
+                        validAuth: false
+                    })
+                }
+            });
     }
 
-    handleHideSetOfficialModal() {
+    handleHideSetOfficialModal() {
         this.setState({
             showOfficialSessionConfig: false
         });
@@ -114,7 +124,9 @@ export default class PanelSession extends React.Component {
                 >
                     <Modal.Body>
                         <form>
-                            <FormGroup>
+                            <FormGroup
+                                validationState={this.state.validAuth ? null : "error"}
+                            >
                                 <InputGroup>
                                     <FormControl
                                         type="text"
