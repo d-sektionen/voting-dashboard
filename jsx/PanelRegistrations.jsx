@@ -67,6 +67,7 @@ export default class PanelRegistrations extends React.Component {
 
     }
 
+    // TODO Confirmation before removal
     removeAllUsersFromSession() {
 
         const data = {variant: 'all'};
@@ -80,7 +81,7 @@ export default class PanelRegistrations extends React.Component {
 
         const addUser = <AddUserForm onSubmit={this.handleNewUserAdded.bind(this)}/>;
 
-        const registeredText = "Registrerade [" + this.state.userLength + "]";
+        let registeredText = "Registrerade" + (this.state.userLength > 0 ?  (" [" + this.state.userLength + "]") : "");
 
         return (
             <Panel className="panel panel-registrations" footer={addUser}>

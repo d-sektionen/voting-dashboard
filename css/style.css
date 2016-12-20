@@ -34,6 +34,8 @@ ul {
 
 .panel-session-new-button {
     color: white !important;
+    padding-left: 60px !important;
+    padding-right: 60px !important;
 }
 
 .panel {

@@ -12,8 +12,8 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 const mountNode = document.getElementById('dashboard');
-const baseUrl = "https://beta.d-sektionen.se/api/voting/";
-// const baseUrl = "http://localhost:5001/api/voting/";
+// const baseUrl = "https://beta.d-sektionen.se/api/voting/";
+const baseUrl = "http://localhost:5001/api/voting/";
 
 class Dashboard extends React.Component {
 
@@ -42,12 +42,6 @@ class Dashboard extends React.Component {
         cookie.save('session_id', data.session_id, {path: '/', maxAge: 60 * 60 * 10});
         cookie.save('admin_token', data.admin_token, {path: '/', maxAge: 60 * 60 * 10});
         console.log("Session opened: " + JSON.stringify(data));
-
-        fetch("https://beta.d-sektionen.se/wp-content/themes/d-sektionen_design/includes/" +
-            "voting-add-option.php?auth=superSecretAuth1234asdf&session_id=" + data.session_id)
-            .then(response => response.json())
-            .then(responseJSON => console.log(responseJSON))
-
     }
 
     getAdminHeaders() {
