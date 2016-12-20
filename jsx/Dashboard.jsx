@@ -12,7 +12,8 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 const mountNode = document.getElementById('dashboard');
-const baseUrl = "http://localhost:80/api/voting/";
+const baseUrl = "https://beta.d-sektionen.se/api/voting/";
+// const baseUrl = "http://localhost/api/voting/";
 
 class Dashboard extends React.Component {
 
