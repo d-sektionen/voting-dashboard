@@ -32,10 +32,15 @@ export default class PanelVoting extends React.Component {
     handleNewVote(vote_code, question) {
         this.props.onNewVote(vote_code);
 
-
         this.setState({
             showVoteConfig: false,
             question: question
+        });
+    }
+
+    handleVoteCreaterAbort() {
+        this.setState({
+            showVoteConfig: false
         });
     }
 
@@ -135,6 +140,7 @@ export default class PanelVoting extends React.Component {
                     adminHeaders={this.props.adminHeaders}
                     onNewVote={this.handleNewVote.bind(this)}
                     show={this.state.showVoteConfig}
+                    onAbort={this.handleVoteCreaterAbort.bind(this)}
                 />
 
                 <Modal

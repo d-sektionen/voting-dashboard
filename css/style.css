@@ -128,6 +128,11 @@ ul {
     text-align: left;
 }
 
+.users-item.noshow{
+    box-shadow: 2px 3px 2px 0 #4c636e;
+    background-color: #81939c;
+}
+
 .users-item.vote {
     box-shadow: 2px 3px 2px 0 #4f824f;
     background-color: lightgreen;

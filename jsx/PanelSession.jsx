@@ -42,7 +42,6 @@ export default class PanelSession extends React.Component {
         });
     }
 
-    // superSecretAuth1234asdf
     handleSubmitOfficialSession(e) {
         e.preventDefault();
 

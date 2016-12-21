@@ -215,11 +215,11 @@ export default class VoteCreater extends React.Component {
     }
 
     handleSubmit(vote_code, question, alternatives) {
-        this.props.onNewVote(vote_code, question, alternatives);
+        this.props.onNewVote(vote_code, question);
     }
 
     handleClosing() {
-        this.props.onNewVote(null, null, null);
+        this.props.onAbort();
     }
 
     render() {
@@ -234,7 +234,6 @@ export default class VoteCreater extends React.Component {
                     closeButton
                 >
                     <Modal.Title>Skapa en ny omröstning</Modal.Title>
-                    <h5>ALTERNATIV KAN INTE INNEHÅLLA Å, Ä ELLER Ö</h5>
                     <p>Varning: Genom att skapa en ny omröstning kommer den befintliga omröstningen tas bort.</p>
                     <text>Klicka <a href="#">här</a> om du vill ladda ner en kopia av den aktuella [WIP]</text>
                 </Modal.Header>

@@ -52,8 +52,8 @@ export default class VoteVisualizer extends React.Component {
 
         return (
 
-            <Tabs defaultActiveKey={"Lista"} id="vote-visualizer">
-                <Tab eventKey={"Lista"} title="Lista" className="vote-visualizer-body">
+            <Tabs defaultActiveKey={"List"} id="vote-visualizer">
+                <Tab eventKey={"List"} title="Lista" className="vote-visualizer-body">
                     <ul>
                         <FlipMove
                             staggerDelayBy={300}
@@ -64,6 +64,9 @@ export default class VoteVisualizer extends React.Component {
                         </FlipMove>
                         <h3 id="vote-visualizer-notvoted">Inte röstat: {noVotes}</h3>
                     </ul>
+                </Tab>
+                <Tab eventKey={"PieChart"} title="Pie chart" className="vote-visualizer-body">
+
                 </Tab>
             </Tabs>
         );

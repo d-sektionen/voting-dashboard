@@ -18,10 +18,6 @@ class User extends React.Component {
     }
 
     render() {
-
-
-        const voted = this.props.user[2];
-
         const button = <Button
             bsStyle="danger"
             className="raised users-item-button"
@@ -30,9 +26,10 @@ class User extends React.Component {
             <Glyphicon glyph="remove"/>
         </Button>;
 
+        // voted ? "vote" : "novote"
         return (
             <li
-                className={"users-item " + (voted ? "vote" : "novote")}
+                className={"users-item noshow"}
                 onMouseEnter={() => this.setState({isHovering: true})}
                 onMouseLeave={() => this.setState({isHovering: false})}
             >
