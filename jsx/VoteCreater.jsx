@@ -240,7 +240,7 @@ export default class VoteCreater extends React.Component {
                 >
                     <Modal.Title>Skapa en ny omröstning</Modal.Title>
                     <p>Varning: Genom att skapa en ny omröstning kommer den befintliga omröstningen tas bort.</p>
-                    <text>Klicka <a href={savedVotesUrl}>här</a> om du vill ladda ner en kopia av den aktuella [WIP]</text>
+                    <text>Klicka <a href={savedVotesUrl}>här</a> om du vill hämta en kopia av den aktuella.</text>
                 </Modal.Header>
 
                 <Modal.Body>
