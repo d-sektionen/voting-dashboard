@@ -223,6 +223,11 @@ export default class VoteCreater extends React.Component {
     }
 
     render() {
+
+        let savedVotesUrl = this.props.baseUrl + "votesaver";
+        savedVotesUrl += "?session_id=" + this.props.session_id;
+        savedVotesUrl += "&admin_token=" + this.props.admin_token;
+
         return (
             <Modal
                 show={this.props.show}
@@ -235,7 +240,7 @@ export default class VoteCreater extends React.Component {
                 >
                     <Modal.Title>Skapa en ny omröstning</Modal.Title>
                     <p>Varning: Genom att skapa en ny omröstning kommer den befintliga omröstningen tas bort.</p>
-                    <text>Klicka <a href="#">här</a> om du vill ladda ner en kopia av den aktuella [WIP]</text>
+                    <text>Klicka <a href={savedVotesUrl}>här</a> om du vill ladda ner en kopia av den aktuella [WIP]</text>
                 </Modal.Header>
 
                 <Modal.Body>

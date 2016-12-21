@@ -141,6 +141,8 @@ export default class PanelVoting extends React.Component {
                     onNewVote={this.handleNewVote.bind(this)}
                     show={this.state.showVoteConfig}
                     onAbort={this.handleVoteCreaterAbort.bind(this)}
+                    session_id = {this.props.session_id}
+                    admin_token = {this.props.admin_token}
                 />
 
                 <Modal
