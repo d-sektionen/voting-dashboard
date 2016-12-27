@@ -1,3 +1,9 @@
+@import url("buttons.css");
+@import url("panel_session.css");
+@import url("panel_users.css");
+@import url("panel_voting.css");
+@import url("qr.css");
+
 .modal-session-setup {
     text-align: center;
     max-width: 25vw;
@@ -40,40 +46,19 @@ ul {
 
 .panel {
     box-shadow: 6px 7px 4px 0 #000000 !important;
+    border-radius: 1px !important;
     text-align: center;
     height: 83vh;
     z-index: 10;
     overflow: auto;
 }
 
-.panel-session {
-
+.col-md-3 {
+    padding: 0 5px 0 !important;
 }
 
-.panel-session-qr {
-    height: auto;
-}
-
-.panel-session-hr {
-    margin-bottom: 12px;
-    margin-top: 10px;
-}
-
-#qr-img {
-    margin: 0 auto;
-}
-
-#qr-fullscreen {
-    color: #1d1d1d;
-}
-
-.qr-img-modal {
-    margin: 0 auto;
-    vertical-align: middle;
-    width: auto;
-    min-width: 0 !important;
-    padding-left: 50px;
-    padding-right: 60px;
+.col-md-6 {
+    padding: 0 5px 0 !important;
 }
 
 .panel-voting {
@@ -84,10 +69,6 @@ ul {
     text-align: left;
 }
 
-.add-user-form {
-    margin-bottom: 0 !important;
-}
-
 .panel-footer {
     position: absolute;
     right: 16px;
@@ -96,138 +77,10 @@ ul {
     background: #000;
 }
 
-.vote_code-modal {
-    min-width: 100vw;
-    text-align: center;
-}
-
-.vote_code-text {
-    font-size: 3500%;
-    margin: 0 auto;
-}
-
-.panel-registrations {
-
-}
-
-.modal-confirm-remove-users {
-    text-align: center;
-    max-width: 25vw;
-    width: 50%;
-}
-
-.users-container {
-    height: 63vh;
-    overflow-y: scroll;
-    background-color: #6c6c6c;
-    border-radius: 5px;
-}
-
-.users-item {
-    border-radius: 5px;
-    margin: 5px;
-    height: 50px;
-    padding-top: 9px;
-    padding-left: 15px;
-    font-size: 150%;
-    font-weight: bold;
-    text-align: left;
-}
-
-.users-item.noshow{
-    box-shadow: 2px 3px 2px 0 #4c636e;
-    background-color: #81939c;
-}
-
-.users-item.vote {
-    box-shadow: 2px 3px 2px 0 #4f824f;
-    background-color: lightgreen;
-}
-
-.users-item.novote {
-    box-shadow: 2px 3px 2px 0 #854343;
-    background-color: lightcoral;
-}
-
-.users-item-button {
-    color: lightcoral;
-    float: right;
-    margin-right: 8px;
-    padding-top: 0;
-    margin-top: -3px;
-    margin-bottom: 14px;
-}
-
-.users-item-text  {
-
-}
-
-.vote-creater-modal {
-    transform: scale(1, 1) !important;
-}
-
 .p {
     /*margin-bottom: 0 !important;*/
 }
 
 .show-grid {
 
-}
-
-.vote-visualizer  {
-    margin-top: 18px !important;
-}
-
-.vote-visualizer-body {
-    height: 54vh;
-    border: 1px solid lightgray;
-    border-radius: 0 0 10px 10px;
-    overflow: scroll;
-}
-
-.vote-visualizer-item {
-    font-size: 200%;
-    font-weight: bold;
-    height: 50px;
-    margin: 5px;
-    padding: 5px 10px 10px;
-    background-color: #323232;
-    border-radius: 5px;
-    box-shadow: 2px 2px 1px 0 #1f1f1f;
-    color: white;
-}
-
-.vote-visualizer-text  {
-
-}
-
-.vote-visualizer-number {
-    font-size: 80%;
-    background-color: #464646;
-    float: right;
-    padding-left: 5px;
-    padding-right: 5px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border-radius: 2px;
-}
-
-#vote-visualizer-notvoted  {
-    float: bottom;
-}
-
-#liu_id {
-    margin-bottom: 0;
-}
-
-#liuid-submit-button  {
-    height: 133% !important;
-    margin-top: -3px !important;
-}
-
-#registration-list {
-    list-style-type: none;
-    min-height: 0;
-    padding-left: 0;
-    text-align: left;
 }
