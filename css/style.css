@@ -110,6 +110,12 @@ ul {
 
 }
 
+.modal-confirm-remove-users {
+    text-align: center;
+    max-width: 25vw;
+    width: 50%;
+}
+
 .users-container {
     height: 63vh;
     overflow-y: scroll;

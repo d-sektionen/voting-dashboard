@@ -205,28 +205,40 @@ export default class SessionOpener extends React.Component {
                     <Button
                         onClick={this.handleCreateNew.bind(this)}
                         bsStyle="success"
-                        bsSize="large"
                         className="raised"
+                        bsSize="large"
                         block
                     >
                         Generera ny
                     </Button>
-                    <Button onClick={this.handleLoadOld.bind(this)} bsStyle="info" block className="raised">Ladda in
-                        gammal</Button>
+                    <Button
+                        onClick={this.handleLoadOld.bind(this)}
+                        bsStyle="info"
+                        className="raised"
+                        block
+                    >
+                        Ladda in gammal
+                    </Button>
                 </Modal.Body>
         }
 
         let modal;
         if (this.props.closeable) {
             modal =
-                <Modal show={this.props.show} dialogClassName="modal-session-setup"
-                       onHide={this.handleClosing.bind(this)}>
+                <Modal
+                    show={this.props.show}
+                    dialogClassName="modal-session-setup"
+                    onHide={this.handleClosing.bind(this)}
+                >
                     {header}
                     {body}
                 </Modal>
         } else {
             modal =
-                <Modal show={this.props.show} dialogClassName="modal-session-setup">
+                <Modal
+                    show={this.props.show}
+                    dialogClassName="modal-session-setup"
+                >
                     {header}
                     {body}
                 </Modal>
