@@ -1,9 +1,3 @@
-@import url("buttons.css");
-@import url("panel_session.css");
-@import url("panel_users.css");
-@import url("panel_voting.css");
-@import url("qr.css");
-
 .modal-session-setup {
     text-align: center;
     max-width: 25vw;
@@ -71,9 +65,9 @@ ul {
 
 .panel-footer {
     position: absolute;
-    right: 16px;
+    right: 5px;
     bottom: 21px;
-    left: 16px;
+    left: 5px;
     background: #000;
 }
 
