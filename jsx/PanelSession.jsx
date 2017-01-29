@@ -45,7 +45,7 @@ export default class PanelSession extends React.Component {
     handleSubmitOfficialSession(e) {
         e.preventDefault();
 
-        const url = "https://beta.d-sektionen.se/wp-content/themes/d-sektionen_design/includes/" +
+        const url = "https://d-sektionen.se/wp-content/themes/d-sektionen_design/includes/" +
             "voting-add-option.php?auth=" + this.state.superSecretAuth + "&session_id=" + this.props.session_id;
 
         fetch(url, {mode: "no-cors", method: "GET"})
