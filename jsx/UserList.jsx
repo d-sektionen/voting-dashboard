@@ -51,29 +51,16 @@ export default class UserList extends React.Component {
         this.state = {
             users: [],
         };
-    }
 
-    componentDidMount() {
-        this.intervalId = setInterval(this.handleUpdate.bind(this), 3000);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.intervalId);
-    }
-
-    handleUpdate() {
-        const userPromise = this.props.onUpdate();
-
-        userPromise.then(dataJSON => {
-            if (!dataJSON) return;          // Nothing new, don't update.
-            const users = dataJSON.data.users.map(user => [user.liu_id, user.timestamp, user.vote]);
+        this.props.socket.on('user_update', data => {
+            const users = data.users.map(user => [user.liu_id, user.timestamp, user.vote]);
             this.updateList(users);
+            this.props.onNewUserLength(data.users.length);
         });
     }
 
     handleRemove(user) {
         this.props.onRemove(user);
-        this.handleUpdate();
     }
 
     updateList(users) {
@@ -96,9 +83,7 @@ export default class UserList extends React.Component {
 
     render() {
 
-        // How we know a new session was opened, ergo we need to open an eventSource at this
         if (this.props.session_id != this.savedSession) {
-            this.handleUpdate();
             this.savedSession = this.props.session_id;
         }
 

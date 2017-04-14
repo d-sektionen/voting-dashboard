@@ -12,7 +12,6 @@ export default class PanelRegistrations extends React.Component {
 
     constructor(props) {
         super(props);
-        this.hash = "invalidhash";
 
         this.state = {
             userLength: 0,
@@ -38,26 +37,10 @@ export default class PanelRegistrations extends React.Component {
             });
     }
 
-    updateUsers() {
-
-        let url = this.props.baseUrl + "sync?session_id=";
-        url += this.props.session_id;
-        url += "&admin_token=";
-        url += this.props.admin_token;
-        url += "&hash=";
-        url += this.hash;
-        url += "&type=users";
-
-        return fetch(url, {method: "GET"})
-            .then(dataRaw => dataRaw.json())
-            .then(dataJSON => {
-                if (dataJSON.data.status === "already updated") return;
-                this.hash = dataJSON.data.hash;
-                this.setState({
-                    userLength: dataJSON.data.users.length
-                });
-                return dataJSON;        // Data is then returned to UserList call for list-updating.
-            });
+    updateUserLength(length) {
+        this.setState({
+            userLength: length
+        });
     }
 
     removeUserFromSession(liu_id) {
@@ -81,7 +64,6 @@ export default class PanelRegistrations extends React.Component {
         })
     }
 
-    // TODO Confirmation before removal
     handleRemoveAllUsersFromSession() {
 
         const data = {variant: 'all'};
@@ -145,11 +127,12 @@ export default class PanelRegistrations extends React.Component {
                     <div className="users-container">
                         <UserList
                             onRemove={this.removeUserFromSession.bind(this)}
-                            onUpdate={this.updateUsers.bind(this)}
+                            onNewUserLength={this.updateUserLength.bind(this)}
                             baseUrl={this.props.baseUrl}
                             adminHeaders={this.props.adminHeaders}
                             session_id={this.props.session_id}
                             admin_token={this.props.admin_token}
+                            socket={this.props.socket}
                         />
                     </div>
                 </Panel>

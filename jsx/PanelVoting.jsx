@@ -15,12 +15,30 @@ export default class PanelVoting extends React.Component {
         super(props);
 
         this.intervalId = null;
-        this.hash = "invalidhash";
 
         this.state = {
             showVoteConfig: false,
             showVoteCode: false
         };
+
+        this.props.socket.on('vote_update', data => {
+            const newVoteCode = data.vote_code;
+            const newQuestion = data.question;
+            if (newVoteCode !== this.props.vote_code || newQuestion !== this.state.question) {
+                this.handleNewVote(newVoteCode, newQuestion);
+            }
+
+            const votes = data.votes;
+            let alternatives = [];
+
+            for (let key in votes) {
+                alternatives.push([key, votes[key]]);
+            }
+
+            if (alternatives.length > 0) {
+                this.updateVotes(alternatives);
+            }
+        });
     }
 
     handleConfigVote() {
@@ -38,7 +56,7 @@ export default class PanelVoting extends React.Component {
         });
     }
 
-    handleVoteCreaterAbort() {
+    handleVoteCreaterAbort() {
         this.setState({
             showVoteConfig: false
         });
@@ -56,57 +74,12 @@ export default class PanelVoting extends React.Component {
         });
     }
 
-    doRequest() {
-        let url = this.props.baseUrl + "sync?session_id=";
-        url += this.props.session_id;
-        url += "&admin_token=";
-        url += this.props.admin_token;
-        url += "&hash=";
-        url += this.hash;
-        url += "&type=votes";
-
-
-        fetch(url, {method: "GET"})
-            .then(dataRaw => dataRaw.json())
-            .then(dataJSON => {
-
-                    if (dataJSON.data.status === "already updated") return;
-
-                    if (dataJSON.data.vote_code !== this.props.vote_code || dataJSON.data.question !== this.state.question) {
-                        this.handleNewVote(dataJSON.data.vote_code, dataJSON.data.question)
-                    }
-
-                    this.hash = dataJSON.data.hash;
-
-                    const votes = dataJSON.data.votes;
-                    let alternatives = [];
-
-                    for (let key in votes) {
-                        alternatives.push([key, votes[key]]);
-                    }
-
-                    if (alternatives.length > 0) {
-                        this.updateVotes(alternatives);
-                    }
-                }
-            );
-    }
-
     updateVotes(alternatives) {
         this.setState({
             alternatives: alternatives
         });
 
         this.newData = true;
-    }
-
-    componentDidMount() {
-        this.intervalId = setInterval(this.doRequest.bind(this), 3000);
-        this.doRequest();
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.intervalId);
     }
 
     render() {
@@ -141,8 +114,8 @@ export default class PanelVoting extends React.Component {
                     onNewVote={this.handleNewVote.bind(this)}
                     show={this.state.showVoteConfig}
                     onAbort={this.handleVoteCreaterAbort.bind(this)}
-                    session_id = {this.props.session_id}
-                    admin_token = {this.props.admin_token}
+                    session_id={this.props.session_id}
+                    admin_token={this.props.admin_token}
                 />
 
                 <Modal

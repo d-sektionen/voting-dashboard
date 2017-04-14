@@ -28,6 +28,8 @@ class Dashboard extends React.Component {
             vote_code: cookie.load("vote_code"),
             configured: !!cookie.load("session_id")
         };
+
+        this.socket = io.connect(baseUrl);
     }
 
     handleSessionOpened(data) {
@@ -109,6 +111,7 @@ class Dashboard extends React.Component {
                                 baseUrl={baseUrl}
                                 session_id={this.state.session_id}
                                 admin_token={this.state.admin_token}
+                                socket={this.socket}
                             />
                         </Col>
                         <Col xs={12} md={3}>
@@ -117,6 +120,7 @@ class Dashboard extends React.Component {
                                 baseUrl={baseUrl}
                                 session_id={this.state.session_id}
                                 admin_token={this.state.admin_token}
+                                socket={this.socket}
                             />
                         </Col>
                     </Row>
