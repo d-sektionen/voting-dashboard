@@ -23,7 +23,7 @@ class LoadOldSessionForm extends React.Component {
 
         if (!!this.state.sessionId && !!this.state.adminToken) {
             let validP = this.props.onCompleted(this.state.sessionId, this.state.adminToken);
-            validP.then((valid) => {
+            validP.then(valid => {
                 this.setState({valid: valid});
             });
         }
@@ -130,13 +130,12 @@ export default class SessionOpener extends React.Component {
     handleSubmitLoadOld(session_id, admin_token) {
         const validP = this.sendValidateSessionRequest(session_id, admin_token);
 
-        return validP.then((valid) => {
+        return validP.then(valid => {
             if (valid) {
                 this.handleSessionOpened(session_id, admin_token);
-                return true;
-            } else {
-                return false;
             }
+
+            return valid;
         })
     }
 
@@ -156,6 +155,7 @@ export default class SessionOpener extends React.Component {
         this.setState({
             loadingOldSession: false
         });
+
         const data = {session_id: session_id, admin_token: admin_token};
         this.props.onSessionOpened(data);
     }
@@ -166,6 +166,7 @@ export default class SessionOpener extends React.Component {
 
     handleClosing() {
         this.props.onClose();
+
         this.setState({
             loadingOldSession: false
         });

@@ -45,16 +45,12 @@ export default class UserList extends React.Component {
     constructor(props) {
         super(props);
 
-        this.intervalId = null;
-        this.savedSession = null;
-
         this.state = {
             users: [],
         };
 
         this.props.socket.on('user_update', data => {
-            const users = data.users.map(user => [user.liu_id, user.timestamp, user.vote]);
-            this.updateList(users);
+            this.updateList(data.users);
             this.props.onNewUserLength(data.users.length);
         });
     }
@@ -69,7 +65,7 @@ export default class UserList extends React.Component {
         let userList = users.map(user => {
             return (
                 <User
-                    key={user[0]}
+                    key={user.liu_id}
                     user={user}
                     onRemove={this.handleRemove.bind(this)}
                 />
@@ -82,11 +78,6 @@ export default class UserList extends React.Component {
     }
 
     render() {
-
-        if (this.props.session_id != this.savedSession) {
-            this.savedSession = this.props.session_id;
-        }
-
         return (
             <ul>
                 <FlipMove

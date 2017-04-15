@@ -12,8 +12,8 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 const mountNode = document.getElementById('dashboard');
-const baseUrl = "https://d-sektionen.se/api/voting/";
-// const baseUrl = "http://localhost/api/voting/";
+// const baseUrl = "https://d-sektionen.se/api/voting/";
+const baseUrl = "http://localhost/api/voting/";
 
 class Dashboard extends React.Component {
 
@@ -44,6 +44,8 @@ class Dashboard extends React.Component {
         cookie.save('session_id', data.session_id, {path: '/', maxAge: 60 * 60 * 10});
         cookie.save('admin_token', data.admin_token, {path: '/', maxAge: 60 * 60 * 10});
         console.log("Session opened: " + JSON.stringify(data));
+
+        this.socket.emit("session_switch", {session_id: data.session_id, admin_token: data.admin_token});
     }
 
     getAdminHeaders() {

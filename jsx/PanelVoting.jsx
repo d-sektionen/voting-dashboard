@@ -14,8 +14,6 @@ export default class PanelVoting extends React.Component {
     constructor(props) {
         super(props);
 
-        this.intervalId = null;
-
         this.state = {
             showVoteConfig: false,
             showVoteCode: false
