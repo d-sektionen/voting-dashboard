@@ -17,10 +17,15 @@
     z-index: 100;
 }
 
+@media screen and (min-width: 990px){
+    .panel-session-new-button {
+        padding-right: 4vw !important;
+    }
+}
+
 .panel-session-new-button {
     color: white !important;
     width: 100%;
-    padding-right: 17% !important;
     text-align: center !important;
     border-radius: 5px !important;
 }
