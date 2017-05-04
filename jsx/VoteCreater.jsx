@@ -242,7 +242,6 @@ export default class VoteCreater extends React.Component {
                     <p>Varning: Genom att skapa en ny omröstning kommer den befintliga omröstningen tas bort.</p>
                     <text>Klicka <a href={savedVotesUrl}>här</a> om du vill hämta en kopia av den aktuella.</text>
                 </Modal.Header>
-
                 <Modal.Body>
                     <CreateVoteForm
                         onSubmit={this.handleSubmit.bind(this)}
@@ -250,10 +249,8 @@ export default class VoteCreater extends React.Component {
                         adminHeaders={this.props.adminHeaders}
                     />
                 </Modal.Body>
-
             </Modal>
         );
     }
-
 }
 
