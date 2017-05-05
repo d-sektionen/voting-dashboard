@@ -12,8 +12,9 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 const mountNode = document.getElementById('dashboard');
-const baseUrl = "https://d-sektionen.se/api/voting/";
-// const baseUrl = "http://localhost/api/voting/";
+// const baseUrl = "https://d-sektionen.se/api/voting/";
+const baseUrl = "http://localhost/api/voting/";
+const allowedSections = ['d', 'y', 'm', 'i'];
 
 class Dashboard extends React.Component {
 
@@ -26,7 +27,8 @@ class Dashboard extends React.Component {
             session_id: cookie.load("session_id"),
             admin_token: cookie.load("admin_token"),
             vote_code: cookie.load("vote_code"),
-            configured: !!cookie.load("session_id")
+            configured: !!cookie.load("session_id"),
+            section: cookie.load("section")
         };
     }
 
@@ -34,6 +36,7 @@ class Dashboard extends React.Component {
         this.setState({
             session_id: data.session_id,
             admin_token: data.admin_token,
+            section: data.section,
             configured: true,
             vote_code: null
         });
@@ -41,7 +44,7 @@ class Dashboard extends React.Component {
         cookie.remove("vote_code", {path: '/'});
         cookie.save('session_id', data.session_id, {path: '/', maxAge: 60 * 60 * 10});
         cookie.save('admin_token', data.admin_token, {path: '/', maxAge: 60 * 60 * 10});
-        console.log("Session opened: " + JSON.stringify(data));
+        cookie.save('section', data.section, {path: '/', maxAge: 60 * 60 * 10});
     }
 
     getAdminHeaders() {
@@ -82,12 +85,25 @@ class Dashboard extends React.Component {
                     closeable={!!cookie.load("session_id")}                          // Only allow closing if session exists.
                     onClose={this.handleNewSessionButtonCanceled.bind(this)}
                     baseUrl={baseUrl}
+                    allowedSections={allowedSections}
                 />
 
                 <div className="page-header">
                     <h1 style={{marginTop: "15px"}}>Dashboard för D-Cide</h1>
                     <small className="subtitle">Skapat av D-sektionens WebbU 16-17</small>
                 </div>
+
+                <div
+                    style={{
+                        width: "70px",
+                        height: "70px",
+                        position: "absolute",
+                        left: "10px",
+                        top: "10px",
+                        backgroundImage: "url(img/logos/" + this.state.section + "-sek_logo.png)",
+                        backgroundSize: "70px 70px"
+                    }}
+                />
 
                 <Grid fluid={true}>
                     <Row className="show-grid">

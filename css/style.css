@@ -24,18 +24,16 @@ ul {
     color: white;
 }
 
+.session-opener-section-chooser {
+    margin-bottom: 20px;
+}
+
 .panel-header {
     margin-top: 0;
 }
 
 .subtitle {
     color: #939393;
-}
-
-.panel-session-new-button {
-    color: white !important;
-    padding-left: 60px !important;
-    padding-right: 60px !important;
 }
 
 .panel {
@@ -53,10 +51,6 @@ ul {
 
 .col-md-6 {
     padding: 0 5px 0 !important;
-}
-
-.panel-voting {
-
 }
 
 .panel-voting-body {

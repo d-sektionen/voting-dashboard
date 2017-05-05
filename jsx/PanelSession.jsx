@@ -90,7 +90,7 @@ export default class PanelSession extends React.Component {
         const officialSessionButton =
             <Button
                 bsStyle="info"
-                className="raised"
+                className="panel-session-official-button"
                 onClick={this.handleOpenSetOfficialModal.bind(this)}
             >
                 <Glyphicon glyph="cloud"/>
@@ -99,6 +99,7 @@ export default class PanelSession extends React.Component {
         const buttonGroup =
             <ButtonGroup
                 bsSize="large"
+                className="panel-session-button-group"
             >
                 {newSessionButton}{officialSessionButton}
             </ButtonGroup>;

@@ -158,7 +158,7 @@ export default class PanelVoting extends React.Component {
                 </Modal>
 
                 <Panel className="panel panel-voting">
-                    <h2 className="panel-header">Omröstning</h2>
+                    <h2 className="panel-header panel-voting-header">Omröstning</h2>
                     <hr />
 
                     <div className="panel-voting-body">
