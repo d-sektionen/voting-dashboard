@@ -3,6 +3,30 @@
     border-color: transparent !important;
 }
 
+.session-opener-section-chooser {
+    box-shadow: 0 3px 5px 0 #555555;
+    border-radius: 7px;
+    border: none;
+}
+
+.btn-section-chooser.raised {
+    width: 60px;
+    height: 60px;
+    background: no-repeat center;
+    background-size: 50px 50px;
+    filter: grayscale(80%) blur(1px);
+}
+
+.btn-section-chooser.selected {
+	filter: none;
+    border: none;
+}
+
+.btn-section-chooser.raised:active, .btn-section-chooser.raised.active {
+	margin-bottom: -3px;
+	margin-top: 3px;
+}
+
 .btn-primary.raised {
 	box-shadow: 0 3px 0 0 #007299;
 }

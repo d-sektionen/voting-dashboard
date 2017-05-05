@@ -2,6 +2,7 @@ import React from 'react';
 
 import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
+import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
 
@@ -102,7 +103,9 @@ export default class SessionOpener extends React.Component {
 
         this.state = {
             showModal: this.props.show,
-            loadingOldSession: false
+            loadingOldSession: false,
+            noSectionSelected: false,           // Sets to true when a session tries to open with no chosenSelection.
+            chosenSection: null
         };
     }
 
@@ -123,16 +126,16 @@ export default class SessionOpener extends React.Component {
         return fetch(this.props.baseUrl + "session", {method: "GET", headers: headers})
             .then(response => response.json())
             .then(responseJson => {
-                return responseJson.data.status == "valid";
+                return responseJson.data;
             });
     }
 
     handleSubmitLoadOld(session_id, admin_token) {
         const validP = this.sendValidateSessionRequest(session_id, admin_token);
 
-        return validP.then((valid) => {
-            if (valid) {
-                this.handleSessionOpened(session_id, admin_token);
+        return validP.then(data => {
+            if (data.status == "valid") {
+                this.handleSessionOpened(session_id, admin_token, data.section);
                 return true;
             } else {
                 return false;
@@ -145,22 +148,34 @@ export default class SessionOpener extends React.Component {
             "Content-Type": "application/json"
         };
 
-        return fetch(this.props.baseUrl + "session", {method: "POST", headers: headers})
+        const body = JSON.stringify({
+            section: this.state.chosenSection
+        });
+
+        return fetch(this.props.baseUrl + "session", {method: "POST", headers: headers, body: body})
             .then(response => response.json())
             .then(responseJson => {
-                this.handleSessionOpened(responseJson.data.session_id, responseJson.data.admin_token);
+                const data = responseJson.data;
+                this.handleSessionOpened(data.session_id, data.admin_token, data.section);
             });
     }
 
-    handleSessionOpened(session_id, admin_token) {
+    handleSessionOpened(session_id, admin_token, section) {
         this.setState({
             loadingOldSession: false
         });
-        const data = {session_id: session_id, admin_token: admin_token};
+        const data = {session_id: session_id, admin_token: admin_token, section: section};
         this.props.onSessionOpened(data);
     }
 
     handleCreateNew() {
+        if (this.state.chosenSection == null) {
+            this.setState({
+                noSectionSelected: true
+            });
+            return;
+        }
+
         this.sendNewSessionRequest();
     }
 
@@ -172,7 +187,6 @@ export default class SessionOpener extends React.Component {
     }
 
     render() {
-
         const title = "Öppna en Session";
 
         let header;
@@ -188,6 +202,35 @@ export default class SessionOpener extends React.Component {
                 </Modal.Header>
         }
 
+        const noSectionSelectedStyle = {
+            boxShadow: "0 3px 5px 0 red"
+        };
+
+        const sectionChooser = (
+            <ButtonGroup
+                bsSize="large"
+                className="session-opener-section-chooser"
+                style={this.state.noSectionSelected ? noSectionSelectedStyle: null}
+            >
+                {this.props.allowedSections.map(section => {
+                    const selectedSection = section == this.state.chosenSection ? " selected" : "";
+                    return (
+                        <Button
+                            onClick={() => this.setState({
+                                chosenSection: section,
+                                noSectionSelected: false
+                            })}
+                            className={"btn-section-chooser raised" + selectedSection}
+                            style={{
+                                backgroundImage: "url(img/logos/" + section + "-sek_logo.png)",
+                            }}
+                            key={section}
+                        />
+                    );
+                })}
+            </ButtonGroup>
+        );
+
         let body;
         if (this.state.loadingOldSession) {
             body =
@@ -201,7 +244,7 @@ export default class SessionOpener extends React.Component {
                 <Modal.Body>
                     <p>Du kan välja att antingen generera en helt ny Session, eller ladda in en gammal.</p>
                     <hr />
-
+                    {sectionChooser}
                     <Button
                         onClick={this.handleCreateNew.bind(this)}
                         bsStyle="success"
