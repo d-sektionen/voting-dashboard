@@ -213,14 +213,14 @@ export default class SessionOpener extends React.Component {
                 style={this.state.noSectionSelected ? noSectionSelectedStyle: null}
             >
                 {this.props.allowedSections.map(section => {
-                    const selectedSection = section == this.state.chosenSection ? " selected" : "";
+                    const selectedSection = section == this.state.chosenSection ? " selected" : " raised";
                     return (
                         <Button
                             onClick={() => this.setState({
                                 chosenSection: section,
                                 noSectionSelected: false
                             })}
-                            className={"btn-section-chooser raised" + selectedSection}
+                            className={"btn-section-chooser" + selectedSection}
                             style={{
                                 backgroundImage: "url(img/logos/" + section + "-sek_logo.png)",
                             }}

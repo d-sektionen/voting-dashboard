@@ -18,8 +18,20 @@
 }
 
 .btn-section-chooser.selected {
+    width: 60px;
+    height: 60px;
+    background: no-repeat center;
+    background-size: 50px 50px;
 	filter: none;
     border: none;
+}
+
+.btn-section-chooser.selected:active {
+    background-color: white !important;
+}
+
+.btn-section-chooser.selected:focus {
+    background-color: white !important;
 }
 
 .btn-section-chooser.raised:active, .btn-section-chooser.raised.active {
