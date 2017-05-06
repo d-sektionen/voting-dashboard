@@ -91,8 +91,6 @@ class Dashboard extends React.Component {
             />
         );
 
-        console.log(window.innerWidth);
-
         const logo = window.innerWidth > 550 ? logoDiv : null;
 
         return (
