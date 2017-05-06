@@ -222,7 +222,7 @@ export default class SessionOpener extends React.Component {
                             })}
                             className={"btn-section-chooser" + selectedSection}
                             style={{
-                                backgroundImage: "url(img/logos/" + section + "-sek_logo.png)",
+                                backgroundImage: "url(https://d-sektionen.se/downloads/logos/" + section + "-sek_logo.png)",
                             }}
                             key={section}
                         />

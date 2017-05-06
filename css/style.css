@@ -9,6 +9,11 @@ body {
     background-color: #282828 !important;
 }
 
+.modal-session-setup.modal-dialog {
+    min-width: 350px;
+    margin: 10px auto;
+}
+
 #dashboard {
 
 }

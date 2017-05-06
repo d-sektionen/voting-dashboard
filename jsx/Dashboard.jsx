@@ -12,8 +12,8 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 const mountNode = document.getElementById('dashboard');
-const baseUrl = "https://d-sektionen.se/api/voting/";
-// const baseUrl = "http://localhost/api/voting/";
+// const baseUrl = "https://d-sektionen.se/api/voting/";
+const baseUrl = "http://localhost/api/voting/";
 const allowedSections = ['d', 'y', 'm', 'i'];
 
 class Dashboard extends React.Component {
@@ -75,8 +75,26 @@ class Dashboard extends React.Component {
     }
 
     render() {
-
         const newSession = !this.state.configured;
+
+        const logoDiv = (
+            <div
+                style={{
+                        width: "70px",
+                        height: "70px",
+                        position: "absolute",
+                        left: "10px",
+                        top: "10px",
+                        backgroundImage: "url(https://d-sektionen.se/downloads/logos/" + this.state.section + "-sek_logo.png)",
+                        backgroundSize: "70px 70px"
+                    }}
+            />
+        );
+
+        console.log(window.innerWidth);
+
+        const logo = window.innerWidth > 550 ? logoDiv : null;
+
         return (
             <div>
                 <SessionOpener
@@ -93,17 +111,7 @@ class Dashboard extends React.Component {
                     <small className="subtitle">Skapat av D-sektionens WebbU 16-17</small>
                 </div>
 
-                <div
-                    style={{
-                        width: "70px",
-                        height: "70px",
-                        position: "absolute",
-                        left: "10px",
-                        top: "10px",
-                        backgroundImage: "url(img/logos/" + this.state.section + "-sek_logo.png)",
-                        backgroundSize: "70px 70px"
-                    }}
-                />
+                {logo}
 
                 <Grid fluid={true}>
                     <Row className="show-grid">
