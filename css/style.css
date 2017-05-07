@@ -8,6 +8,17 @@
 body {
     background-color: #282828 !important;
 }
+@media screen and (max-width: 990px) {
+    .panel {
+        height: 100% !important;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .section-logo {
+        display: none !important;
+    }
+}
 
 .modal-session-setup.modal-dialog {
     min-width: 350px;

@@ -12,8 +12,8 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 const mountNode = document.getElementById('dashboard');
-const baseUrl = "https://d-sektionen.se/api/voting/";
-// const baseUrl = "http://localhost/api/voting/";
+// const baseUrl = "https://d-sektionen.se/api/voting/";
+const baseUrl = "http://localhost/api/voting/";
 const allowedSections = ['d', 'y', 'm', 'i'];
 
 class Dashboard extends React.Component {
@@ -77,8 +77,9 @@ class Dashboard extends React.Component {
     render() {
         const newSession = !this.state.configured;
 
-        const logoDiv = (
+        const logo = (
             <div
+                className="section-logo"
                 style={{
                         width: "70px",
                         height: "70px",
@@ -90,8 +91,6 @@ class Dashboard extends React.Component {
                     }}
             />
         );
-
-        const logo = window.innerWidth > 550 ? logoDiv : null;
 
         return (
             <div>

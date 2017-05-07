@@ -14,7 +14,7 @@
     height: 60px;
     background: no-repeat center;
     background-size: 50px 50px;
-    filter: grayscale(80%) blur(1px);
+    filter: grayscale(90%);
 }
 
 .btn-section-chooser.selected {
