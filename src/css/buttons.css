@@ -3,6 +3,10 @@
     border-color: transparent !important;
 }
 
+.btn {
+    color: white !important;
+}
+
 .session-opener-section-chooser {
     box-shadow: 0 3px 5px 0 #555555;
     border-radius: 7px;

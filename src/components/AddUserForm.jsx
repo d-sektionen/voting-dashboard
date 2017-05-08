@@ -27,11 +27,11 @@ export default class AddUserForm extends React.Component {
             const status = this.props.onSubmit(this.state.liu_id);
 
             status.then(status => {
-                if (status == "registered") {
+                if (status === "registered") {
                     this.setState({
                         liu_id: ""
                     });
-                } else if (status == "already registered") {                // TODO use this in some sort of tooltip
+                } else if (status === "already registered") {                // TODO use this in some sort of tooltip
                     this.setState({
                         already_registered: true,
                         valid: false

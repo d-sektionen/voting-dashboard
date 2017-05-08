@@ -1,45 +1,25 @@
 {
-  "name": "voting_frontend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "babel-preset-react": "^6.16.0",
-    "babelify": "^7.3.0",
-    "bower": "^1.8.0",
-    "browserify": "^13.1.1",
-    "del": "^2.2.0",
-    "gulp": "^3.9.1",
-    "gulp-browser": "^2.1.4",
-    "gulp-html-replace": "^1.6.2",
-    "gulp-size": "^2.1.0",
-    "gulp-streamify": "^1.0.2",
-    "gulp-uglify": "^2.0.0",
-    "react-hot-loader": "^1.3.1",
-    "reactify": "^1.1.1",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.8.0"
-  },
+  "name": "d-sektionen_voting",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0",
-    "react": "^15.4.1",
-    "react-bootstrap": "^0.30.7",
-    "react-cookie": "^1.0.4",
-    "react-dom": "^15.4.1",
-    "react-flip-move": "^2.7.2",
-    "react-modal": "^1.6.1",
-    "react-native-event-source": "^1.0.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
     "react-simple-pie-chart": "^0.4.0",
     "socket.io-client": "^1.7.3",
-    "socket.io-react": "^1.1.2"
+    "socket.io-react": "^1.1.2",
+    "react-flip-move": "^2.7.2",
+    "react-modal": "^1.6.1",
+    "react-bootstrap": "^0.31.0",
+    "react-cookie": "^1.0.4"
   },
-  "ecmaFeatures": {
-    "modules": true
+  "devDependencies": {
+    "react-scripts": "0.9.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   }
 }

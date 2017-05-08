@@ -1,25 +1,33 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import cookie from 'react-cookie';
 
-import PanelSession from './PanelSession.jsx';
-import PanelVoting from './PanelVoting.jsx';
-import PanelRegistrations from './PanelRegistrations.jsx';
-import SessionOpener from './SessionOpener.jsx';
+import PanelSession from './components/PanelSession';
+import PanelVoting from './components/PanelVoting';
+import PanelRegistrations from './components/PanelRegistrations';
+import SessionOpener from './components/SessionOpener';
 
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-const mountNode = document.getElementById('dashboard');
-const baseUrl = "https://d-sektionen.se/api/voting/";
-// const baseUrl = "http://localhost/api/voting/";
+import './css/buttons.css';
+import './css/index.css';
+import './css/panel_session.css';
+import './css/panel_users.css';
+import './css/panel_voting.css';
+import './css/qr.css';
+import './css/style.css'
+
+import config from './config.json';
+// const config = {baseUrl: "http://localhost/api/voting/"};
+
+const baseUrl = config.baseUrl;
 const allowedSections = ['d', 'y', 'm', 'i'];
 
-class Dashboard extends React.Component {
+
+export default class Dashboard extends React.Component {
 
     constructor(props) {
-
         super(props);
 
         this.state = {
@@ -146,5 +154,3 @@ class Dashboard extends React.Component {
         );
     }
 }
-
-ReactDOM.render(<Dashboard/>, mountNode);

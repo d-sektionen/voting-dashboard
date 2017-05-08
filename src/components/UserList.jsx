@@ -97,7 +97,7 @@ export default class UserList extends React.Component {
     render() {
 
         // How we know a new session was opened, ergo we need to open an eventSource at this
-        if (this.props.session_id != this.savedSession) {
+        if (this.props.session_id !== this.savedSession) {
             this.handleUpdate();
             this.savedSession = this.props.session_id;
         }

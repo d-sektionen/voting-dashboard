@@ -97,7 +97,7 @@ class CreateVoteForm extends React.Component {
         let toSet;
 
         for (let i in newOptions) {
-            if (newOptions[i].id == id) {
+            if (newOptions[i].id === id) {
                 toSet = i;
             }
         }
@@ -209,10 +209,6 @@ class CreateVoteForm extends React.Component {
 
 
 export default class VoteCreater extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     handleSubmit(vote_code, question, alternatives) {
         this.props.onNewVote(vote_code, question);

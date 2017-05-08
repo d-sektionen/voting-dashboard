@@ -7,6 +7,7 @@
 
 body {
     background-color: #282828 !important;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 @media screen and (max-width: 990px) {
     .panel {
@@ -78,7 +79,7 @@ ul {
     right: 5px;
     bottom: 21px;
     left: 5px;
-    background: #000;
+    background: #f4f4f4 !important;
 }
 
 .p {

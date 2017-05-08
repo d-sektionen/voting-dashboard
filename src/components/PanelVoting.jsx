@@ -5,8 +5,8 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-bootstrap/lib/Modal';
 
-import VoteCreater from './VoteCreater.jsx';
-import VoteVisualizer from './VoteVisualizer.jsx';
+import VoteCreater from './VoteCreater';
+import VoteVisualizer from './VoteVisualizer';
 
 
 export default class PanelVoting extends React.Component {
@@ -141,8 +141,8 @@ export default class PanelVoting extends React.Component {
                     onNewVote={this.handleNewVote.bind(this)}
                     show={this.state.showVoteConfig}
                     onAbort={this.handleVoteCreaterAbort.bind(this)}
-                    session_id = {this.props.session_id}
-                    admin_token = {this.props.admin_token}
+                    session_id={this.props.session_id}
+                    admin_token={this.props.admin_token}
                 />
 
                 <Modal

@@ -54,6 +54,13 @@
     margin-bottom: 14px;
 }
 
+.button-remove-users {
+    float: right;
+    margin-right: 8px;
+    margin-top: -3px;
+    margin-bottom: 14px;
+}
+
 .users-item-text  {
 
 }

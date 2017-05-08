@@ -10,10 +10,10 @@ export default class VoteVisualizer extends React.Component {
 
     static getNoVotes(altCopy) {
 
-        if (altCopy.length == 0) return null;
+        if (altCopy.length === 0) return null;
 
         for (let i in altCopy) {
-            if (altCopy[i][0] == "not_voted") {
+            if (altCopy[i][0] === "not_voted") {
                 return altCopy.splice(i, 1)[0][1]
             }
         }
@@ -67,6 +67,8 @@ export default class VoteVisualizer extends React.Component {
                 green = p;
                 blue = q;
                 break;
+            default:
+                break;
         }
 
         return ("#" +
@@ -91,7 +93,7 @@ export default class VoteVisualizer extends React.Component {
             const distCCW = (c1.h >= c2.h) ? c1.h - c2.h : 1 + c1.h - c2.h;
             const distCW = (c1.h >= c2.h) ? 1 + c2.h - c1.h : c2.h - c1.h;
             // ensure we get the right number of steps by adding remainder to final part
-            if (col == parts - 1) partSteps += remainder;
+            if (col === parts - 1) partSteps += remainder;
 
             // make gradient for this part
             for (let step = 0; step < partSteps; step++) {
@@ -99,7 +101,7 @@ export default class VoteVisualizer extends React.Component {
                 // interpolate h, s, b
                 let h = (distCW <= distCCW) ? c1.h + (distCW * p) : c1.h - (distCCW * p);
                 if (h < 0) h = 1 + h;
-                if (h > 1) h = h - 1;
+                if (h > 1) h--;
                 const s = (1 - p) * c1.s + p * c2.s;
                 const b = (1 - p) * c1.b + p * c2.b;
                 // add to gradient array

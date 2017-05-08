@@ -134,7 +134,7 @@ export default class SessionOpener extends React.Component {
         const validP = this.sendValidateSessionRequest(session_id, admin_token);
 
         return validP.then(data => {
-            if (data.status == "valid") {
+            if (data.status === "valid") {
                 this.handleSessionOpened(session_id, admin_token, data.section);
                 return true;
             } else {
@@ -169,7 +169,7 @@ export default class SessionOpener extends React.Component {
     }
 
     handleCreateNew() {
-        if (this.state.chosenSection == null) {
+        if (this.state.chosenSection === null) {
             this.setState({
                 noSectionSelected: true
             });
@@ -213,7 +213,7 @@ export default class SessionOpener extends React.Component {
                 style={this.state.noSectionSelected ? noSectionSelectedStyle: null}
             >
                 {this.props.allowedSections.map(section => {
-                    const selectedSection = section == this.state.chosenSection ? " selected" : " raised";
+                    const selectedSection = section === this.state.chosenSection ? " selected" : " raised";
                     return (
                         <Button
                             onClick={() => this.setState({

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import AddUserForm from './AddUserForm.jsx';
-import UserList from './UserList.jsx';
+import AddUserForm from './AddUserForm';
+import UserList from './UserList';
 
 import Panel from 'react-bootstrap/lib/Panel';
 import Button from 'react-bootstrap/lib/Button';
@@ -137,10 +137,13 @@ export default class PanelRegistrations extends React.Component {
                 <Panel className="panel panel-registrations" footer={addUser}>
                     <h2 className="panel-header">{registeredText}
                         <Button
-                            className="raised users-item-button"
+                            className="raised button-remove-users"
                             bsStyle="danger"
-                            onClick={this.handleOpenRemoveUsersModal.bind(this)}><Glyphicon
-                            glyph="trash"/></Button></h2>
+                            onClick={this.handleOpenRemoveUsersModal.bind(this)}
+                        >
+                            <Glyphicon glyph="trash"/>
+                        </Button>
+                    </h2>
                     <hr />
                     <div className="users-container">
                         <UserList
