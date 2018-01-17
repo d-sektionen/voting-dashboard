@@ -30,10 +30,10 @@ module.exports = {
       path.resolve('./node_modules'),
     ],
   },
-  // Moduler, körs när koden söks igenom
-  // Här kollar vi vilka filer som laddas in med ett regex-test
-  // sedan gör vi någon transformation på den filen,
-  // tex kompilera alla JS-filer med babel
+  // Moduler, körs när koden söks igenom.
+  // Här kollar vi vilka filer som laddas in med ett regex-test,
+  // sedan gör vi någon transformation på den filen.
+  // Tex att kompilera alla JS-filer med babel
   module: {
     loaders: [
       // För JSX (react) och ES6 som kompileras ner till ES5.

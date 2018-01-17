@@ -28,8 +28,8 @@ export default class PanelVoting extends React.Component {
     })
   }
 
-  handleNewVote(vote_code, question) {
-    this.props.onNewVote(vote_code)
+  handleNewVote(voteCode, question) {
+    this.props.onNewVote(voteCode)
 
     this.setState({
       showVoteConfig: false,
