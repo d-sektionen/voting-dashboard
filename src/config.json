@@ -1,0 +1,4 @@
+{
+  "allowedSections": ["d", "y", "m", "i"],
+  "apiURL": "http://localhost:8000"
+}

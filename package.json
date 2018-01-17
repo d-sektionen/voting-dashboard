@@ -14,10 +14,11 @@
     "clean": "rm -r node_modules && rm package-lock.json"
   },
   "dependencies": {
+    "materialize-css": "^1.0.0-alpha.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-simple-pie-chart": "^0.5.0",
-    "react-flip-move": "^3.0.0"
+    "react-flip-move": "^3.0.0",
+    "react-simple-pie-chart": "^0.5.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.37",

@@ -3,19 +3,14 @@ import React from 'react'
 import AddUserForm from 'components/AddUserForm'
 import UserList from 'components/UserList'
 
-import Panel from 'react-bootstrap/lib/Panel'
-import Button from 'react-bootstrap/lib/Button'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import Modal from 'react-bootstrap/lib/Modal'
 
-export default class PanelRegistrations extends React.Component {
+export default class UserRegistration extends React.Component {
   constructor(props) {
     super(props)
     this.hash = 'invalidhash'
 
     this.state = {
-      userLength: 0,
-      showRemoveUsersModal: false,
+      users: [],
     }
   }
 

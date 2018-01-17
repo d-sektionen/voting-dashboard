@@ -2,7 +2,7 @@ Frontend för D-sektionens röstningssystem.
 
 https://d-sektionen.se/voting
 
-# Local utveckling
+# Lokal utveckling
 
 ## Quick start
 Installera senaste versionen av [node.js](https://nodejs.org/en/)
