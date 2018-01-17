@@ -37,7 +37,7 @@ export default class Dashboard extends React.Component {
       admin_token: get('admin_token'),
       voteCode: get('voteCode'),
       configured: get('session_id', false),
-      section: get('section'),
+      section: get('section', 'd'),
     }
   }
 
@@ -68,9 +68,7 @@ export default class Dashboard extends React.Component {
 
   handleNewVote(voteCode) {
     if (voteCode) { // We can also call this when the vote-creation was canceled (i.e. no voteCode)
-      this.setState({
-        voteCode,
-      })
+      this.setState({ voteCode })
       store('voteCode', voteCode, { path: '/', maxAge: 60 * 60 * 10 })
     }
   }
@@ -85,40 +83,26 @@ export default class Dashboard extends React.Component {
 
   render() {
     const newSession = !this.state.configured
-
-    const logo = (
-      <div
-        className='section-logo'
-        style={{
-          width: '70px',
-          height: '70px',
-          position: 'absolute',
-          left: '10px',
-          top: '10px',
-          backgroundImage: `url(https://d-sektionen.se/downloads/logos/${this.state.section}-sek_logo.png)`,
-          backgroundSize: '70px 70px',
-        }}
-      />
-    )
+    console.log(`images/section/${this.state.section}.png`)
 
     return (
-      <div />
-      // <div>
-      //   <SessionOpener
-      //     onSessionOpened={this.handleSessionOpened.bind(this)}
-      //     show={newSession}
-      //     closeable={get('session_id', false)} // Only allow closing if session exists.
-      //     onClose={this.handleNewSessionButtonCanceled.bind(this)}
-      //     baseUrl={baseUrl}
-      //     allowedSections={allowedSections}
-      //   />
+      <div>
+        {/* <SessionOpener
+          onSessionOpened={this.handleSessionOpened.bind(this)}
+          show={newSession}
+          closeable={get('session_id', false)} // Only allow closing if session exists.
+          onClose={this.handleNewSessionButtonCanceled.bind(this)}
+          baseUrl={baseUrl}
+          allowedSections={allowedSections}
+        /> */}
 
-      //   <div className='page-header'>
-      //     <h1 style={{ marginTop: '15px' }}>Dashboard för D-Cide</h1>
-      //     <small className='subtitle'>Skapat av D-sektionens WebbU 16-17</small>
-      //   </div>
+        <div className='page-header'>
+          <h1 style={{ marginTop: '15px' }}>Dashboard för D-Cide</h1>
+          <small className='subtitle'>Skapat av D-sektionens WebbU 16-17</small>
+        </div>
+        <div className='section-logo' style={{ backgroundImage: `url(images/section/${this.state.section}.png)` }} />
 
-      //   {logo}
+        {/*
 
       //   <Grid fluid>
       //     <Row className='show-grid'>
@@ -151,8 +135,8 @@ export default class Dashboard extends React.Component {
       //         />
       //       </Col>
       //     </Row>
-      //   </Grid>
-      // </div>
+      //   </Grid> */}
+      </div>
     )
   }
 }
