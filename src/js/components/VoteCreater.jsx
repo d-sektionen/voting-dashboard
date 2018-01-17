@@ -1,252 +1,249 @@
-import React from 'react';
-import FlipMove from 'react-flip-move';
+import React from 'react'
+import FlipMove from 'react-flip-move'
 
-import Modal from 'react-bootstrap/lib/Modal';
-import FormGroup from 'react-bootstrap/lib/FormGroup';
-import InputGroup from 'react-bootstrap/lib/InputGroup';
-import FormControl from 'react-bootstrap/lib/FormControl';
-import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
-import Button from 'react-bootstrap/lib/Button';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Modal from 'react-bootstrap/lib/Modal'
+import FormGroup from 'react-bootstrap/lib/FormGroup'
+import InputGroup from 'react-bootstrap/lib/InputGroup'
+import FormControl from 'react-bootstrap/lib/FormControl'
+import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar'
+import Button from 'react-bootstrap/lib/Button'
+import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 
 
 class VoteOption extends React.Component {
+  constructor(props) {
+    super(props)
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            text: "",
-            valid: true
-        };
+    this.state = {
+      text: '',
+      valid: true,
     }
+  }
 
-    handleChange(e) {
-        this.setState({
-            text: e.target.value,
-            valid: !!e.target.value
-        });
+  handleChange(e) {
+    this.setState({
+      text: e.target.value,
+      valid: !!e.target.value,
+    })
 
-        this.props.onChange(e, this.props.uniqueId);
-    }
+    this.props.onChange(e, this.props.uniqueId)
+  }
 
-    handleRemove() {
-        this.props.onRemove(this.props.uniqueId);
-    }
+  handleRemove() {
+    this.props.onRemove(this.props.uniqueId)
+  }
 
-    render() {
+  render() {
+    let content
 
-        let content;
-
-        if (this.props.removeable) {
-            content = <InputGroup>
-                <FormControl
-                    type="text"
-                    value={this.state.text}
-                    placeholder={this.props.placeholder}
-                    onChange={this.handleChange.bind(this)}
-                />
-                <InputGroup.Button>
-                    <Button
-                        type="button"
-                        id="voteform-remove-button"
-                        bsStyle="danger"
-                        onClick={this.handleRemove.bind(this)}
-                    ><Glyphicon glyph="minus"/>
-                    </Button>
-                </InputGroup.Button>
-            </InputGroup>;
-        } else {
-            content = <FormControl
-                type="text"
-                value={this.state.text}
-                placeholder={this.props.placeholder}
-                onChange={this.handleChange.bind(this)}
-            />;
-        }
-        return (
-            <FormGroup
-                controlId={this.props.controlId}
-                validationState={this.state.valid ? null : "error"}
+    if (this.props.removeable) {
+      content = (
+        <InputGroup>
+          <FormControl
+            type='text'
+            value={this.state.text}
+            placeholder={this.props.placeholder}
+            onChange={this.handleChange.bind(this)}
+          />
+          <InputGroup.Button>
+            <Button
+              type='button'
+              id='voteform-remove-button'
+              bsStyle='danger'
+              onClick={this.handleRemove.bind(this)}
             >
-                {content}
-            </FormGroup>
-        );
+              <Glyphicon glyph='minus' />
+            </Button>
+          </InputGroup.Button>
+        </InputGroup>
+      )
+    } else {
+      content = (<FormControl
+        type='text'
+        value={this.state.text}
+        placeholder={this.props.placeholder}
+        onChange={this.handleChange.bind(this)}
+      />)
     }
+    return (
+      <FormGroup
+        controlId={this.props.controlId}
+        validationState={this.state.valid ? null : 'error'}
+      >
+        {content}
+      </FormGroup>
+    )
+  }
 }
 
 
 class CreateVoteForm extends React.Component {
+  constructor(props) {
+    super(props)
 
-    constructor(props) {
-        super(props);
+    const newOptions = []
 
-        let newOptions = [];
-
-        for (let i in [1, 2]) {
-            newOptions.push({text: "", id: Date.now() - i * 100});       // Special case as their keys need to be unique.
-        }
-
-        this.state = {
-            options: newOptions
-        };
+    for (const i in [1, 2]) {
+      newOptions.push({ text: '', id: Date.now() - i * 100 }) // Special case as their keys need to be unique.
     }
 
-    handleChange(e, id) {
-        let newOptions = this.state.options;
-        let toSet;
+    this.state = {
+      options: newOptions,
+    }
+  }
 
-        for (let i in newOptions) {
-            if (newOptions[i].id === id) {
-                toSet = i;
-            }
-        }
+  handleChange(e, id) {
+    const newOptions = this.state.options
+    let toSet
 
-        newOptions[toSet].text = e.target.value;
-
-        this.setState({
-            options: newOptions
-        });
+    for (const i in newOptions) {
+      if (newOptions[i].id === id) {
+        toSet = i
+      }
     }
 
-    handleNewOption() {
-        let newOptions = this.state.options.slice();
-        newOptions.push({text: "", id: Date.now()});
+    newOptions[toSet].text = e.target.value
 
-        this.setState({
-            options: newOptions
-        });
+    this.setState({
+      options: newOptions,
+    })
+  }
+
+  handleNewOption() {
+    const newOptions = this.state.options.slice()
+    newOptions.push({ text: '', id: Date.now() })
+
+    this.setState({
+      options: newOptions,
+    })
+  }
+
+  handleRemoveOption(id) {
+    const newOptions = this.state.options
+    let toRemove
+
+    for (const i in newOptions) { // Ugly method in order to find which alternative we are looking for
+      if (newOptions[i].id === id) {
+        toRemove = i
+      }
     }
 
-    handleRemoveOption(id) {
-        let newOptions = this.state.options;
-        let toRemove;
+    newOptions.splice(toRemove, 1)
 
-        for (let i in newOptions) {                 // Ugly method in order to find which alternative we are looking for
-            if (newOptions[i].id === id) {
-                toRemove = i;
-            }
-        }
+    this.setState({
+      options: newOptions,
+    })
+  }
 
-        newOptions.splice(toRemove, 1);
+  handleSubmit(e) {
+    e.preventDefault()
+    const optionTexts = this.state.options.map(option => option.text) // Returns an easy-to-read
 
-        this.setState({
-            options: newOptions
-        });
+    for (const i in optionTexts) {
+      if (!optionTexts[i]) {
+        return // If any option unfilled, return.
+      }
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
-        const optionTexts = this.state.options.map(option => option.text);      // Returns an easy-to-read
+    const newQuestion = optionTexts.splice(0, 1)[0]
+    const data = { question: newQuestion, alternatives: optionTexts }
 
-        for (let i in optionTexts) {
-            if (!optionTexts[i]) {
-                return;                                 // If any option unfilled, return.
-            }
-        }
+    fetch(
+      `${this.props.baseUrl}vote`,
+      { method: 'POST', headers: this.props.adminHeaders, body: JSON.stringify(data) }
+    )
+      .then(response => response.json())
+      .then(responseJSON => {
+        this.props.onSubmit(responseJSON.data.vote_code, responseJSON.data.question, responseJSON.data.alternatives)
+      })
+  }
 
-        const newQuestion = optionTexts.splice(0, 1)[0];
-        const data = {question: newQuestion, alternatives: optionTexts};
+  render() {
+    const options = this.state.options.map((option, index) => (
+      <VoteOption
+        controlId={index ? (`alt${index}`) : 'question'}
+        placeholder={index ? (`Alternativ ${index}`) : 'Fråga'}
+        removeable={index > 1}
+        onRemove={this.handleRemoveOption.bind(this)}
+        onChange={this.handleChange.bind(this)}
+        uniqueId={option.id}
+        key={option.id}
+      />
+    ))
 
-        fetch(this.props.baseUrl + "vote",
-            {method: "POST", headers: this.props.adminHeaders, body: JSON.stringify(data)})
-            .then(response => response.json())
-            .then(responseJSON => {
-                this.props.onSubmit(responseJSON.data.vote_code, responseJSON.data.question, responseJSON.data.alternatives);
-            });
-    }
+    return (
+      <form>
+        <FlipMove
+          duration={150}
+          enterAnimation='accordionHorizontal'
+          leaveAnimation='accordionHorizontal'
+          easing='ease-in'
+        >
+          {options}
+          <ButtonToolbar>
+            <Button
+              onClick={this.handleNewOption.bind(this)}
+              bsStyle='success'
+              type='button'
+              className='raised'
+            >
+              <Glyphicon glyph='plus' /> Nytt alternativ
+            </Button>
+            <Button
+              style={{ float: 'right' }}
+              onClick={this.handleSubmit.bind(this)}
+              bsStyle='success'
+              type='submit'
+              className='raised'
+            >
+              <Glyphicon glyph='ok' /> Sätt omröstning
+            </Button>
+          </ButtonToolbar>
 
-    render() {
-
-        const options = this.state.options.map((option, index) => {
-            return (
-                <VoteOption
-                    controlId={index ? ("alt" + index) : "question"}
-                    placeholder={index ? ("Alternativ " + index) : "Fråga"}
-                    removeable={index > 1}
-                    onRemove={this.handleRemoveOption.bind(this)}
-                    onChange={this.handleChange.bind(this)}
-                    uniqueId={option.id}
-                    key={option.id}
-                />
-            );
-        });
-
-        return (
-            <form>
-                <FlipMove
-                    duration={150}
-                    enterAnimation="accordionHorizontal"
-                    leaveAnimation="accordionHorizontal"
-                    easing="ease-in"
-                >
-                    {options}
-                    <ButtonToolbar>
-                        <Button
-                            onClick={this.handleNewOption.bind(this)}
-                            bsStyle="success"
-                            type="button"
-                            className="raised"
-                        >
-                            <Glyphicon glyph="plus"/> Nytt alternativ
-                        </Button>
-                        <Button
-                            style={{float: "right"}}
-                            onClick={this.handleSubmit.bind(this)}
-                            bsStyle="success"
-                            type="submit"
-                            className="raised"
-                        >
-                            <Glyphicon glyph="ok"/> Sätt omröstning
-                        </Button>
-                    </ButtonToolbar>
-
-                </FlipMove>
-            </form>
-        );
-    }
+        </FlipMove>
+      </form>
+    )
+  }
 }
 
 
 export default class VoteCreater extends React.Component {
+  handleSubmit(vote_code, question, alternatives) {
+    this.props.onNewVote(vote_code, question)
+  }
 
-    handleSubmit(vote_code, question, alternatives) {
-        this.props.onNewVote(vote_code, question);
-    }
+  handleClosing() {
+    this.props.onAbort()
+  }
 
-    handleClosing() {
-        this.props.onAbort();
-    }
+  render() {
+    let savedVotesUrl = `${this.props.baseUrl}votesaver`
+    savedVotesUrl += `?session_id=${this.props.session_id}`
+    savedVotesUrl += `&admin_token=${this.props.admin_token}`
 
-    render() {
-
-        let savedVotesUrl = this.props.baseUrl + "votesaver";
-        savedVotesUrl += "?session_id=" + this.props.session_id;
-        savedVotesUrl += "&admin_token=" + this.props.admin_token;
-
-        return (
-            <Modal
-                show={this.props.show}
-                onHide={this.handleClosing.bind(this)}
-                className="vote-creater-modal"
-            >
-                <Modal.Header
-                    style={{textAlign: "center"}}
-                    closeButton
-                >
-                    <Modal.Title>Skapa en ny omröstning</Modal.Title>
-                    <p>Varning: Genom att skapa en ny omröstning kommer den befintliga omröstningen tas bort.</p>
-                    <text>Klicka <a href={savedVotesUrl}>här</a> om du vill hämta en kopia av den aktuella.</text>
-                </Modal.Header>
-                <Modal.Body>
-                    <CreateVoteForm
-                        onSubmit={this.handleSubmit.bind(this)}
-                        baseUrl={this.props.baseUrl}
-                        adminHeaders={this.props.adminHeaders}
-                    />
-                </Modal.Body>
-            </Modal>
-        );
-    }
+    return (
+      <Modal
+        show={this.props.show}
+        onHide={this.handleClosing.bind(this)}
+        className='vote-creater-modal'
+      >
+        <Modal.Header
+          style={{ textAlign: 'center' }}
+          closeButton
+        >
+          <Modal.Title>Skapa en ny omröstning</Modal.Title>
+          <p>Varning: Genom att skapa en ny omröstning kommer den befintliga omröstningen tas bort.</p>
+          <text>Klicka <a href={savedVotesUrl}>här</a> om du vill hämta en kopia av den aktuella.</text>
+        </Modal.Header>
+        <Modal.Body>
+          <CreateVoteForm
+            onSubmit={this.handleSubmit.bind(this)}
+            baseUrl={this.props.baseUrl}
+            adminHeaders={this.props.adminHeaders}
+          />
+        </Modal.Body>
+      </Modal>
+    )
+  }
 }
 
