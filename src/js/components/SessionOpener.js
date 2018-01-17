@@ -6,7 +6,6 @@ import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
 
-
 class LoadOldSessionForm extends React.Component {
   constructor(props) {
     super(props)
@@ -188,12 +187,12 @@ export default class SessionOpener extends React.Component {
       header =
               (<Modal.Header closeButton>
                 <Modal.Title>{title}</Modal.Title>
-              </Modal.Header>)
+               </Modal.Header>)
     } else {
       header =
               (<Modal.Header>
                 <Modal.Title>{title}</Modal.Title>
-               </Modal.Header>)
+              </Modal.Header>)
     }
 
     const noSectionSelectedStyle = {
@@ -233,7 +232,7 @@ export default class SessionOpener extends React.Component {
                   onCompleted={this.handleSubmitLoadOld.bind(this)}
                   onBack={this.handleLoadOld.bind(this)}
                 />
-               </Modal.Body>)
+              </Modal.Body>)
     } else {
       body =
               (<Modal.Body>
@@ -257,7 +256,7 @@ export default class SessionOpener extends React.Component {
                 >
                         Ladda in gammal
                 </Button>
-               </Modal.Body>)
+              </Modal.Body>)
     }
 
     let modal
@@ -270,7 +269,7 @@ export default class SessionOpener extends React.Component {
               >
                 {header}
                 {body}
-              </Modal>)
+               </Modal>)
     } else {
       modal =
               (<Modal
@@ -279,7 +278,7 @@ export default class SessionOpener extends React.Component {
               >
                 {header}
                 {body}
-               </Modal>)
+              </Modal>)
     }
 
     return (

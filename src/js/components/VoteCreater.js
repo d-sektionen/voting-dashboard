@@ -246,4 +246,3 @@ export default class VoteCreater extends React.Component {
     )
   }
 }
-

@@ -4,7 +4,6 @@ import FlipMove from 'react-flip-move'
 import Button from 'react-bootstrap/lib/Button'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 
-
 class User extends React.Component {
   constructor(props) {
     super(props)

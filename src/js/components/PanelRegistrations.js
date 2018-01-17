@@ -1,7 +1,7 @@
 import React from 'react'
 
-import AddUserForm from './AddUserForm'
-import UserList from './UserList'
+import AddUserForm from 'components/AddUserForm'
+import UserList from 'components/UserList'
 
 import Panel from 'react-bootstrap/lib/Panel'
 import Button from 'react-bootstrap/lib/Button'
@@ -19,17 +19,17 @@ export default class PanelRegistrations extends React.Component {
     }
   }
 
-  handleNewUserAdded(liu_id) {
-    return this.addUserToSession(liu_id)
+  handleNewUserAdded(liuID) {
+    return this.addUserToSession(liuID)
   }
 
-  addUserToSession(liu_id) {
+  addUserToSession(liuID) {
     const data = {
-      id: liu_id,
+      id: liuID,
     }
 
     return fetch(
-      `${this.props.baseUrl }registration`,
+      `${this.props.baseUrl}registration`,
       { method: 'POST', headers: this.props.adminHeaders, body: JSON.stringify(data) }
     )
       .then(response => response.json())
@@ -57,8 +57,8 @@ export default class PanelRegistrations extends React.Component {
       })
   }
 
-  removeUserFromSession(liu_id) {
-    const data = { id: liu_id, variant: 'single' }
+  removeUserFromSession(liuID) {
+    const data = { id: liuID, variant: 'single' }
 
     fetch(
       `${this.props.baseUrl}registration`,
@@ -93,67 +93,67 @@ export default class PanelRegistrations extends React.Component {
   render() {
     const addUser = <AddUserForm onSubmit={this.handleNewUserAdded.bind(this)} />
 
-    const registeredText = `Registrerade${  this.state.userLength > 0 ? (' [' + this.state.userLength + ']') : ''}`
+    const registeredText = `Registrerade${this.state.userLength > 0 ? (` [${this.state.userLength}]`) : ''}`
 
     return (
-          <div>
-            <Modal
-                show={this.state.showRemoveUsersModal}
-                onHide={this.handleHideRemoveUsersModal.bind(this)}
-                dialogClassName='modal-session-setup'
-              >
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                            Radera alla registrerade användare
-                      </Modal.Title>
-                  </Modal.Header>
+      <div>
+        <Modal
+          show={this.state.showRemoveUsersModal}
+          onHide={this.handleHideRemoveUsersModal.bind(this)}
+          dialogClassName='modal-session-setup'
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              Radera alla registrerade användare
+            </Modal.Title>
+          </Modal.Header>
 
-                <Modal.Body>
-                    <p>Vill du fortsätta?</p>
-                    <hr />
+          <Modal.Body>
+            <p>Vill du fortsätta?</p>
+            <hr />
 
-                    <Button
-                        className='raised'
-                        bsStyle='danger'
-                        bsSize='large'
-                        block
-                        onClick={this.handleRemoveAllUsersFromSession.bind(this)}
-                      >
+            <Button
+              className='raised'
+              bsStyle='danger'
+              bsSize='large'
+              block
+              onClick={this.handleRemoveAllUsersFromSession.bind(this)}
+            >
                             Radera alla
-                      </Button>
-                    <Button
-                        className='raised'
-                        bsStyle='info'
-                        block
-                        onClick={this.handleHideRemoveUsersModal.bind(this)}
-                      >
+            </Button>
+            <Button
+              className='raised'
+              bsStyle='info'
+              block
+              onClick={this.handleHideRemoveUsersModal.bind(this)}
+            >
                             NEVERMIND
-                      </Button>
-                  </Modal.Body>
-              </Modal>
-            <Panel className='panel panel-registrations' footer={addUser}>
-                <h2 className='panel-header'>{registeredText}
-                    <Button
-                        className='raised button-remove-users'
-                        bsStyle='danger'
-                        onClick={this.handleOpenRemoveUsersModal.bind(this)}
-                      >
-                        <Glyphicon glyph='trash' />
-                      </Button>
-                  </h2>
-                <hr />
-                <div className='users-container'>
-                    <UserList
-                        onRemove={this.removeUserFromSession.bind(this)}
-                        onUpdate={this.updateUsers.bind(this)}
-                        baseUrl={this.props.baseUrl}
-                        adminHeaders={this.props.adminHeaders}
-                        session_id={this.props.session_id}
-                        admin_token={this.props.admin_token}
-                      />
-                  </div>
-              </Panel>
+            </Button>
+          </Modal.Body>
+        </Modal>
+        <Panel className='panel panel-registrations' footer={addUser}>
+          <h2 className='panel-header'>{registeredText}
+            <Button
+              className='raised button-remove-users'
+              bsStyle='danger'
+              onClick={this.handleOpenRemoveUsersModal.bind(this)}
+            >
+              <Glyphicon glyph='trash' />
+            </Button>
+          </h2>
+          <hr />
+          <div className='users-container'>
+            <UserList
+              onRemove={this.removeUserFromSession.bind(this)}
+              onUpdate={this.updateUsers.bind(this)}
+              baseUrl={this.props.baseUrl}
+              adminHeaders={this.props.adminHeaders}
+              session_id={this.props.session_id}
+              admin_token={this.props.admin_token}
+            />
           </div>
+        </Panel>
+      </div>
     )
   }
 }

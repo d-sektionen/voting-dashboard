@@ -1,6 +1,6 @@
 import React from 'react'
-import Image from 'react-bootstrap/lib/Image'
 
+import Image from 'react-bootstrap/lib/Image'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import Modal from 'react-bootstrap/lib/Modal'
 

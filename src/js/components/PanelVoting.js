@@ -5,8 +5,8 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
 
-import VoteCreater from './VoteCreater'
-import VoteVisualizer from './VoteVisualizer'
+import VoteCreater from 'components/VoteCreater'
+import VoteVisualizer from 'components/VoteVisualizer'
 
 
 export default class PanelVoting extends React.Component {
@@ -37,7 +37,7 @@ export default class PanelVoting extends React.Component {
     })
   }
 
-  handleVoteCreaterAbort() {
+  handleVoteCreaterAbort() {
     this.setState({
       showVoteConfig: false,
     })
@@ -56,7 +56,7 @@ export default class PanelVoting extends React.Component {
   }
 
   doRequest() {
-    let url = `${this.props.baseUrl }sync?session_id=`
+    let url = `${this.props.baseUrl}sync?session_id=`
     url += this.props.session_id
     url += '&admin_token='
     url += this.props.admin_token
@@ -76,7 +76,7 @@ export default class PanelVoting extends React.Component {
 
         this.hash = dataJSON.data.hash
 
-        const votes = dataJSON.data.votes
+        const { votes } = dataJSON.data
         const alternatives = []
 
         for (const key in votes) {
@@ -111,68 +111,71 @@ export default class PanelVoting extends React.Component {
     let voteVis = null
 
     if (this.props.vote_code) {
-      showVoteCodeButton = (<Button
-        onClick={this.handleShowVoteCode.bind(this)}
-        bsStyle='info'
-        style={{ float: 'right' }}
-        className='raised'
-      >
-        <Glyphicon glyph='eye-open' /> Vote Code
-      </Button>)
+      showVoteCodeButton = (
+        <Button
+          onClick={this.handleShowVoteCode.bind(this)}
+          bsStyle='info'
+          style={{ float: 'right' }}
+          className='raised'
+        >
+          <Glyphicon glyph='eye-open' /> Vote Code
+        </Button>
+      )
 
-      voteVis =
-              (<VoteVisualizer
-alternatives={this.state.alternatives}
-                disableAllAnimations={!this.newData}
-              />)
+      voteVis = (
+        <VoteVisualizer
+          alternatives={this.state.alternatives}
+          disableAllAnimations={!this.newData}
+        />
+      )
 
       this.newData = false
     }
 
     return (
       <div>
-            <VoteCreater
-                baseUrl={this.props.baseUrl}
-                adminHeaders={this.props.adminHeaders}
-                onNewVote={this.handleNewVote.bind(this)}
-                show={this.state.showVoteConfig}
-                onAbort={this.handleVoteCreaterAbort.bind(this)}
-                session_id={this.props.session_id}
-                admin_token={this.props.admin_token}
-              />
+        <VoteCreater
+          baseUrl={this.props.baseUrl}
+          adminHeaders={this.props.adminHeaders}
+          onNewVote={this.handleNewVote.bind(this)}
+          show={this.state.showVoteConfig}
+          onAbort={this.handleVoteCreaterAbort.bind(this)}
+          session_id={this.props.session_id}
+          admin_token={this.props.admin_token}
+        />
 
-            <Modal
-                show={this.state.showVoteCode}
-                onHide={this.handleHideVoteCode.bind(this)}
-                dialogClassName='vote_code-modal'
-              >
-                <Modal.Body>
-                    <text className='vote_code-text'>
-                        {this.props.vote_code}
-                      </text>
-                  </Modal.Body>
-              </Modal>
+        <Modal
+          show={this.state.showVoteCode}
+          onHide={this.handleHideVoteCode.bind(this)}
+          dialogClassName='vote_code-modal'
+        >
+          <Modal.Body>
+            <text className='vote_code-text'>
+              {this.props.vote_code}
+            </text>
+          </Modal.Body>
+        </Modal>
 
-            <Panel className='panel panel-voting'>
-                <h2 className='panel-header panel-voting-header'>Omröstning</h2>
-                <hr />
+        <Panel className='panel panel-voting'>
+          <h2 className='panel-header panel-voting-header'>Omröstning</h2>
+          <hr />
 
-                <div className='panel-voting-body'>
-                    <Button
-                        bsStyle='success'
-                        onClick={this.handleConfigVote.bind(this)}
-                        className='raised'
-                      >
-                        <Glyphicon glyph='plus' /> Starta ny omröstning
-                      </Button>
-                    {showVoteCodeButton}
+          <div className='panel-voting-body'>
+            <Button
+              bsStyle='success'
+              onClick={this.handleConfigVote.bind(this)}
+              className='raised'
+            >
+              <Glyphicon glyph='plus' /> Starta ny omröstning
+            </Button>
+            {showVoteCodeButton}
 
-                    <h3 style={{ textAlign: 'center' }}>{this.state.question}</h3>
-                    {voteVis}
-                  </div>
-
-              </Panel>
+            <h3 style={{ textAlign: 'center' }}>{this.state.question}</h3>
+            {voteVis}
           </div>
+
+        </Panel>
+      </div>
     )
   }
 }

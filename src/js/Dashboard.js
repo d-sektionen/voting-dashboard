@@ -1,14 +1,15 @@
 import React from 'react'
-import cookie from 'react-cookie'
 
-import PanelSession from './components/PanelSession'
-import PanelVoting from './components/PanelVoting'
-import PanelRegistrations from './components/PanelRegistrations'
-import SessionOpener from './components/SessionOpener'
+import PanelSession from 'components/PanelSession'
+import PanelVoting from 'components/PanelVoting'
+import PanelRegistrations from 'components/PanelRegistrations'
+import SessionOpener from 'components/SessionOpener'
 
 import Grid from 'react-bootstrap/lib/Grid'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
+
+import { get, store, remove } from 'utils'
 
 import 'buttons.css'
 import 'index.css'
@@ -18,24 +19,25 @@ import 'panel_voting.css'
 import 'qr.css'
 import 'style.css'
 
-import config from './config.json'
-// const config = {baseUrl: "http://localhost/api/voting/"};
+// import config from './config.json'
+// TODO: Fixa senare
+const config = {
+  baseUrl: 'http://localhost/api/voting/',
+  allowedSections: ['d', 'y', 'm', 'i'],
+}
 
-const baseUrl = config.baseUrl
-const allowedSections = ['d', 'y', 'm', 'i']
-
+const { baseUrl, allowedSections } = config
 
 export default class Dashboard extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      showVoteConfig: false,
-      session_id: cookie.load('session_id'),
-      admin_token: cookie.load('admin_token'),
-      vote_code: cookie.load('vote_code'),
-      configured: !!cookie.load('session_id'),
-      section: cookie.load('section'),
+      session_id: get('session_id'),
+      admin_token: get('admin_token'),
+      voteCode: get('voteCode'),
+      configured: get('session_id', false),
+      section: get('section'),
     }
   }
 
@@ -45,13 +47,13 @@ export default class Dashboard extends React.Component {
       admin_token: data.admin_token,
       section: data.section,
       configured: true,
-      vote_code: null,
+      voteCode: null,
     })
 
-    cookie.remove('vote_code', { path: '/' })
-    cookie.save('session_id', data.session_id, { path: '/', maxAge: 60 * 60 * 10 })
-    cookie.save('admin_token', data.admin_token, { path: '/', maxAge: 60 * 60 * 10 })
-    cookie.save('section', data.section, { path: '/', maxAge: 60 * 60 * 10 })
+    remove('voteCode')
+    store('session_id', data.session_id)
+    store('admin_token', data.admin_token)
+    store('section', data.section)
   }
 
   getAdminHeaders() {
@@ -64,12 +66,12 @@ export default class Dashboard extends React.Component {
     }
   }
 
-  handleNewVote(vote_code) {
-    if (vote_code) { // We can also call this when the vote-creation was canceled (i.e. no vote_code)
+  handleNewVote(voteCode) {
+    if (voteCode) { // We can also call this when the vote-creation was canceled (i.e. no voteCode)
       this.setState({
-        vote_code,
+        voteCode,
       })
-      cookie.save('vote_code', vote_code, { path: '/', maxAge: 60 * 60 * 10 })
+      store('voteCode', voteCode, { path: '/', maxAge: 60 * 60 * 10 })
     }
   }
 
@@ -86,70 +88,71 @@ export default class Dashboard extends React.Component {
 
     const logo = (
       <div
-            className='section-logo'
-            style={{
-                        width: '70px',
-                        height: '70px',
-                        position: 'absolute',
-                        left: '10px',
-                        top: '10px',
-                        backgroundImage: `url(https://d-sektionen.se/downloads/logos/${this.state.section}-sek_logo.png)`,
-                        backgroundSize: '70px 70px',
-                    }}
-          />
+        className='section-logo'
+        style={{
+          width: '70px',
+          height: '70px',
+          position: 'absolute',
+          left: '10px',
+          top: '10px',
+          backgroundImage: `url(https://d-sektionen.se/downloads/logos/${this.state.section}-sek_logo.png)`,
+          backgroundSize: '70px 70px',
+        }}
+      />
     )
 
     return (
-      <div>
-            <SessionOpener
-              onSessionOpened={this.handleSessionOpened.bind(this)}
-              show={newSession}
-              closeable={!!cookie.load('session_id')} // Only allow closing if session exists.
-              onClose={this.handleNewSessionButtonCanceled.bind(this)}
-              baseUrl={baseUrl}
-              allowedSections={allowedSections}
-            />
+      <div />
+      // <div>
+      //   <SessionOpener
+      //     onSessionOpened={this.handleSessionOpened.bind(this)}
+      //     show={newSession}
+      //     closeable={get('session_id', false)} // Only allow closing if session exists.
+      //     onClose={this.handleNewSessionButtonCanceled.bind(this)}
+      //     baseUrl={baseUrl}
+      //     allowedSections={allowedSections}
+      //   />
 
-            <div className='page-header'>
-              <h1 style={{ marginTop: '15px' }}>Dashboard för D-Cide</h1>
-              <small className='subtitle'>Skapat av D-sektionens WebbU 16-17</small>
-            </div>
+      //   <div className='page-header'>
+      //     <h1 style={{ marginTop: '15px' }}>Dashboard för D-Cide</h1>
+      //     <small className='subtitle'>Skapat av D-sektionens WebbU 16-17</small>
+      //   </div>
 
-            {logo}
+      //   {logo}
 
-            <Grid fluid>
-              <Row className='show-grid'>
-                  <Col xs={12} md={3}>
-                      <PanelSession
-                          onNewSession={this.handleNewSessionButtonClick.bind(this)}
-                          session_id={this.state.session_id}
-                          admin_token={this.state.admin_token}
-                          vote_code={this.state.vote_code}
-                          baseUrl={baseUrl}
-                        />
-                    </Col>
-                  <Col xs={12} md={6}>
-                      <PanelVoting
-                          onNewVote={this.handleNewVote.bind(this)}
-                          vote_code={this.state.vote_code}
-                          question={this.state.question}
-                          adminHeaders={this.getAdminHeaders()}
-                          baseUrl={baseUrl}
-                          session_id={this.state.session_id}
-                          admin_token={this.state.admin_token}
-                        />
-                    </Col>
-                  <Col xs={12} md={3}>
-                      <PanelRegistrations
-                          adminHeaders={this.getAdminHeaders()}
-                          baseUrl={baseUrl}
-                          session_id={this.state.session_id}
-                          admin_token={this.state.admin_token}
-                        />
-                    </Col>
-                </Row>
-            </Grid>
-          </div>
+      //   <Grid fluid>
+      //     <Row className='show-grid'>
+      //       <Col xs={12} md={3}>
+      //         <PanelSession
+      //           onNewSession={this.handleNewSessionButtonClick.bind(this)}
+      //           session_id={this.state.session_id}
+      //           admin_token={this.state.admin_token}
+      //           voteCode={this.state.voteCode}
+      //           baseUrl={baseUrl}
+      //         />
+      //       </Col>
+      //       <Col xs={12} md={6}>
+      //         <PanelVoting
+      //           onNewVote={this.handleNewVote.bind(this)}
+      //           voteCode={this.state.voteCode}
+      //           question={this.state.question}
+      //           adminHeaders={this.getAdminHeaders()}
+      //           baseUrl={baseUrl}
+      //           session_id={this.state.session_id}
+      //           admin_token={this.state.admin_token}
+      //         />
+      //       </Col>
+      //       <Col xs={12} md={3}>
+      //         <PanelRegistrations
+      //           adminHeaders={this.getAdminHeaders()}
+      //           baseUrl={baseUrl}
+      //           session_id={this.state.session_id}
+      //           admin_token={this.state.admin_token}
+      //         />
+      //       </Col>
+      //     </Row>
+      //   </Grid>
+      // </div>
     )
   }
 }
