@@ -6,8 +6,8 @@ import 'custom.css'
 
 import { queryString } from 'utils'
 import { store, login } from 'state'
-import Header from 'components/containers/Header'
-import Meetings from 'components/containers/Meetings'
+import Header from 'containers/Header'
+import Meetings from 'containers/Meetings'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ export default class App extends React.Component {
         />
         <div className='row'>
           <div className='col s12 m3 l2'>
-            {/* <Meetings /> */}
+            <Meetings />
           </div>
           <div className='col s12 m4'>1</div>
           <div className='col s12 m3 l2'>1</div>

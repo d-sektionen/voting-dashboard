@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { logout } from 'state'
 import { loginURL } from 'config'
-import SectionSelection from 'components/containers/SectionSelection'
+import SectionSelection from 'containers/SectionSelection'
 
 const Header = props => (
   <nav className={props.className}>
