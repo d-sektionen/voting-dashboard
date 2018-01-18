@@ -1,6 +1,6 @@
 import React from 'react'
 import { getMeetings } from 'api'
-import TextInput from 'components/Materialize/TextInput'
+import
 
 export default class Meetings extends React.Component {
   constructor(props) {
@@ -18,13 +18,11 @@ export default class Meetings extends React.Component {
 
   render() {
     return (
-      <div className='collection'>
+      <ListContainer>
         {this.state.meetings.map(meeting => (
           <a key={meeting.id} className='collection-item' disabled={meeting.archived}>{meeting.name}</a>
-        ))
-        }
-        <TextInput text='Nytt möte' id='newMeeting' />
-      </div>
+        ))}
+      </ListContainer>
     )
   }
 }

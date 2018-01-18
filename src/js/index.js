@@ -6,9 +6,3 @@ ReactDOM.render(
   <App />,
   document.getElementById('app')
 )
-
-// import { getUsers } from 'api'
-
-// console.log(getUsers)
-// getUsers()
-//   .then(console.log)
