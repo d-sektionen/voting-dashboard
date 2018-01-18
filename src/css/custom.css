@@ -1,0 +1,12 @@
+nav {
+  padding: 0 12px 0 4px;
+}
+
+.section-logo {
+  transition: all 0.5s;
+}
+
+.section-logo:hover {
+  -webkit-filter: none!important;
+  filter: none!important;
+}

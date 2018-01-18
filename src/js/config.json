@@ -1,4 +1,26 @@
 {
-  "allowedSections": ["d", "y", "m", "i"],
-  "apiURL": "http://localhost:8000"
+  "sections": [
+    {
+      "name":"d",
+      "id": 1,
+      "logo": "images/sections/d.png"
+    },
+    {
+      "name":"i",
+      "id": 2,
+      "logo": "images/sections/i.png"
+    },
+    {
+      "name":"m",
+      "id": 3,
+      "logo": "images/sections/m.png"
+    },
+    {
+      "name":"y",
+      "id": 4,
+      "logo": "images/sections/y.png"
+    }
+  ],
+  "apiURL": "http://localhost:8000",
+  "loginURL": "http://localhost:8000/account/token?redirect=http://localhost:8080"
 }

@@ -18,7 +18,7 @@ export const loginReducer = (state = get(tokenStoreKey, null), action) => {
   }
 }
 
-export const sectionReducer = (state = get(sectionStoreKey, 'd'), action) => {
+export const sectionReducer = (state = get(sectionStoreKey, 1), action) => {
   switch (action.type) {
     case SET_SECTION:
       store(sectionStoreKey, action.payload)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { getMeetings } from 'api'
-import
+import ListContainer from 'components/ListContainer'
 
 export default class Meetings extends React.Component {
   constructor(props) {

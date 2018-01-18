@@ -5,7 +5,7 @@ import 'material-icons.css'
 import 'custom.css'
 
 import { queryString } from 'utils'
-import { store, setToken } from 'state'
+import { store, login } from 'state'
 import Header from 'components/containers/Header'
 import Meetings from 'components/containers/Meetings'
 
@@ -15,7 +15,7 @@ export default class App extends React.Component {
 
     // Temp fulfix för att hämta token
     if (queryString('token') !== null) {
-      store.dispatch(setToken(queryString('token')))
+      store.dispatch(login(queryString('token')))
       window.history.pushState(null, null, '/')
     }
   }
@@ -23,7 +23,10 @@ export default class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Header title='Dashboard för D-Cide' />
+        <Header
+          title='Dashboard för D-Cide'
+          className='grey darken-4'
+        />
         <div className='row'>
           <div className='col s12 m3 l2'>
             {/* <Meetings /> */}
