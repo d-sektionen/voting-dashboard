@@ -1,4 +1,4 @@
-export { deleteToken } from 'api/token'
+export { hasToken, deleteToken } from 'api/token'
 export * from 'api/meeting'
 export * from 'api/scanner'
 export * from 'api/user'
