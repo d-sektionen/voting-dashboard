@@ -25,8 +25,8 @@ const Header = props => (
   </nav>
 )
 
-const mapStateToProps = (state, ownProps) => ({
-  token: state.login,
+const mapStateToProps = state => ({
+  token: state.token,
 })
 
 const mapDispatchToProps = dispatch => ({
