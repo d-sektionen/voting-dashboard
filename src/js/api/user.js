@@ -1,18 +1,16 @@
-import { json } from 'utils'
-import { apiURL as url } from 'config'
-import { getToken, header } from 'api/token'
+import { fetchAPI } from 'api/common'
 
-export const getUsers = meetingID => {
-  getToken()
-    .then(token => fetch(`${url}/voting/attendants/`, header(token)))
-    .then(json)
-    .then(jsonData => {
+const userURL = '/voting/attendants/'
+
+export const getUsers = meetingID => (
+  fetchAPI(userURL)
+    .then(json => {
       if (meetingID) {
-        return jsonData.filter(user => user.meeting === meetingID)
+        return json.filter(user => user.meeting === meetingID)
       }
-      return jsonData
+      return json
     })
-}
+)
 
 
 export const addUser = liuID => {

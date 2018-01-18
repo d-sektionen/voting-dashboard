@@ -20,7 +20,6 @@ export default class App extends React.Component {
     }
 
     this.state = {
-      section: null,
       token: get('token'),
     }
 
@@ -37,7 +36,6 @@ export default class App extends React.Component {
       <React.Fragment>
         <Header
           title='Dashboard för D-Cide'
-          section={this.state.section}
           loggedIn={this.state.token}
           onLogOut={this.handleLogout}
         />
@@ -52,47 +50,3 @@ export default class App extends React.Component {
     )
   }
 }
-
-/* <SessionOpener
-          onSessionOpened={this.handleSessionOpened.bind(this)}
-          show={newSession}
-          closeable={get('session_id', false)} // Only allow closing if session exists.
-          onClose={this.handleNewSessionButtonCanceled.bind(this)}
-          baseUrl={baseUrl}
-          allowedSections={allowedSections}
-        /> */
-
-/*
-
-      //   <Grid fluid>
-      //     <Row className='show-grid'>
-      //       <Col xs={12} md={3}>
-      //         <PanelSession
-      //           onNewSession={this.handleNewSessionButtonClick.bind(this)}
-      //           session_id={this.state.session_id}
-      //           admin_token={this.state.admin_token}
-      //           voteCode={this.state.voteCode}
-      //           baseUrl={baseUrl}
-      //         />
-      //       </Col>
-      //       <Col xs={12} md={6}>
-      //         <PanelVoting
-      //           onNewVote={this.handleNewVote.bind(this)}
-      //           voteCode={this.state.voteCode}
-      //           question={this.state.question}
-      //           adminHeaders={this.getAdminHeaders()}
-      //           baseUrl={baseUrl}
-      //           session_id={this.state.session_id}
-      //           admin_token={this.state.admin_token}
-      //         />
-      //       </Col>
-      //       <Col xs={12} md={3}>
-      //         <PanelRegistrations
-      //           adminHeaders={this.getAdminHeaders()}
-      //           baseUrl={baseUrl}
-      //           session_id={this.state.session_id}
-      //           admin_token={this.state.admin_token}
-      //         />
-      //       </Col>
-      //     </Row>
-      //   </Grid> */

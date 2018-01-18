@@ -11,7 +11,7 @@ export const store = (key, value) => localStorage.setItem(key, JSON.stringify(va
 
 export const remove = key => localStorage.removeItem(key)
 
-
+// Get the token from the URL
 export const queryString = key => {
   const [foundKey, value] = window.location.search.substring(1).split('=')
   return foundKey === key ? value : null
