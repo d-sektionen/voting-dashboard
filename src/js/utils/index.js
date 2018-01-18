@@ -10,3 +10,9 @@ export const get = (key, defaultValue) => (
 export const store = (key, value) => localStorage.setItem(key, JSON.stringify(value))
 
 export const remove = key => localStorage.removeItem(key)
+
+
+export const queryString = key => {
+  const [foundKey, value] = window.location.search.substring(1).split('=')
+  return foundKey === key ? value : null
+}

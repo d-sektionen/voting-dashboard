@@ -27,7 +27,6 @@ module.exports = {
     modules: [
       path.resolve('./src/js'),
       path.resolve('./src/css'),
-      path.resolve('.'),
       path.resolve('./node_modules'),
     ],
   },

@@ -3,6 +3,8 @@ import { apiURL as url } from 'config'
 
 const tokenStorageKey = 'token'
 
+export const hasToken = () => get(tokenStorageKey) !== undefined
+
 export const getToken = () => {
   const storedToken = get(tokenStorageKey)
 
@@ -25,7 +27,3 @@ export const getToken = () => {
 export const deleteToken = () => {
   remove(tokenStorageKey)
 }
-
-export const header = token => ({
-  Authorization: `JWT ${token}`,
-})

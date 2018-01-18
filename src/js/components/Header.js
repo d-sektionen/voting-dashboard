@@ -2,11 +2,11 @@ import React from 'react'
 
 export default props => {
   let button
-
-  if (props.liuID) {
-    button = <button className='waves-effect waves-light btn'>Logga ut</button>
+  // props.liuID
+  if (props.loggedIn) {
+    button = <button onClick={props.onLogOut} className='waves-effect waves-light btn'>Logga ut</button>
   } else {
-    button = <button className='waves-effect waves-light btn'>Logga in</button>
+    button = <a href='http://localhost:8000/account/token?redirect=http://localhost:8080' className='waves-effect waves-light btn'>Logga in</a>
   }
 
   return (
