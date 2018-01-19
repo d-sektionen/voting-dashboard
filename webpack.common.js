@@ -18,7 +18,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.[chunkhash].js',
-    publicPath: '/', // Används av webpack-dev-server
+    // Används av webpack-dev-server.
+    // Simulera den mappstruktur vi har i production
+    publicPath: '/dashboard',
   },
   // För de här vägarna kommer webpack leta efter filer när den stöter på imports.
   // Gör så att man kan skriva absoluta vägar istället för relativa,
@@ -82,7 +84,7 @@ module.exports = {
         to: 'images/',
       },
     ]),
-    new HtmlWebpackPlugin({ // Stoppa in referencer till JS och CSS-filerna i vår index.html
+    new HtmlWebpackPlugin({ // Stoppa in referencer till de kompilerade JS och CSS-filerna i vår index.html
       template: 'src/index.html',
       favicon: 'src/images/favicon.ico',
     }),

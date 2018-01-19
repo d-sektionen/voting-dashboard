@@ -16,7 +16,7 @@ class Meetings extends React.Component {
     return (
       <ListContainer filter={this.filter} noItemsText='Inga möten hittades' onAddItem={this.props.handleAddItem}>
         {this.props.meetings.map(meeting => (
-          <a key={meeting.id} className='collection-item' disabled={meeting.archived}>{meeting.name}</a>
+          <a key={meeting.id} className='collection-item'>{meeting.name}</a>
         ))}
       </ListContainer>
     )
@@ -25,6 +25,7 @@ class Meetings extends React.Component {
 
 const mapStateToProps = state => ({
   meetings: state.meeting.list,
+  currentMeeting: state.meeting.currentMeeting,
 })
 
 const mapDispatchToProps = dispatch => {

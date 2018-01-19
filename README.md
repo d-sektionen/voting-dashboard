@@ -43,6 +43,7 @@ npm start
 - [ESLint](https://eslint.org/) - formateringsprogram för JS
 
 # Förbättringar
+Inline css - usch
 
 # Programkoder
 - 6CITE - IT

@@ -28,7 +28,7 @@ export default class App extends React.Component {
           className='grey darken-4'
         />
         <div className='row section'>
-          <div className='col s12 m3 l2'>
+          <div className='col s12 m3'>
             <Meetings />
           </div>
           <div className='col s12 m4'>1</div>

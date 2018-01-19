@@ -3,11 +3,6 @@ const merge = require('webpack-merge')
 const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
-  // Används för single page apps (SPA).
-  // Förmodligen inte relevant i detta projekt.
-  devServer: {
-    historyApiFallback: true,
-  },
   // Mappa den kod du faktist skrev till den kod som genereras.
   // Ett måste när man debuggar, finns olika 'lägen' som
   // väger snabbhet av webpack-kompliering mot hur bra kvalite man
@@ -16,4 +11,11 @@ module.exports = merge(common, {
   // Tex är detta ett läge som är en relativt snabbt men som
   // bara visar den rad som erroret kom på.
   devtool: 'cheap-module-eval-source-map',
+  plugins: [
+    // Indikera för frontend om vi är i development eller production-mode.
+    // Används i config-filen för att bestämma vilken url vi ska använda för API:t.
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+    }),
+  ],
 })

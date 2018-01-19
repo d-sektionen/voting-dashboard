@@ -8,11 +8,11 @@ export default class ListContainer extends React.Component {
 
     this.state = {
       textFilter: '',
-      meetingName: '', // newItemText
+      newItemText: '', // newItemText
     }
 
     this.handleNewFilter = this.handleNewFilter.bind(this)
-    this.handleMeetingNameChange = this.handleMeetingNameChange.bind(this)
+    this.handleTextChange = this.handleTextChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -20,14 +20,14 @@ export default class ListContainer extends React.Component {
     this.setState({ textFilter })
   }
 
-  handleMeetingNameChange(meetingName) {
-    this.setState({ meetingName })
+  handleTextChange(newItemText) {
+    this.setState({ newItemText })
   }
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.onAddItem(this.state.meetingName)
-    this.setState({ meetingName: '' })
+    this.props.onAddItem(this.state.newItemText)
+    this.setState({ newItemText: '' })
   }
 
   render() {
@@ -54,7 +54,7 @@ export default class ListContainer extends React.Component {
         </div>
         <div style={flex}>
           <form onSubmit={this.handleSubmit}>
-            <TextInput onChange={this.handleMeetingNameChange} value={this.state.meetingName} text='Nytt möte' />
+            <TextInput onChange={this.handleTextChange} value={this.state.newItemText} text='Nytt möte' />
           </form>
         </div>
       </div>
