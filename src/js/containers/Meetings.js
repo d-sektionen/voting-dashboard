@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { store, fetchMeetings, createMeeting, setCurrentMeeting } from 'state'
 import ListContainer from 'components/ListContainer'
+import Panel from 'components/Panel'
 
 class Meetings extends React.Component {
   componentDidMount() {
@@ -16,25 +17,28 @@ class Meetings extends React.Component {
 
   render() {
     return (
-      <ListContainer
-        filter={this.filter}
-        title='Möten'
-        newItemText='Nytt möte'
-        noItemsText='Inga möten hittades'
-        onAddItem={this.props.handleAddMeeting}
-      >
-        {this.props.meetings.map(meeting => (
-          <a
-            onClick={() => this.props.handleSelectMeetings(meeting.id)}
-            key={meeting.id}
-            className={`collection-item ${meeting.id === this.props.currentMeeting ? 'active' : ''}`}
-            role='button'
-            style={{ cursor: 'pointer' }}
-          >
-            {meeting.name}
-          </a>
+      <Panel>
+        <ListContainer
+          filter={this.filter}
+          title='Möten'
+          newItemText='Nytt möte'
+          noItemsText='Inga möten hittades'
+          onAddItem={this.props.handleAddMeeting}
+          style={this.props.style}
+        >
+          {this.props.meetings.map(meeting => (
+            <a
+              onClick={() => this.props.handleSelectMeetings(meeting.id)}
+              key={meeting.id}
+              className={`collection-item ${meeting.id === this.props.currentMeeting ? 'active' : ''}`}
+              role='button'
+              style={{ cursor: 'pointer' }}
+            >
+              {meeting.name}
+            </a>
         ))}
-      </ListContainer>
+        </ListContainer>
+      </Panel>
     )
   }
 }

@@ -10,3 +10,20 @@ nav {
   -webkit-filter: none!important;
   filter: none!important;
 }
+
+.panel {
+  height: 800px;
+  padding: 13px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.panel-header {
+  margin-top: 0;
+}
+
+.list-collection {
+  max-height: 518px;
+  overflow-y: auto;
+}

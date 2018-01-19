@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { store } from 'state'
 import ListContainer from 'components/ListContainer'
+import Panel from 'components/Panel'
 
 class Users extends React.Component {
   componentDidMount() {
@@ -16,16 +17,17 @@ class Users extends React.Component {
 
   render() {
     return (
-      <ListContainer
-        filter={this.filter}
-        title='Registrerade'
-        newItemText='Nytt LiU-ID'
-        noItemsText='Inga personer hittades'
-        // onAddItem={this.props.handleAddMeeting}
-      >
-        {[].map(a => <a>1</a>)}
+      <Panel>
+        <ListContainer
+          filter={this.filter}
+          title='Registrerade'
+          newItemText='Nytt LiU-ID'
+          noItemsText='Inga personer hittades'
+          style={this.props.style}
+        >
+          {[].map(a => <a>1</a>)}
 
-        {/* {this.props.meetings.map(meeting => (
+          {/* {this.props.meetings.map(meeting => (
           <a
             // onClick={() => this.props.handleSelectMeetings(meeting.id)}
             key={meeting.id}
@@ -36,7 +38,8 @@ class Users extends React.Component {
             {meeting.name}
           </a>
         ))} */}
-      </ListContainer>
+        </ListContainer>
+      </Panel>
     )
   }
 }

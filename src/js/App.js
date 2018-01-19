@@ -8,6 +8,7 @@ import { queryString } from 'utils'
 import { store, login } from 'state'
 import Header from 'containers/Header'
 import Meetings from 'containers/Meetings'
+import Voting from 'containers/Voting'
 import Users from 'containers/Users'
 
 export default class App extends React.Component {
@@ -28,16 +29,22 @@ export default class App extends React.Component {
           title='Dashboard för D-Cide'
           className='grey darken-4'
         />
-        <div className='row section'>
-          <div className='col s12 m3'>
-            <Meetings />
+        <div className='row section panel-container'>
+          <div className='col s12 m3' style={styles}>
+            <Meetings style={styles} />
           </div>
-          <div className='col s12 m5 l6'>1</div>
-          <div className='col s12 m4 l3'>
-            <Users />
+          <div className='col s12 m5 l6' style={styles}>
+            <Voting style={styles} />
+          </div>
+          <div className='col s12 m4 l3' style={styles}>
+            <Users style={styles} />
           </div>
         </div>
       </React.Fragment>
     )
   }
+}
+
+const styles = {
+  height: '100%',
 }
