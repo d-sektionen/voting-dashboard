@@ -7,16 +7,21 @@ export default class TextInput extends React.Component {
     super(props)
 
     this.id = randomID()
+    this.onChange = this.onChange.bind(this)
   }
 
   componentDidMount() {
     M.updateTextFields()
   }
 
+  onChange(event) {
+    this.props.onChange(event.target.value)
+  }
+
   render() {
     return (
       <div className='input-field' style={styles}>
-        <input id={this.id} type='text' />
+        <input onChange={this.onChange} id={this.id} value={this.props.value} type='text' />
         <label htmlFor={this.id} style={labelStyles}>{this.props.text}</label>
       </div>
     )

@@ -17,7 +17,7 @@ const SectionSelection = props => (
           WebkitFilter: props.currentSection !== section.id ? 'grayscale(100%)' : 'none',
        }}
         key={section.name}
-        onClick={() => props.onSetSection(section.id)}
+        onClick={() => props.handleSetSection(section.id)}
       />
     ))}
   </div>
@@ -35,7 +35,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onSetSection: (sectionID) => dispatch(setSection(sectionID)),
+  handleSetSection: (sectionID) => dispatch(setSection(sectionID)),
 })
 
 export default connect(

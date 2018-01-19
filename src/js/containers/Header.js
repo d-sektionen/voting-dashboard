@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { logout } from 'state'
 import { loginURL } from 'config'
+import { capitalize } from 'utils'
 import SectionSelection from 'containers/SectionSelection'
 
 const Header = props => (
@@ -12,7 +13,7 @@ const Header = props => (
       </div>
       <a href='/' className='brand-logo center hide-on-med-and-down'>{props.title}</a>
       <ul className='right'>
-        <li>JESWR740 - </li>
+        <li style={{ marginRight: '9px' }}>{capitalize('jeswr740')}</li>
         <li>
           { props.token ?
             <button onClick={props.onLogOut} className='waves-effect waves-light btn'>Logga ut</button>

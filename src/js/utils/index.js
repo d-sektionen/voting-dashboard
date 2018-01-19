@@ -18,3 +18,5 @@ export const queryString = key => {
 }
 
 export const randomID = () => `id${Math.random().toString(36).substr(5)}${Date.now().toString().substr(9)}`
+
+export const capitalize = str => str[0].toUpperCase() + str.slice(1)

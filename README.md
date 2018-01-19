@@ -42,8 +42,10 @@ npm start
   - plugins
 - [ESLint](https://eslint.org/) - formateringsprogram för JS
 
+# Förbättringar
+
 # Programkoder
-6CITE - IT
-6CDDD - D
-6CMJU - U
-6KIPR - IP
+- 6CITE - IT
+- 6CDDD - D
+- 6CMJU - U
+- 6KIPR - IP

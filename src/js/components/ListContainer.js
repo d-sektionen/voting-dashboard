@@ -8,53 +8,72 @@ export default class ListContainer extends React.Component {
 
     this.state = {
       textFilter: '',
+      meetingName: '', // newItemText
     }
 
     this.handleNewFilter = this.handleNewFilter.bind(this)
+    this.handleMeetingNameChange = this.handleMeetingNameChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleNewFilter(textFilter) {
     this.setState({ textFilter })
   }
 
+  handleMeetingNameChange(meetingName) {
+    this.setState({ meetingName })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.onAddItem(this.state.meetingName)
+    this.setState({ meetingName: '' })
+  }
+
   render() {
-    const filteredChildren = this.props.children.filter(child => {
-      if (this.state.textFilter === '') {
+    const filteredItems = this.props.children.filter(item => {
+      if (this.state.textFilter === '' || !this.props.filter) {
         return true
       }
-      return this.props.filter(child, this.state.textFilter)
+      return this.props.filter(item, this.state.textFilter)
     })
 
-
     return (
-      <div className='card-panel' style={styles}>
+      <div className='card-panel' style={panelStyles}>
         <div style={flex}>
           <h4 style={{ marginTop: 0 }}>Möten</h4>
           <div className='divider' />
           <FilterInput onChange={this.handleNewFilter} />
-          {filteredChildren.length > 0 ?
-            <div className='collection'>
-              {filteredChildren}
+          {filteredItems.length > 0 ?
+            <div className='collection' style={collectionStyles}>
+              {filteredItems}
             </div>
             :
-            <p style={{ marginLeft: '7px' }}>Inga möten hittades</p>
+            <p style={{ marginLeft: '7px' }}>{this.props.noItemsText}</p>
           }
         </div>
         <div style={flex}>
-          <TextInput text='Nytt möte' id='newMeeting' />
+          <form onSubmit={this.handleSubmit}>
+            <TextInput onChange={this.handleMeetingNameChange} value={this.state.meetingName} text='Nytt möte' />
+          </form>
         </div>
       </div>
     )
   }
 }
 
-// Change this ugly flexbox shit to CSS grid when browser support is ok
-const styles = {
+// Change this ugly flexbox shit to CSS grid when browser support is acceptable
+const panelStyles = {
   padding: '13px',
   minHeight: '600px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
+}
+
+const collectionStyles = {
+  maxHeight: '547px',
+  overflowY: 'auto',
 }
 
 const flex = {

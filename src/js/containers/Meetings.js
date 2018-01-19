@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { store, fetchMeetings } from 'state'
+import { store, fetchMeetings, createMeeting } from 'state'
 import ListContainer from 'components/ListContainer'
 
 class Meetings extends React.Component {
@@ -14,7 +14,7 @@ class Meetings extends React.Component {
 
   render() {
     return (
-      <ListContainer filter={this.filter}>
+      <ListContainer filter={this.filter} noItemsText='Inga möten hittades' onAddItem={this.props.handleAddItem}>
         {this.props.meetings.map(meeting => (
           <a key={meeting.id} className='collection-item' disabled={meeting.archived}>{meeting.name}</a>
         ))}
@@ -27,4 +27,14 @@ const mapStateToProps = state => ({
   meetings: state.meeting.list,
 })
 
-export default connect(mapStateToProps)(Meetings)
+const mapDispatchToProps = dispatch => {
+  const { section } = store.getState()
+  return {
+    handleAddItem: meetingText => dispatch(createMeeting(meetingText, section)),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Meetings)

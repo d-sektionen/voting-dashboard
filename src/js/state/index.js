@@ -8,7 +8,7 @@ import { meetingReducer } from 'state/meeting'
 
 export { setToken, deleteToken } from 'state/token'
 export { setSection } from 'state/section'
-export { setMeetings, setMeetingID, fetchMeetings } from 'state/meeting'
+export { setMeetings, setMeetingID, fetchMeetings, createMeeting } from 'state/meeting'
 
 export const store = createStore(
   combineReducers({
