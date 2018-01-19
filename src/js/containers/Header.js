@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { logout } from 'state'
+import { deleteToken } from 'state'
 import { loginURL } from 'config'
 import { capitalize } from 'utils'
 import SectionSelection from 'containers/SectionSelection'
@@ -31,7 +31,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onLogOut: () => dispatch(logout()),
+  onLogOut: () => dispatch(deleteToken()),
 })
 
 export default connect(

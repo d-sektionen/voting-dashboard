@@ -14,7 +14,9 @@
     "clean": "rm -r node_modules && rm package-lock.json"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "materialize-css": "^1.0.0-alpha.3",
+    "query-string": "^5.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",

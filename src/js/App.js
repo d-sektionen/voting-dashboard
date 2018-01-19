@@ -4,8 +4,8 @@ import 'materialize-css/dist/css/materialize.min.css'
 import 'material-icons.css'
 import 'custom.css'
 
-import { queryString } from 'utils'
-import { store, login } from 'state'
+import queryString from 'query-string'
+import { store, setToken } from 'state'
 import Header from 'containers/Header'
 import Meetings from 'containers/Meetings'
 import Voting from 'containers/Voting'
@@ -15,10 +15,11 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
 
-    // Temp fulfix för att hämta token
-    if (queryString('token') !== null) {
-      store.dispatch(login(queryString('token')))
-      window.history.pushState(null, null, '/')
+    const { token } = queryString.parse(window.location.search)
+
+    if (token) {
+      store.dispatch(setToken(token))
+      window.history.pushState(null, null, '/dashboard')
     }
   }
 
@@ -30,21 +31,17 @@ export default class App extends React.Component {
           className='grey darken-4'
         />
         <div className='row section panel-container'>
-          <div className='col s12 m3' style={styles}>
-            <Meetings style={styles} />
+          <div className='col s12 m3'>
+            <Meetings />
           </div>
-          <div className='col s12 m5 l6' style={styles}>
-            <Voting style={styles} />
+          <div className='col s12 m5 l6'>
+            <Voting />
           </div>
-          <div className='col s12 m4 l3' style={styles}>
-            <Users style={styles} />
+          <div className='col s12 m4 l3'>
+            <Users />
           </div>
         </div>
       </React.Fragment>
     )
   }
-}
-
-const styles = {
-  height: '100%',
 }

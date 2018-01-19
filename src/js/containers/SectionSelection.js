@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { sections } from 'config'
 import { setSection } from 'state'
+import classNames from 'classnames'
 
 const SectionSelection = props => (
   <div className='valign-wrapper' style={{ lineHeight: 0, height: '100%' }}>
@@ -10,12 +11,7 @@ const SectionSelection = props => (
         src={section.logo}
         alt={`${section.name.toUpperCase()}-Sektionen`}
         title={`${section.name.toUpperCase()}-Sektionen`}
-        className='responsive-img section-logo'
-        style={{
-          ...imageStyles,
-          filter: props.currentSection !== section.id ? 'grayscale(100%)' : 'none',
-          WebkitFilter: props.currentSection !== section.id ? 'grayscale(100%)' : 'none',
-       }}
+        className={classNames('responsive-img', 'section-logo', { grayscale: props.currentSection !== section.id })}
         key={section.name}
         onClick={() => props.handleSetSection(section.id)}
       />
@@ -23,14 +19,8 @@ const SectionSelection = props => (
   </div>
 )
 
-const imageStyles = {
-  maxHeight: '64px',
-  maxWidth: '64px',
-  margin: '0px 2px',
-  cursor: 'pointer',
-}
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   currentSection: state.section,
 })
 

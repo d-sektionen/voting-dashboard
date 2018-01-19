@@ -17,11 +17,9 @@ class Meetings extends React.Component {
 
   render() {
     return (
-      <Panel>
+      <Panel title='Möten' newItemText='Nytt möte'>
         <ListContainer
           filter={this.filter}
-          title='Möten'
-          newItemText='Nytt möte'
           noItemsText='Inga möten hittades'
           onAddItem={this.props.handleAddMeeting}
           style={this.props.style}

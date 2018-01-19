@@ -10,7 +10,7 @@ export default class Voting extends React.Component {
 
   render() {
     return (
-      <Panel />
+      <Panel title='Omröstning' newItemText='Ny omröstning' />
     )
   }
 }
