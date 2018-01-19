@@ -26,6 +26,7 @@ npm start
 - [React](https://reactjs.org/docs/hello-world.html) - UI-framework
   - [JSX](https://reactjs.org/docs/introducing-jsx.html) - fancy notation för React
 - [Redux](https://redux.js.org/docs/introduction/Motivation.html) - håller globala tillstånd i React
+  -[Redux-thunk](https://redux.js.org/docs/advanced/AsyncActions.html) - plugin som hanterar asynkrona tillstånd 
 - [ES6](http://es6-features.org/#Constants) - ny JS-standard, också kallad ES2015
   - fat arrow notation - (arg1, arg2) => ( returnValue )
   - [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) - för requests 
@@ -41,6 +42,21 @@ npm start
   - modules
   - plugins
 - [ESLint](https://eslint.org/) - formateringsprogram för JS
+
+## Scripts
+
+# Struktur
+
+## Node - modulärt
+
+## API
+
+## Redux - tillstånd
+
+## React - containers vs components
+
+## Materialize
+
 
 # Förbättringar
 Inline css - usch

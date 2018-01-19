@@ -8,7 +8,7 @@ export default class ListContainer extends React.Component {
 
     this.state = {
       textFilter: '',
-      newItemText: '', // newItemText
+      newItemText: '',
     }
 
     this.handleNewFilter = this.handleNewFilter.bind(this)
@@ -41,7 +41,7 @@ export default class ListContainer extends React.Component {
     return (
       <div className='card-panel' style={panelStyles}>
         <div style={flex}>
-          <h4 style={{ marginTop: 0 }}>Möten</h4>
+          <h4 style={{ marginTop: 0 }}>{this.props.title}</h4>
           <div className='divider' />
           <FilterInput onChange={this.handleNewFilter} />
           {filteredItems.length > 0 ?
@@ -54,7 +54,7 @@ export default class ListContainer extends React.Component {
         </div>
         <div style={flex}>
           <form onSubmit={this.handleSubmit}>
-            <TextInput onChange={this.handleTextChange} value={this.state.newItemText} text='Nytt möte' />
+            <TextInput onChange={this.handleTextChange} value={this.state.newItemText} text={this.props.newItemText} />
           </form>
         </div>
       </div>

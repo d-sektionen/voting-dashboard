@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { store, fetchMeetings, createMeeting } from 'state'
+import { store, fetchMeetings, createMeeting, setCurrentMeeting } from 'state'
 import ListContainer from 'components/ListContainer'
 
 class Meetings extends React.Component {
@@ -9,14 +9,30 @@ class Meetings extends React.Component {
   }
 
   filter(childItem, textFilter) {
-    return childItem.props.children.includes(textFilter.trim())
+    const test = childItem.props.children.toLowerCase()
+    const filter = textFilter.trim().toLowerCase()
+    return test.includes(filter)
   }
 
   render() {
     return (
-      <ListContainer filter={this.filter} noItemsText='Inga möten hittades' onAddItem={this.props.handleAddItem}>
+      <ListContainer
+        filter={this.filter}
+        title='Möten'
+        newItemText='Nytt möte'
+        noItemsText='Inga möten hittades'
+        onAddItem={this.props.handleAddMeeting}
+      >
         {this.props.meetings.map(meeting => (
-          <a key={meeting.id} className='collection-item'>{meeting.name}</a>
+          <a
+            onClick={() => this.props.handleSelectMeetings(meeting.id)}
+            key={meeting.id}
+            className={`collection-item ${meeting.id === this.props.currentMeeting ? 'active' : ''}`}
+            role='button'
+            style={{ cursor: 'pointer' }}
+          >
+            {meeting.name}
+          </a>
         ))}
       </ListContainer>
     )
@@ -31,7 +47,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   const { section } = store.getState()
   return {
-    handleAddItem: meetingText => dispatch(createMeeting(meetingText, section)),
+    handleAddMeeting: meetingText => dispatch(createMeeting(meetingText, section)),
+    handleSelectMeetings: meetingID => dispatch(setCurrentMeeting(meetingID)),
   }
 }
 
