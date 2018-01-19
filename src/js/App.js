@@ -8,6 +8,7 @@ import { queryString } from 'utils'
 import { store, login } from 'state'
 import Header from 'containers/Header'
 import Meetings from 'containers/Meetings'
+import Users from 'containers/Users'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -31,8 +32,10 @@ export default class App extends React.Component {
           <div className='col s12 m3'>
             <Meetings />
           </div>
-          <div className='col s12 m4'>1</div>
-          <div className='col s12 m3 l2'>1</div>
+          <div className='col s12 m5 l6'>1</div>
+          <div className='col s12 m4 l3'>
+            <Users />
+          </div>
         </div>
       </React.Fragment>
     )

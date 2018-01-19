@@ -1,18 +1,10 @@
-import { fetchAPI } from 'api/common'
+import { fetchAPI, postAPI, deleteAPI } from 'api/common'
 
 const userURL = '/voting/attendants/'
 
-export const getUsers = meetingID => (
-  fetchAPI(userURL)
-    .then(json => {
-      if (meetingID) {
-        return json.filter(user => user.meeting === meetingID)
-      }
-      return json
-    })
-)
+export const getUsers = () => fetchAPI(userURL)
 
+export const addUser = (liuID, meeting) => postAPI(userURL, { username: liuID, meeting })
 
-export const addUser = liuID => {
+export const removeUser = liuID => deleteAPI(`${userURL}${liuID}`)
 
-}

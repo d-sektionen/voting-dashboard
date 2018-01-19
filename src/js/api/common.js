@@ -23,6 +23,8 @@ const doRequest = (endpoint, init) => {
 
 export const fetchAPI = endpoint => doRequest(endpoint, {})
 
+export const deleteAPI = endpoint => doRequest(endpoint, { method: 'DELETE' })
+
 export const postAPI = (endpoint, data) => doRequest(endpoint, { method: 'POST', body: JSON.stringify(data) })
 
 export const updateAPI = (endpoint, data) => doRequest(endpoint, { method: 'PATCH', body: JSON.stringify(data) })
