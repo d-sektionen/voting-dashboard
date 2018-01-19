@@ -8,9 +8,13 @@ class Meetings extends React.Component {
     store.dispatch(fetchMeetings())
   }
 
+  filter(childItem, textFilter) {
+    return childItem.props.children.includes(textFilter.trim())
+  }
+
   render() {
     return (
-      <ListContainer>
+      <ListContainer filter={this.filter}>
         {this.props.meetings.map(meeting => (
           <a key={meeting.id} className='collection-item' disabled={meeting.archived}>{meeting.name}</a>
         ))}

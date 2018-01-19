@@ -27,12 +27,14 @@ export default class App extends React.Component {
           title='Dashboard för D-Cide'
           className='grey darken-4'
         />
-        <div className='row'>
-          <div className='col s12 m3 l2'>
-            <Meetings />
+        <div className='section'>
+          <div className='row'>
+            <div className='col s12 m3 l2'>
+              <Meetings />
+            </div>
+            <div className='col s12 m4'>1</div>
+            <div className='col s12 m3 l2'>1</div>
           </div>
-          <div className='col s12 m4'>1</div>
-          <div className='col s12 m3 l2'>1</div>
         </div>
       </React.Fragment>
     )

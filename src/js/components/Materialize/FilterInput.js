@@ -9,13 +9,14 @@ export default class TextInput extends React.Component {
   render() {
     return (
       <div className='input-field' style={styles}>
-        <input id={this.props.id} type='text' className='validate' style={styles} />
-        <label htmlFor={this.props.id}>{this.props.text}</label>
+        <input type='text' placeholder='Filtrera' onChange={(e) => this.props.onChange(e.target.value)} />
       </div>
+
     )
   }
 }
 
 const styles = {
   marginBottom: '0',
+  padding: '0 7px',
 }

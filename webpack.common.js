@@ -75,14 +75,14 @@ module.exports = {
   // och minifiering av kod
   plugins: [
     new CleanWebpackPlugin(['dist']), // Ta bort dist-mappen (resar bort gammla filer)
-    extractCss, // Lägg all CSS du har hittat i en fil
+    extractCss, // Lägg all CSS du har hittat till en bundle fil
     new CopyWebpackPlugin([ // Kopiera bilderna
       {
         from: 'src/images',
         to: 'images/',
       },
     ]),
-    new HtmlWebpackPlugin({ // Stoppa in referencer till JS och CSS-filerna i vårt index.html
+    new HtmlWebpackPlugin({ // Stoppa in referencer till JS och CSS-filerna i vår index.html
       template: 'src/index.html',
       favicon: 'src/images/favicon.ico',
     }),
