@@ -40,7 +40,7 @@ export default class Panel extends React.Component {
           }
           {this.props.children}
         </div>
-        <form onSubmit={this.props.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <TextInput onChange={this.handleTextChange} value={this.state.newItemText} text={this.props.newItemText} />
         </form>
       </div>

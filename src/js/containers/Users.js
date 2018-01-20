@@ -18,7 +18,6 @@ const users = props =>
       <ListContainer
         filter={usersFilter}
         noItemsText='Inga personer hittades'
-        style={props.style}
       >
         {[].map(a => <a>1</a>)}
 

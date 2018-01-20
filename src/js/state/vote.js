@@ -1,4 +1,3 @@
-import { get, set } from 'utils'
 import {
   getVotes as getVotesAPI,
   getVote as getVoteAPI,
@@ -7,12 +6,10 @@ import {
 } from 'api'
 
 // action types
-export const SET_CURRENT_VOTE_ID = 'SET_CURRENT_VOTE_ID'
 export const SET_CURRENT_VOTE = 'SET_CURRENT_VOTE'
 export const SET_VOTES = 'SET_VOTES'
 
 // action creators
-export const setCurrentVoteID = voteID => ({ type: SET_CURRENT_VOTE_ID, payload: voteID })
 export const setCurrentVote = vote => ({ type: SET_CURRENT_VOTE, payload: vote })
 export const setVotes = voteList => ({ type: SET_VOTES, payload: voteList })
 
@@ -29,7 +26,7 @@ export const getVote = voteID => dispatch => {
 }
 
 export const createVote = (question, meetingID) => dispatch => {
-  createVoteAPI(question, meetingID)
+  createVoteAPI(question, meetingID, [])
     .then(resp => dispatch(getVotes()))
 }
 
@@ -39,21 +36,13 @@ export const updateVote = (voteID, question, open, alternatives) => dispatch => 
 }
 
 // reducer
-const voteStoreKey = 'vote'
 const initialState = {
-  currentVoteID: get(voteStoreKey, null),
   currentVote: {},
   list: [],
 }
 
 export const voteReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_CURRENT_VOTE_ID:
-      set(voteStoreKey, action.payload)
-      return {
-        ...state,
-        currentVoteID: action.payload,
-      }
     case SET_CURRENT_VOTE:
       return {
         ...state,
@@ -68,4 +57,3 @@ export const voteReducer = (state = initialState, action) => {
       return state
   }
 }
-

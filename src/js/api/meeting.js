@@ -4,7 +4,7 @@ const meetingURL = '/voting/meetings/'
 
 export const getMeetings = () => fetchAPI(meetingURL)
 
-export const getMeeting = meetingID => fetchAPI(`${meetingURL}${meetingID}`)
+export const getMeeting = meetingID => fetchAPI(`${meetingURL}${meetingID}/`)
 
 export const createMeeting = (name, section) => postAPI(meetingURL, { name, section })
 

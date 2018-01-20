@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { store, createMeeting, setCurrentMeeting } from 'state'
 import ListContainer from 'components/ListContainer'
+import ListItem from 'components/ListItem'
 import Panel from 'components/Panel'
 
 const meetingFilter = (childItem, textFilter) => {
@@ -14,7 +15,7 @@ const meetings = props => (
   <Panel
     title='Möten'
     newItemText='Nytt möte'
-    onAddItem={name => props.addMeeting(name, props.section)}
+    onAddItem={name => props.createMeeting(name, props.section)}
   >
     <ListContainer
       filter={meetingFilter}
@@ -22,16 +23,14 @@ const meetings = props => (
       style={props.style}
     >
       {props.meetings.map(meeting => (
-        <a
-          onClick={() => props.selectMeetings(meeting.id)}
-          key={meeting.id}
-          className={`collection-item ${meeting.id === props.currentMeeting ? 'active' : ''}`}
-          role='button'
-          style={{ cursor: 'pointer' }}
+        <ListItem
+          active={meeting.id === props.currentMeeting}
+          onClick={() => props.setCurrentMeeting(meeting.id)}
+          key={`meeting${meeting.id}`}
         >
           {meeting.name}
-        </a>
-        ))}
+        </ListItem>
+      ))}
     </ListContainer>
   </Panel>
 )
@@ -43,8 +42,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  addMeeting: (meetingText, section) => dispatch(createMeeting(meetingText, section)),
-  selectMeetings: meetingID => dispatch(setCurrentMeeting(meetingID)),
+  createMeeting: (meetingText, section) => dispatch(createMeeting(meetingText, section)),
+  setCurrentMeeting: meetingID => dispatch(setCurrentMeeting(meetingID)),
 })
 
 export default connect(
