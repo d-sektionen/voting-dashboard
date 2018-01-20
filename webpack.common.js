@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
-const extractCss = new ExtractTextPlugin('materalize.[contenthash].css')
+const extractCss = new ExtractTextPlugin('[name].[contenthash].css')
 const extractSass = new ExtractTextPlugin('bundle.[contenthash].css')
 
 module.exports = {
@@ -67,7 +67,7 @@ module.exports = {
         test: /\.(sass|scss)$/,
         loader: extractSass.extract(['css-loader', 'sass-loader']),
       },
-      // Fonter
+      // Fonts
       {
         test: /\.(ttf|eot|woff|woff2)$/,
         loader: 'file-loader',
