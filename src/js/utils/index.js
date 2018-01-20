@@ -12,12 +12,6 @@ export const store = (key, value) => localStorage.setItem(key, JSON.stringify(va
 
 export const remove = key => localStorage.removeItem(key)
 
-// Get the token from the URL
-export const queryString = key => {
-  const [foundKey, value] = window.location.search.substring(1).split('=')
-  return foundKey === key ? value : null
-}
-
 export const randomID = () => `id${Math.random().toString(36).substr(5)}${Date.now().toString().substr(9)}`
 
 export const capitalize = str => str[0].toUpperCase() + str.slice(1)

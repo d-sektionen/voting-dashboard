@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
-const extractCss = new ExtractTextPlugin('[name].[contenthash].css')
+const extractCss = new ExtractTextPlugin('materialize.css')
 const extractSass = new ExtractTextPlugin('bundle.[contenthash].css')
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
   },
   // För de här vägarna kommer webpack leta efter filer när den stöter på imports.
   // Gör så att man kan skriva absoluta vägar istället för relativa,
-  // tex 'import utils' istället för 'import ../utils'
+  // tex 'import utils' istället för 'import ../../utils'
   resolve: {
     modules: [
       path.resolve('./src/js'),

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { store } from 'state'
 import Panel from 'components/Panel'
 
-export default class Voting extends React.Component {
+export default class Votes extends React.Component {
   componentWillMount() {
 
   }
