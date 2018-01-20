@@ -1,6 +1,10 @@
+/* menu */
+
 nav {
   padding: 0 12px 0 4px;
 }
+
+/* section selection in the upper left corner  */
 
 .section-logo {
   max-height: 64px;
@@ -19,6 +23,8 @@ nav {
   -Webkit-filter: grayscale(100%);
   filter: grayscale(100%);
 }
+
+/* the main 3 panels on the page */
 
 .panel {
   height: 800px;

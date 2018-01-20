@@ -35,12 +35,12 @@ npm start
   - [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)/[export](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export)
   - [npm](https://docs.npmjs.com/getting-started/what-is-npm) - Pakethanterare för JS
 - [Materialize](http://next.materializecss.com/about.html) - CSS-framework 
-
+- [Sass](http://sass-lang.com/guide) - CSS++
 ## Överkurs men ändå bra att veta
 - [babel](https://babeljs.io/) - transpile ("översätter") JSX och ES6 till ES5
 - [webpack](https://webpack.js.org/concepts/) - hanterar kompilering av kod, dev server, mm
-  - modules
-  - plugins
+  - [modules](https://webpack.js.org/concepts/modules/)
+  - [plugins](https://webpack.js.org/concepts/plugins/)
 - [ESLint](https://eslint.org/) - formateringsprogram för JS
 
 ## Scripts

@@ -4,9 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
-const extractCss = new ExtractTextPlugin({
-  filename: 'bundle.[contenthash].css',
-})
+const extractCss = new ExtractTextPlugin('materalize.[contenthash].css')
+const extractSass = new ExtractTextPlugin('bundle.[contenthash].css')
 
 module.exports = {
   // Startpunk och slutpunkt för all Javascript i vårt projekt.
@@ -29,6 +28,7 @@ module.exports = {
     modules: [
       path.resolve('./src/js'),
       path.resolve('./src/css'),
+      path.resolve('./src/sass'),
       path.resolve('./node_modules'),
     ],
   },
@@ -62,6 +62,11 @@ module.exports = {
         test: /\.css$/,
         loader: extractCss.extract('css-loader'),
       },
+      // SASS
+      {
+        test: /\.(sass|scss)$/,
+        loader: extractSass.extract(['css-loader', 'sass-loader']),
+      },
       // Fonter
       {
         test: /\.(ttf|eot|woff|woff2)$/,
@@ -78,6 +83,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']), // Ta bort dist-mappen (resar bort gammla filer)
     extractCss, // Lägg all CSS du har hittat till en bundle fil
+    extractSass,
     new CopyWebpackPlugin([ // Kopiera bilderna
       {
         from: 'src/images',

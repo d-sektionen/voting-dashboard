@@ -1,17 +1,15 @@
 import React from 'react'
-
-import 'materialize-css/dist/css/materialize.min.css'
-import 'material-icons.css'
-import 'custom.css'
-
 import queryString from 'query-string'
+import { connect } from 'react-redux'
+import classNames from 'classnames'
 import { store, setToken } from 'state'
+import { getSectionName } from 'utils'
 import Header from 'containers/Header'
 import Meetings from 'containers/Meetings'
 import Voting from 'containers/Voting'
 import Users from 'containers/Users'
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props)
 
@@ -24,13 +22,15 @@ export default class App extends React.Component {
   }
 
   render() {
+    const sectionName = getSectionName(this.props.section)
+
     return (
       <React.Fragment>
         <Header
           title='Dashboard för D-Cide'
           className='grey darken-4'
         />
-        <div className='row section panel-container'>
+        <div className={classNames('row', 'section', sectionName)}>
           <div className='col s12 m3'>
             <Meetings />
           </div>
@@ -45,3 +45,9 @@ export default class App extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  section: state.section,
+})
+
+export default connect(mapStateToProps)(App)

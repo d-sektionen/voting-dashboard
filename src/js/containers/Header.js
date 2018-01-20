@@ -13,14 +13,14 @@ const Header = props => (
       </div>
       <a href='/' className='brand-logo center hide-on-med-and-down'>{props.title}</a>
       <ul className='right'>
-        <li className='hide-on-small-only' style={{ marginRight: '9px' }}>{capitalize('jeswr740')}</li>
-        <li>
-          { props.token ?
-            <button onClick={props.onLogOut} className='waves-effect waves-light btn'>Logga ut</button>
-            :
-            <a href={loginURL} className='waves-effect waves-light btn'>Logga in</a>
-          }
-        </li>
+        { props.token ?
+          <React.Fragment>
+            <li className='hide-on-small-only' style={{ marginRight: '9px' }}>{capitalize('jeswr740')}</li>
+            <li><button onClick={props.onLogOut} className='waves-effect waves-light btn'>Logga ut</button></li>
+          </React.Fragment>
+          :
+          <li><a href={loginURL} className='waves-effect waves-light btn'>Logga in</a></li>
+        }
       </ul>
     </div>
   </nav>

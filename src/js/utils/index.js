@@ -1,3 +1,4 @@
+import { sections } from 'config'
 
 // JSON-parsing for fetch
 export const json = x => x.json()
@@ -20,3 +21,5 @@ export const queryString = key => {
 export const randomID = () => `id${Math.random().toString(36).substr(5)}${Date.now().toString().substr(9)}`
 
 export const capitalize = str => str[0].toUpperCase() + str.slice(1)
+
+export const getSectionName = id => sections.find(section => section.id === id).name

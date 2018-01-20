@@ -17,11 +17,9 @@ class Users extends React.Component {
 
   render() {
     return (
-      <Panel>
+      <Panel title='Registrerade' newItemText='Nytt LiU-ID'>
         <ListContainer
           filter={this.filter}
-          title='Registrerade'
-          newItemText='Nytt LiU-ID'
           noItemsText='Inga personer hittades'
           style={this.props.style}
         >
