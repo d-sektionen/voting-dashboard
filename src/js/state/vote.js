@@ -1,4 +1,4 @@
-import { get, store } from 'utils'
+import { get, set } from 'utils'
 import {
   getVotes as getVotesAPI,
   getVote as getVoteAPI,
@@ -17,8 +17,9 @@ export const setCurrentVote = vote => ({ type: SET_CURRENT_VOTE, payload: vote }
 export const setVotes = voteList => ({ type: SET_VOTES, payload: voteList })
 
 // async action creators
-export const getVotes = () => dispatch => {
+export const getVotes = meetingID => dispatch => {
   getVotesAPI()
+    // Filter
     .then(json => dispatch(setVotes(json.reverse())))
 }
 
@@ -34,7 +35,7 @@ export const createVote = (question, meetingID) => dispatch => {
 
 export const updateVote = (voteID, question, open, alternatives) => dispatch => {
   updateVoteAPI(voteID, question, open, alternatives)
-    .then(resp => dispatch(getVote(voteID)))
+    .then(resp => dispatch(setCurrentVote(resp)))
 }
 
 // reducer
@@ -48,7 +49,7 @@ const initialState = {
 export const voteReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CURRENT_VOTE_ID:
-      store(voteStoreKey, action.payload)
+      set(voteStoreKey, action.payload)
       return {
         ...state,
         currentVoteID: action.payload,

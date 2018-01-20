@@ -5,13 +5,13 @@ import { loginURL } from 'config'
 import { capitalize } from 'utils'
 import SectionSelection from 'containers/SectionSelection'
 
-const Header = props => (
+const header = props => (
   <nav className={props.className}>
     <div className='nav-wrapper'>
       <div className='left' style={{ height: '100%' }}>
         <SectionSelection />
       </div>
-      <a href='/' className='brand-logo center hide-on-med-and-down'>{props.title}</a>
+      <a href='/dashboard' className='brand-logo center hide-on-med-and-down'>{props.title}</a>
       <ul className='right'>
         { props.token ?
           <React.Fragment>
@@ -41,4 +41,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Header)
+)(header)

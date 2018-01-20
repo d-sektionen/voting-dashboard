@@ -1,4 +1,4 @@
-import { get, store, remove } from 'utils'
+import { get, set, remove } from 'utils'
 
 // action types
 export const SET_TOKEN = 'SET_TOKEN'
@@ -15,10 +15,11 @@ const initialState = get(tokenStoreKey, null)
 export const tokenReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_TOKEN:
-      store(tokenStoreKey, action.payload)
+      set(tokenStoreKey, action.payload)
       return action.payload
     case DELETE_TOKEN:
       remove(tokenStoreKey)
+      window.location = '/dashboard'
       return null
     default:
       return state

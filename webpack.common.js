@@ -34,7 +34,7 @@ module.exports = {
   },
   // Moduler, körs när koden söks igenom.
   // Här kollar vi vilka filer som laddas in med ett regex-test,
-  // sedan gör vi någon transformation på den filen.
+  // sedan gör vi någon typ av transformation på den filen.
   // Tex att kompilera alla JS-filer med babel
   module: {
     loaders: [
@@ -83,7 +83,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']), // Ta bort dist-mappen (resar bort gammla filer)
     extractCss, // Lägg all CSS du har hittat till en bundle fil
-    extractSass,
+    extractSass, // Samma sak för Sass
     new CopyWebpackPlugin([ // Kopiera bilderna
       {
         from: 'src/images',

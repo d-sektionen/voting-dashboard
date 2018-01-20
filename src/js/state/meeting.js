@@ -1,24 +1,35 @@
-import { get, store } from 'utils'
-import { getMeetings, createMeeting as createMeetingAPI } from 'api'
+import { get, set } from 'utils'
+import {
+  getMeetings as getMeetingsAPI,
+  createMeeting as createMeetingAPI,
+  getVotes as getVotesAPI,
+} from 'api'
+import { getVotes } from 'state/vote'
 
 // action types
-export const SET_CURRENT_MEETING = 'SET_CURRENT_MEETING'
+export const SET_MEETING_ID = 'SET_MEETING_ID'
 export const SET_MEETINGS = 'SET_MEETINGS'
 
 // action creators
-export const setCurrentMeeting = meetingID => ({ type: SET_CURRENT_MEETING, payload: meetingID })
+export const setMeetingID = meetingID => ({ type: SET_MEETING_ID, payload: meetingID })
 export const setMeetings = meetingList => ({ type: SET_MEETINGS, payload: meetingList })
 
 // async action creators
-export const fetchMeetings = () => dispatch => {
-  getMeetings()
+export const setCurrentMeeting = meetingID => dispatch => {
+  dispatch(setMeetingID(meetingID))
+  dispatch(getVotes(meetingID))
+}
+
+
+export const getMeetings = () => dispatch => {
+  getMeetingsAPI()
     .then(json => dispatch(setMeetings(json.reverse())))
 }
 
 export const createMeeting = (name, section) => dispatch => {
   createMeetingAPI(name, section)
     .then(resp => {
-      dispatch(fetchMeetings())
+      dispatch(getMeetings())
     })
 }
 
@@ -31,8 +42,8 @@ const initialState = {
 
 export const meetingReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_CURRENT_MEETING:
-      store(meetingStoreKey, action.payload)
+    case SET_MEETING_ID:
+      set(meetingStoreKey, action.payload)
       return {
         ...state,
         currentMeeting: action.payload,

@@ -26,7 +26,9 @@ export default class ListContainer extends React.Component {
 
     return (
       <React.Fragment>
-        <FilterInput onChange={this.handleNewFilter} />
+        {this.props.filter &&
+          <FilterInput onChange={this.handleNewFilter} />
+        }
         {filteredItems.length > 0 ?
           <div className='collection list-collection'>
             {filteredItems}
