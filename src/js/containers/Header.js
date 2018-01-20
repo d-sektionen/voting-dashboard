@@ -15,11 +15,15 @@ const Header = props => (
       <ul className='right'>
         { props.token ?
           <React.Fragment>
-            <li className='hide-on-small-only' style={{ marginRight: '9px' }}>{capitalize('jeswr740')}</li>
-            <li><button onClick={props.onLogOut} className='waves-effect waves-light btn'>Logga ut</button></li>
+            <li className='hide-on-small-only' style={{ marginRight: '9px' }}>
+              {capitalize('jeswr740')}
+            </li>
+            <li>
+              <button onClick={props.onLogOut} className='waves-effect waves-light btn red darken-1'>Logga ut</button>
+            </li>
           </React.Fragment>
           :
-          <li><a href={loginURL} className='waves-effect waves-light btn'>Logga in</a></li>
+          <li><a href={loginURL} className='waves-effect waves-light btn green'>Logga in</a></li>
         }
       </ul>
     </div>

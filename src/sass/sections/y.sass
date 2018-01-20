@@ -1,3 +1,17 @@
 // https://ysektionen.se/media/uploads/Y-sektionens-grafiska-profil.pdf
 $y-yellow: rgb(255,242,0)
 $y-green: rgb(115, 189, 131)
+
+.y
+  .collection .collection-item.active
+    background: $m-yellow
+    color: $black
+
+  .collection a.collection-item
+    color: $black
+
+  input[type=text]:not(.browser-default):focus:not([readonly])
+    border-bottom-color: $black
+
+  input[type=text]:not(.browser-default):focus:not([readonly])+label
+    color: $black

@@ -4,3 +4,17 @@ $d-pink: #E5398D
 $d-blue: #20407C
 $d-green: #70BD44
 $d-yellow: #F7E623
+
+.d
+  .collection .collection-item.active
+    background: $d-pink
+    color: #eafaf9
+
+  .collection a.collection-item
+    color: $d-blue
+
+  input[type=text]:not(.browser-default):focus:not([readonly])
+    border-bottom-color: $d-blue
+
+  input[type=text]:not(.browser-default):focus:not([readonly])+label
+    color: $d-blue

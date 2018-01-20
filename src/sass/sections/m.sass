@@ -1,3 +1,17 @@
 // https://www.maskinteknologsektionen.se/
 $m-red: #B9000A
 $m-yellow: #FFE500
+
+.m
+  .collection .collection-item.active
+    background: $m-red
+    color: $m-yellow
+
+  .collection a.collection-item
+    color: $black
+
+  input[type=text]:not(.browser-default):focus:not([readonly])
+    border-bottom-color: $m-red
+
+  input[type=text]:not(.browser-default):focus:not([readonly])+label
+    color: $m-red
