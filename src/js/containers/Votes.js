@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Panel from 'components/Panel'
 import { createVote, getVote, updateVote } from 'state'
+import Panel from 'components/Panel'
 import ListContainer from 'components/ListContainer'
 import ListItem from 'components/ListItem'
+import TextInput from 'components/TextInput'
+import ToggleBox from 'components/ToggleBox'
 
 const votes = props => (
   <Panel
@@ -11,6 +13,11 @@ const votes = props => (
     newItemText='Ny omröstning'
     onAddItem={question => props.createVote(question, props.currentMeeting)}
   >
+    <form>
+      Fråga: <TextInput inline />
+      Alternativ: <TextInput inline />
+      Öppen: <ToggleBox />
+    </form>
     <ListContainer noItemsText='Inga omröstningar skapde än'>
       {props.votes.map(vote => (
         <ListItem

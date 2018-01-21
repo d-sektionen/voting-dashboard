@@ -1,5 +1,5 @@
 import React from 'react'
-import FilterInput from 'components/Materialize/FilterInput'
+import TextInput from 'components/TextInput'
 
 export default class ListContainer extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class ListContainer extends React.Component {
     return (
       <React.Fragment>
         {this.props.filter &&
-          <FilterInput onChange={this.handleNewFilter} />
+          <TextInput onChange={this.handleNewFilter} placeholder='Filter' />
         }
         {filteredItems.length > 0 ?
           <div className='collection list-collection'>
@@ -35,7 +35,7 @@ export default class ListContainer extends React.Component {
           </div>
             :
           <p style={{ marginLeft: '7px' }}>{this.props.noItemsText}</p>
-          }
+        }
       </React.Fragment>
     )
   }

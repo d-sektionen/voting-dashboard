@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { store } from 'state'
+import { getUsers, addUser, removeUser, getScanners, addSacnner, removeScanner } from 'state'
 import ListContainer from 'components/ListContainer'
 import Panel from 'components/Panel'
 
@@ -38,16 +38,16 @@ const users = props =>
 
 
 const mapStateToProps = state => ({
-  // meetings: state.meeting.list,
-  // currentMeeting: state.meeting.currentMeeting,
+  users: state.users,
+  scanners: state.scanners,
+  currentMeeting: state.meeting.currentMeeting,
 })
 
-const mapDispatchToProps = dispatch =>
-  // const { section } = store.getState()
-  ({
-    // handleAddMeeting: meetingText => dispatch(createMeeting(meetingText, section)),
-    // handleSelectMeetings: meetingID => dispatch(setCurrentMeeting(meetingID)),
-  })
+const mapDispatchToProps = dispatch => ({
+  addUser: meetingText => 1, // dispatch(createMeeting(meetingText, section)),
+  removeUser: meetingID => 1, // dispatch(setCurrentMeeting(meetingID)),
+
+})
 
 
 export default connect(

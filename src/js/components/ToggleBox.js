@@ -2,7 +2,7 @@ import React from 'react'
 import M from 'materialize-css'
 import { randomID } from 'utils'
 
-export default class TextInput extends React.Component {
+export default class ToggleBox extends React.Component {
   constructor(props) {
     super(props)
 
@@ -20,19 +20,10 @@ export default class TextInput extends React.Component {
 
   render() {
     return (
-      <div className='input-field' style={styles}>
+      <div className='input-field'>
         <input onChange={this.onChange} id={this.id} value={this.props.value} type='text' />
-        <label htmlFor={this.id} style={labelStyles}>{this.props.text}</label>
+        <label htmlFor={this.id}>{this.props.text}</label>
       </div>
     )
   }
-}
-
-const styles = {
-  marginBottom: '0',
-  padding: '0 7px',
-}
-
-const labelStyles = {
-  left: '7px',
 }

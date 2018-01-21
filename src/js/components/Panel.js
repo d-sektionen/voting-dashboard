@@ -1,5 +1,5 @@
 import React from 'react'
-import TextInput from 'components/Materialize/TextInput'
+import TextInput from 'components/TextInput'
 
 export default class Panel extends React.Component {
   constructor(props) {
