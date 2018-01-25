@@ -1,5 +1,5 @@
 import React from 'react'
-import M from 'materialize-css'
+import classNames from 'classnames'
 import { randomID } from 'utils'
 
 export default class ToggleBox extends React.Component {
@@ -10,19 +10,19 @@ export default class ToggleBox extends React.Component {
     this.onChange = this.onChange.bind(this)
   }
 
-  componentDidMount() {
-    M.updateTextFields()
-  }
-
   onChange(event) {
     this.props.onChange(event.target.value)
   }
 
   render() {
     return (
-      <div className='input-field'>
-        <input onChange={this.onChange} id={this.id} value={this.props.value} type='text' />
-        <label htmlFor={this.id}>{this.props.text}</label>
+      <div className={classNames('switch', this.props.className)}>
+        <label>
+          {this.props.offText}
+          <input onChange={this.onChange} checked={this.props.value} type='checkbox' />
+          <span className='lever' />
+          {this.props.onText}
+        </label>
       </div>
     )
   }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createVote, setCurrentVote, updateVote } from 'state'
+import { isEmpty } from 'utils'
 import Panel from 'components/Panel'
 import ListContainer from 'components/ListContainer'
 import ListItem from 'components/ListItem'
@@ -21,16 +22,34 @@ class Votes extends React.Component {
         newItemText='Ny omröstning'
         onAddItem={question => this.props.createVote(question, this.props.currentMeeting)}
       >
-        {/* If alternativs.length > 0 ? */}
 
-        {/* <form>
-          Fråga: <TextInput inline />
-          Alternativ 1: <TextInput inline placeholder='Namn 1' />
-          Alternativ 2: <TextInput inline placeholder='Namn 2' />
-          Öppen: <ToggleBox />
-          <button>Lägg till alternativ</button>
-          <button>Spara</button>
-        </form> */}
+
+        {/* If alternativs.length > 0 ? */}
+        {isEmpty(this.props.currentVote) ?
+          <div className='empty-box' />
+            :
+          <form>
+            <TextInput text='Fråga' />
+            <div className='section'>
+              <TextInput text='Alternativ 1' placeholder='Namn 1' />
+              <TextInput text='Alternativ 2' placeholder='Namn 2' />
+              <div className='right-align'>
+                <a className='waves-effect waves-light btn grey lighten-1 right-align'>
+                  Lägg till alternativ
+                  <i className='material-icons right'>add</i>
+                </a>
+              </div>
+            </div>
+            <ToggleBox className='right-align' onText='Öppna frågan' offText='Stäng frågan' />
+            <div className='section right-align'>
+              <button className='btn waves-effect waves-light add-alternative-button green' type='submit' name='action'>
+                Spara
+                <i className='material-icons right'>save</i>
+              </button>
+            </div>
+          </form>
+        }
+        <div className='divider' />
         <ListContainer noItemsText='Inga omröstningar skapde än'>
           {
             this.props.votes.filter(vote => vote.meeting === this.props.currentMeeting)
@@ -43,7 +62,6 @@ class Votes extends React.Component {
                   {vote.question}
                 </ListItem>
             ))
-
           }
         </ListContainer>
       </Panel>
