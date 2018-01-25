@@ -11,8 +11,8 @@ const SET_VOTE = 'SET_VOTE'
 const SET_VOTES = 'SET_VOTES'
 
 // action creators
-export const setVote = vote => ({ type: SET_VOTE, payload: vote })
-export const setVotes = voteList => ({ type: SET_VOTES, payload: voteList })
+const setVote = vote => ({ type: SET_VOTE, payload: vote })
+const setVotes = voteList => ({ type: SET_VOTES, payload: voteList })
 
 // async action creators
 export const getVotes = () => dispatch => {
@@ -21,26 +21,16 @@ export const getVotes = () => dispatch => {
 }
 
 export const setCurrentVote = voteID => dispatch => {
+  if (voteID === null) {
+    dispatch(setVote({}))
+    return
+  }
+
   getVoteAPI(voteID)
     .then(resp => {
       dispatch(setVote(resp))
     })
 }
-
-export const setLatestVote = meetingID => dispatch => {
-  if (meetingID === null) {
-    dispatch(setVote({}))
-    return
-  }
-
-  const state = store.getState()
-  const lastestVote = state.vote.list.filter(vote => vote.meeting === meetingID)[0]
-
-  // A meeting might not have a vote yet, if thats the case set current vote empty object
-  const currentVote = lastestVote || {}
-  dispatch(setVote(currentVote))
-}
-
 
 export const createVote = (question, meetingID) => dispatch => {
   createVoteAPI(question, meetingID, [])
@@ -57,8 +47,8 @@ export const updateVote = (voteID, question, open, alternatives) => dispatch => 
 
 // reducer
 const initialState = {
-  currentVote: {},
-  list: [],
+  current: {},
+  all: [],
 }
 
 export const voteReducer = (state = initialState, action) => {
@@ -66,14 +56,27 @@ export const voteReducer = (state = initialState, action) => {
     case SET_VOTE:
       return {
         ...state,
-        currentVote: action.payload,
+        current: action.payload,
       }
     case SET_VOTES:
       return {
         ...state,
-        list: action.payload,
+        all: action.payload,
       }
     default:
       return state
   }
+}
+
+// helper functions
+export const getLatestVote = meetingID => {
+  if (meetingID === null) {
+    return null
+  }
+
+  const state = store.getState()
+  const lastestVote = state.vote.all.filter(vote => vote.meeting === meetingID)[0]
+
+  // A meeting might not have a vote yet, if thats the case set current vote empty object
+  return lastestVote ? lastestVote.id : null
 }

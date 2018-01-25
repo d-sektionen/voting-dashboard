@@ -3,31 +3,21 @@ import {
   getMeetings as getMeetingsAPI,
   createMeeting as createMeetingAPI,
 } from 'api'
-import { setLatestVote, store } from 'state'
+import { getLatestVote, setCurrentVote, store } from 'state'
 
 // action types
 const SET_MEETING_ID = 'SET_MEETING_ID'
 const SET_MEETINGS = 'SET_MEETINGS'
 
 // action creators
-export const setMeetingID = meetingID => ({ type: SET_MEETING_ID, payload: meetingID })
-export const setMeetings = meetingList => ({ type: SET_MEETINGS, payload: meetingList })
+const setMeetingID = meetingID => ({ type: SET_MEETING_ID, payload: meetingID })
+const setMeetings = meetingList => ({ type: SET_MEETINGS, payload: meetingList })
 
 // async action creators
 export const setCurrentMeeting = meetingID => dispatch => {
   dispatch(setMeetingID(meetingID))
-  dispatch(setLatestVote(meetingID))
+  dispatch(setCurrentVote(getLatestVote(meetingID)))
 }
-
-export const setLatestMeeting = section => dispatch => {
-  const state = store.getState()
-  const lastestMeeting = state.meeting.list.filter(meeting => meeting.section === section)[0]
-
-  // A section might not have a meeting yet, if thats the case set meeting id to null
-  const meetingID = lastestMeeting ? lastestMeeting.id : null
-  dispatch(setCurrentMeeting(meetingID))
-}
-
 
 export const getMeetings = () => dispatch => {
   getMeetingsAPI()
@@ -44,8 +34,8 @@ export const createMeeting = (name, section) => dispatch => {
 // reducer
 const meetingStoreKey = 'meeting'
 const initialState = {
-  currentMeeting: get(meetingStoreKey, null),
-  list: [],
+  current: get(meetingStoreKey, null),
+  all: [],
 }
 
 export const meetingReducer = (state = initialState, action) => {
@@ -54,14 +44,23 @@ export const meetingReducer = (state = initialState, action) => {
       set(meetingStoreKey, action.payload)
       return {
         ...state,
-        currentMeeting: action.payload,
+        current: action.payload,
       }
     case SET_MEETINGS:
       return {
         ...state,
-        list: action.payload,
+        all: action.payload,
       }
     default:
       return state
   }
+}
+
+// helper functinos
+export const getLatestMeeting = section => {
+  const state = store.getState()
+  const lastestMeeting = state.meeting.all.filter(meeting => meeting.section === section)[0]
+
+  // A section might not have a meeting yet, if thats the case set meeting id to null
+  return lastestMeeting ? lastestMeeting.id : null
 }

@@ -39,8 +39,8 @@ const meetings = props => (
 )
 
 const mapStateToProps = state => ({
-  currentMeeting: state.meeting.currentMeeting,
-  meetings: state.meeting.list,
+  currentMeeting: state.meeting.current,
+  meetings: state.meeting.all,
   section: state.section,
 })
 

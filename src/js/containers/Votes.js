@@ -52,9 +52,9 @@ class Votes extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentVote: state.vote.currentVote,
-  votes: state.vote.list,
-  currentMeeting: state.meeting.currentMeeting,
+  currentVote: state.vote.current,
+  votes: state.vote.all,
+  currentMeeting: state.meeting.current,
 })
 
 const mapDispatchToProps = dispatch => ({

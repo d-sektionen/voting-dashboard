@@ -1,5 +1,5 @@
 import { get, set } from 'utils'
-import { setLatestMeeting } from 'state'
+import { getLatestMeeting, setCurrentMeeting } from 'state'
 
 // action types
 const SET_SECTION_ID = 'SET_SECTION_ID'
@@ -11,7 +11,7 @@ export const setSectionID = section => ({ type: SET_SECTION_ID, payload: section
 export const setSection = section => dispatch => {
   dispatch(setSectionID(section))
   // Set current meeting as the lastest created meeting in that section
-  dispatch(setLatestMeeting(section))
+  dispatch(setCurrentMeeting(getLatestMeeting(section)))
 }
 
 // reducer
