@@ -2,13 +2,12 @@ import { get, set } from 'utils'
 import {
   getMeetings as getMeetingsAPI,
   createMeeting as createMeetingAPI,
-  getVotes as getVotesAPI,
 } from 'api'
-import { getVotes } from 'state/vote'
+import { setLatestVote, store } from 'state'
 
 // action types
-export const SET_MEETING_ID = 'SET_MEETING_ID'
-export const SET_MEETINGS = 'SET_MEETINGS'
+const SET_MEETING_ID = 'SET_MEETING_ID'
+const SET_MEETINGS = 'SET_MEETINGS'
 
 // action creators
 export const setMeetingID = meetingID => ({ type: SET_MEETING_ID, payload: meetingID })
@@ -17,7 +16,16 @@ export const setMeetings = meetingList => ({ type: SET_MEETINGS, payload: meetin
 // async action creators
 export const setCurrentMeeting = meetingID => dispatch => {
   dispatch(setMeetingID(meetingID))
-  dispatch(getVotes(meetingID))
+  dispatch(setLatestVote(meetingID))
+}
+
+export const setLatestMeeting = section => dispatch => {
+  const state = store.getState()
+  const lastestMeeting = state.meeting.list.filter(meeting => meeting.section === section)[0]
+
+  // A section might not have a meeting yet, if thats the case set meeting id to null
+  const meetingID = lastestMeeting ? lastestMeeting.id : null
+  dispatch(setCurrentMeeting(meetingID))
 }
 
 
@@ -57,4 +65,3 @@ export const meetingReducer = (state = initialState, action) => {
       return state
   }
 }
-

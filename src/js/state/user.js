@@ -8,7 +8,7 @@ import {
 const sort = arr => arr.sort((a, b) => a.id.localeCompare(b.id))
 
 // action types
-export const SET_USERS = 'SET_USERS'
+const SET_USERS = 'SET_USERS'
 
 // action creators
 export const setUsers = users => ({ type: SET_USERS, payload: users })

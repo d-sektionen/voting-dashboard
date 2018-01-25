@@ -1,8 +1,8 @@
 import { get, set, remove } from 'utils'
 
 // action types
-export const SET_TOKEN = 'SET_TOKEN'
-export const DELETE_TOKEN = 'DELETE_TOKEN'
+const SET_TOKEN = 'SET_TOKEN'
+const DELETE_TOKEN = 'DELETE_TOKEN'
 
 // action creators
 export const setToken = token => ({ type: SET_TOKEN, payload: token })

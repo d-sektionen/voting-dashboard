@@ -8,11 +8,11 @@ import { meetingReducer } from 'state/meeting'
 import { voteReducer } from 'state/vote'
 import { userReducer } from 'state/user'
 
-export { setToken, deleteToken } from 'state/token'
-export { setSection } from 'state/section'
-export { setMeetings, setCurrentMeeting, getMeetings, createMeeting } from 'state/meeting'
-export { getVotes, getVote, createVote, updateVote } from 'state/vote'
-export { getUsers, deleteUser, addUser } from 'state/user'
+export * from 'state/token'
+export * from 'state/section'
+export * from 'state/meeting'
+export * from 'state/vote'
+export * from 'state/user'
 
 const logger = createLogger({
   duration: true,

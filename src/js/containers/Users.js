@@ -10,18 +10,15 @@ const usersFilter = (childItem, textFilter) => {
   return test.includes(filter)
 }
 
-const users = props =>
-  // console.log(props)
+const users = props => (
+  <Panel title='Registrerade' newItemText='Nytt LiU-ID'>
+    <ListContainer
+      filter={usersFilter}
+      noItemsText='Inga personer hittades'
+    >
+      {[].map(a => <a>1</a>)}
 
-  (
-    <Panel title='Registrerade' newItemText='Nytt LiU-ID'>
-      <ListContainer
-        filter={usersFilter}
-        noItemsText='Inga personer hittades'
-      >
-        {[].map(a => <a>1</a>)}
-
-        {/* {props.meetings.map(meeting => (
+      {/* {props.meetings.map(meeting => (
           <a
             // onClick={() => props.handleSelectMeetings(meeting.id)}
             key={meeting.id}
@@ -32,9 +29,9 @@ const users = props =>
             {meeting.name}
           </a>
         ))} */}
-      </ListContainer>
-    </Panel>
-  )
+    </ListContainer>
+  </Panel>
+)
 
 
 const mapStateToProps = state => ({
@@ -46,7 +43,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addUser: meetingText => 1, // dispatch(createMeeting(meetingText, section)),
   removeUser: meetingID => 1, // dispatch(setCurrentMeeting(meetingID)),
-
+  addScanner: () => 1,
+  removeScanner: () => 1,
 })
 
 

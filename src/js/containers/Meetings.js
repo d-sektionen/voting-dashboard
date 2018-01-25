@@ -22,15 +22,18 @@ const meetings = props => (
       noItemsText='Inga möten hittades'
       style={props.style}
     >
-      {props.meetings.map(meeting => (
-        <ListItem
-          active={meeting.id === props.currentMeeting}
-          onClick={() => props.setCurrentMeeting(meeting.id)}
-          key={`meeting${meeting.id}`}
-        >
-          {meeting.name}
-        </ListItem>
-      ))}
+      {
+        props.meetings.filter(meeting => meeting.section === props.section)
+          .map(meeting => (
+            <ListItem
+              active={meeting.id === props.currentMeeting}
+              onClick={() => props.setCurrentMeeting(meeting.id)}
+              key={`meeting${meeting.id}`}
+            >
+              {meeting.name}
+            </ListItem>
+        ))
+      }
     </ListContainer>
   </Panel>
 )
