@@ -18,6 +18,6 @@ export const isEmpty = obj => Object.keys(obj).length === 0 && obj.constructor =
 // Generates random IDs, used for textField component
 export const randomID = () => `id${Math.random().toString(36).substr(5)}${Date.now().toString().substr(9)}`
 
-export const capitalize = str => str[0].toUpperCase() + str.slice(1)
+export const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1)
 
 export const getSectionName = id => sections.find(section => section.id === id).name

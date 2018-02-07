@@ -5,7 +5,7 @@ import {
 } from 'api'
 
 // sort by LiU-ID
-const sort = arr => arr.sort((a, b) => a.id.localeCompare(b.id))
+const sort = arr => arr.sort((a, b) => a.user.username.localeCompare(b.user.username))
 
 // action types
 const SET_USERS = 'SET_USERS'
@@ -14,22 +14,22 @@ const SET_USERS = 'SET_USERS'
 export const setUsers = users => ({ type: SET_USERS, payload: users })
 
 // async action creators
-export const getUsers = () => dispatch => {
-  getUsersAPI()
+export const getUsers = meeting => dispatch => {
+  getUsersAPI(meeting)
     .then(json => dispatch(setUsers(sort(json))))
 }
 
 export const addUser = (liuID, meeting) => dispatch => {
   addUserAPI(liuID, meeting)
     .then(resp => {
-      dispatch(getUsers())
+      dispatch(getUsers(meeting))
     })
 }
 
 export const deleteUser = (liuID, meeting) => dispatch => {
   deleteUserAPI(liuID, meeting)
     .then(resp => {
-      dispatch(getUsers())
+      dispatch(getUsers(meeting))
     })
 }
 

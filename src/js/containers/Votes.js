@@ -23,7 +23,6 @@ class Votes extends React.Component {
         onAddItem={question => this.props.createVote(question, this.props.currentMeeting)}
       >
 
-
         {/* If alternativs.length > 0 ? */}
         {isEmpty(this.props.currentVote) ?
           <div className='empty-box' />
