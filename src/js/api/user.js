@@ -6,5 +6,5 @@ export const getUsers = meeting => fetchAPI(`${userURL}?meeting=${meeting}`)
 
 export const addUser = (liuID, meeting) => postAPI(userURL, { username: liuID, meeting })
 
-export const removeUser = liuID => deleteAPI(`${userURL}${liuID}/`)
+export const removeUser = attendantsID => deleteAPI(`${userURL}${attendantsID}/`)
 
