@@ -1,6 +1,5 @@
-import { json } from 'utils'
-import { apiURL as url } from 'config'
-import { getToken, hasToken } from 'api/token'
+import { json, get } from 'utils'
+import { apiURL } from 'config'
 
 const headers = token => ({
   Authorization: `JWT ${token}`,
@@ -8,17 +7,14 @@ const headers = token => ({
 })
 
 const doRequest = (endpoint, init) => {
-  if (hasToken()) {
-    return (
-      getToken()
-        .then(token => fetch(`${url}${endpoint}`, {
-          headers: headers(token),
-          ...init,
-        }))
-        .then(json)
-    )
-  }
-  return Promise.reject(new Error('Missing token, you are most likely not logged in.'))
+  const token = get('token')
+  return (
+    fetch(`${apiURL}${endpoint}`, {
+      headers: headers(token),
+      ...init,
+    })
+      .then(json)
+  )
 }
 
 export const fetchAPI = endpoint => doRequest(endpoint, {})

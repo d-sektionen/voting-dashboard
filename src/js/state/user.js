@@ -1,36 +1,17 @@
-import {
-  deleteUser as deleteUserAPI,
-  addUser as addUserAPI,
-  getUsers as getUsersAPI,
-} from 'api'
-
-// sort by LiU-ID
-const sort = arr => arr.sort((a, b) => a.user.username.localeCompare(b.user.username))
+import { getUsers as getUsersAPI } from 'api'
 
 // action types
 const SET_USERS = 'SET_USERS'
+const ADD_USER = 'ADD_USER'
 
 // action creators
 export const setUsers = users => ({ type: SET_USERS, payload: users })
+export const addUser = user => ({ type: ADD_USER, payload: user })
 
 // async action creators
 export const getUsers = meeting => dispatch => {
   getUsersAPI(meeting)
-    .then(json => dispatch(setUsers(sort(json))))
-}
-
-export const addUser = (liuID, meeting) => dispatch => {
-  addUserAPI(liuID, meeting)
-    .then(resp => {
-      dispatch(getUsers(meeting))
-    })
-}
-
-export const deleteUser = (liuID, meeting) => dispatch => {
-  deleteUserAPI(liuID, meeting)
-    .then(resp => {
-      dispatch(getUsers(meeting))
-    })
+    .then(json => dispatch(setUsers(json)))
 }
 
 // reducer
@@ -40,8 +21,9 @@ export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USERS:
       return action.payload
+    case ADD_USER:
+      return [...state, action.payload]
     default:
       return state
   }
 }
-

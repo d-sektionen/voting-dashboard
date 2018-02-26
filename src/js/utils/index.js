@@ -1,5 +1,3 @@
-import { sections } from 'config'
-
 // JSON-parsing for fetch
 export const json = x => x.json()
 
@@ -15,9 +13,12 @@ export const remove = key => localStorage.removeItem(key)
 // Check if object has no properties
 export const isEmpty = obj => Object.keys(obj).length === 0 && obj.constructor === Object
 
-// Generates random IDs, used for textField component
+// Generates random IDs, used for the textField component
 export const randomID = () => `id${Math.random().toString(36).substr(5)}${Date.now().toString().substr(9)}`
 
 export const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1)
 
-export const getSectionName = id => sections.find(section => section.id === id).name
+// sort by LiU-ID
+export const liuIdSort = arr => arr.sort((a, b) => a.user.username.localeCompare(b.user.username))
+
+export const getImagePath = section => `/dashboard/images/sections/${section}.png`

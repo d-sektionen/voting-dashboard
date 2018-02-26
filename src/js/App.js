@@ -1,9 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-
-import { getSectionName } from 'utils'
-
+import { loginURL } from 'config'
 // Containers
 import Header from 'containers/Header'
 import Meetings from 'containers/Meetings'
@@ -16,22 +14,34 @@ const app = props => (
       title='Dashboard för D-Cide'
       className='grey darken-4'
     />
-    <div className={classNames('row', 'section', getSectionName(props.section))}>
-      <div className='col s12 m3'>
-        <Meetings />
+    {props.token ?
+      // Logged in, show meetings, votes and user
+      <div className={classNames('row', 'section', props.currentSectionName)}>
+        <div className='col s12 m3'>
+          <Meetings />
+        </div>
+        <div className='col s12 m5 l6'>
+          <Votes />
+        </div>
+        <div className='col s12 m4 l3'>
+          <Users />
+        </div>
       </div>
-      <div className='col s12 m5 l6'>
-        <Votes />
+    :
+      // Logged out, show login text
+      <div>
+        <h5 className='center-align'>
+          <a href={loginURL}>Logga in </a>
+           för använda D-Cides Dashboard
+        </h5>
       </div>
-      <div className='col s12 m4 l3'>
-        <Users />
-      </div>
-    </div>
+    }
   </React.Fragment>
 )
 
 const mapStateToProps = state => ({
-  section: state.section,
+  currentSectionName: state.userInfo.currentSection.name,
+  token: state.token,
 })
 
 export default connect(mapStateToProps)(app)

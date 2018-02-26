@@ -1,47 +1,29 @@
-// import {
-//   deleteUser as deleteUserAPI,
-//   addUser as addUserAPI,
-//   getUsers as getUsersAPI,
-// } from 'api'
+import { getScanners as getScannersAPI } from 'api'
 
-// // sort by LiU-ID
-// const sort = arr => arr.sort((a, b) => a.user.username.localeCompare(b.user.username))
+// action types
+const SET_SCANNERS = 'SET_SCANNERS'
+const ADD_SCANNER = 'ADD_SCANNER'
 
-// // action types
-// const SET_SCANNERS = 'SET_SCANNERS'
+// action creators
+export const setScanners = scanners => ({ type: SET_SCANNERS, payload: scanners })
+export const addScanner = scanner => ({ type: ADD_SCANNER, payload: scanner })
 
-// // action creators
-// export const setScanners = scanner => ({ type: SET_SCANNERS, payload: scanner })
+// async action creators
+export const getScanners = () => dispatch => {
+  getScannersAPI()
+    .then(scanners => dispatch(setScanners(scanners)))
+}
 
-// // async action creators
-// export const getScanners = meeting => dispatch => {
-//   getUsersAPI(meeting)
-//     .then(json => dispatch(setScanners(sort(json))))
-// }
+// reducer
+const initialState = []
 
-// export const addUser = (liuID, meeting) => dispatch => {
-//   addUserAPI(liuID, meeting)
-//     .then(resp => {
-//       dispatch(setScanners(meeting))
-//     })
-// }
-
-// export const deleteUser = (liuID, meeting) => dispatch => {
-//   deleteUserAPI(liuID, meeting)
-//     .then(resp => {
-//       dispatch(getUsers(meeting))
-//     })
-// }
-
-// // reducer
-// const initialState = []
-
-// export const userReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case SET_USERS:
-//       return action.payload
-//     default:
-//       return state
-//   }
-// }
-
+export const scannerReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SET_SCANNERS:
+      return action.payload
+    case ADD_SCANNER:
+      return [...state, action.payload]
+    default:
+      return state
+  }
+}

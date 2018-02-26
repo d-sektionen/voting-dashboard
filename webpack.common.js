@@ -18,10 +18,10 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.[chunkhash].js',
     // Används av webpack-dev-server.
-    // Simulera den mappstruktur vi har i production
+    // Simulera den mappstruktur som vi har i production
     publicPath: '/dashboard',
   },
-  // För de här vägarna kommer webpack leta efter filer när den stöter på imports.
+  // De här vägarna kommer webpack leta efter filer när den stöter på imports.
   // Gör så att man kan skriva absoluta vägar istället för relativa,
   // tex 'import utils' istället för 'import ../../utils'
   resolve: {

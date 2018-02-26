@@ -1,13 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { deleteToken, getUsername } from 'state'
+import { deleteToken, getUserInfo } from 'state'
 import { loginURL } from 'config'
-import { capitalize } from 'utils'
 import SectionSelection from 'containers/SectionSelection'
 
 class Header extends React.Component {
   componentDidMount() {
-    this.props.getUsername()
+    this.props.getUserInfo()
   }
 
   render() {
@@ -22,7 +21,7 @@ class Header extends React.Component {
             { this.props.token ?
               <React.Fragment>
                 <li className='hide-on-small-only' style={{ marginRight: '9px' }}>
-                  {capitalize(this.props.username)}
+                  {`${this.props.firstName} ${this.props.lastName} (${this.props.userName})`}
                 </li>
                 <li>
                   <button onClick={this.props.onLogOut} className='waves-effect waves-light btn red darken-1'>Logga ut</button>
@@ -40,12 +39,14 @@ class Header extends React.Component {
 
 const mapStateToProps = state => ({
   token: state.token,
-  username: state.username,
+  userName: state.userInfo.userName,
+  firstName: state.userInfo.firstName,
+  lastName: state.userInfo.lastName,
 })
 
 const mapDispatchToProps = dispatch => ({
   onLogOut: () => dispatch(deleteToken()),
-  getUsername: () => dispatch(getUsername()),
+  getUserInfo: () => dispatch(getUserInfo()),
 })
 
 export default connect(

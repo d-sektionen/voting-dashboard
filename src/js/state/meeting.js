@@ -1,47 +1,39 @@
-import { get, set } from 'utils'
 import {
   getMeetings as getMeetingsAPI,
   createMeeting as createMeetingAPI,
 } from 'api'
-import { getLatestVote, setCurrentVote, store } from 'state'
 
 // action types
-const SET_MEETING_ID = 'SET_MEETING_ID'
+const SET_CURRENT_MEETING = 'SET_CURRENT_MEETING'
 const SET_MEETINGS = 'SET_MEETINGS'
 
 // action creators
-const setMeetingID = meetingID => ({ type: SET_MEETING_ID, payload: meetingID })
+export const setCurrentMeeting = meetingID => ({ type: SET_CURRENT_MEETING, payload: meetingID })
 const setMeetings = meetingList => ({ type: SET_MEETINGS, payload: meetingList })
-
-// async action creators
-export const setCurrentMeeting = meetingID => dispatch => {
-  dispatch(setMeetingID(meetingID))
-  dispatch(setCurrentVote(getLatestVote(meetingID)))
-}
 
 export const getMeetings = () => dispatch => {
   getMeetingsAPI()
+    // Put newest meetings first in array
     .then(json => dispatch(setMeetings(json.reverse())))
 }
 
+
 export const createMeeting = (name, section) => dispatch => {
   createMeetingAPI(name, section)
-    .then(resp => {
+    .then(response => {
       dispatch(getMeetings())
     })
 }
 
 // reducer
-const meetingStoreKey = 'meeting'
 const initialState = {
-  current: get(meetingStoreKey, null),
+  current: null,
   all: [],
 }
 
 export const meetingReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_MEETING_ID:
-      set(meetingStoreKey, action.payload)
+    case SET_CURRENT_MEETING:
       return {
         ...state,
         current: action.payload,
@@ -54,13 +46,4 @@ export const meetingReducer = (state = initialState, action) => {
     default:
       return state
   }
-}
-
-// helper functinos
-export const getLatestMeeting = section => {
-  const state = store.getState()
-  const lastestMeeting = state.meeting.all.filter(meeting => meeting.section === section)[0]
-
-  // A section might not have a meeting yet, if thats the case set meeting id to null
-  return lastestMeeting ? lastestMeeting.id : null
 }

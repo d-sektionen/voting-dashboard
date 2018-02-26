@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import queryString from 'query-string'
 
-import { store, setToken, getMeetings, getVotes } from 'state'
+import { store, setToken } from 'state'
 import App from 'App'
 
 ReactDOM.render(
@@ -23,6 +23,3 @@ if (token) {
   store.dispatch(setToken(token))
   window.history.pushState(null, null, '/dashboard')
 }
-
-store.dispatch(getMeetings())
-store.dispatch(getVotes())

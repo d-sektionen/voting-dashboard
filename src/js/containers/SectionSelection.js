@@ -1,19 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { sections } from 'config'
-import { setSection } from 'state'
+import { setCurrentSection } from 'state'
 import classNames from 'classnames'
+import { getImagePath } from 'utils'
 
 const SectionSelection = props => (
   <div className='valign-wrapper' style={{ lineHeight: 0, height: '100%' }}>
-    {sections.map(section => (
+    {props.sections.map(section => (
       <img
-        src={section.logo}
-        alt={`${section.name.toUpperCase()}-Sektionen`}
-        title={`${section.name.toUpperCase()}-Sektionen`}
-        className={classNames('responsive-img', 'section-logo', { grayscale: props.currentSection !== section.id })}
+        src={getImagePath(section.name)}
+        alt={section.name}
+        title={section.name}
+        className={classNames('responsive-img', 'section-logo', { grayscale: props.currentSection.id && props.currentSection.id !== section.id })}
         key={section.name}
-        onClick={() => props.handleSetSection(section.id)}
+        onClick={() => props.handleSetSection(section)}
       />
     ))}
   </div>
@@ -21,11 +21,12 @@ const SectionSelection = props => (
 
 
 const mapStateToProps = state => ({
-  currentSection: state.section,
+  currentSection: state.userInfo.currentSection,
+  sections: state.userInfo.sections,
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleSetSection: (sectionID) => dispatch(setSection(sectionID)),
+  handleSetSection: (section) => dispatch(setCurrentSection(section)),
 })
 
 export default connect(
