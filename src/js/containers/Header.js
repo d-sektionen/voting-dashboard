@@ -6,7 +6,17 @@ import SectionSelection from 'containers/SectionSelection'
 
 class Header extends React.Component {
   componentDidMount() {
-    this.props.getUserInfo()
+    if (this.props.token) {
+      // Get username, first/last name and what section the user belong to
+      this.props.getUserInfo()
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // We just got a token
+    if (!this.props.token && nextProps.token) {
+      this.props.getUserInfo()
+    }
   }
 
   render() {
@@ -20,16 +30,18 @@ class Header extends React.Component {
           <ul className='right'>
             { this.props.token ?
               <React.Fragment>
-                <li className='hide-on-small-only' style={{ marginRight: '9px' }}>
-                  {`${this.props.firstName} ${this.props.lastName} (${this.props.userName})`}
-                </li>
+                {this.props.userName &&
+                  <li className='hide-on-small-only' style={{ marginRight: '9px' }}>
+                    {`${this.props.firstName} ${this.props.lastName} (${this.props.userName})`}
+                  </li>
+                }
                 <li>
-                  <button onClick={this.props.onLogOut} className='waves-effect waves-light btn red darken-1'>Logga ut</button>
+                  <button onClick={this.props.logOut} className='waves-effect waves-light btn red darken-1'>Logga ut</button>
                 </li>
               </React.Fragment>
-          :
+              :
               <li><a href={loginURL} className='waves-effect waves-light btn green'>Logga in</a></li>
-        }
+            }
           </ul>
         </div>
       </nav>
@@ -45,7 +57,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onLogOut: () => dispatch(deleteToken()),
+  logOut: () => dispatch(deleteToken()),
   getUserInfo: () => dispatch(getUserInfo()),
 })
 

@@ -17,7 +17,7 @@ export const getScanners = () => dispatch => {
 // reducer
 const initialState = []
 
-export const scannerReducer = (state = initialState, action) => {
+export const scannersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_SCANNERS:
       return action.payload

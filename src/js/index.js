@@ -6,7 +6,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import queryString from 'query-string'
-
 import { store, setToken } from 'state'
 import App from 'App'
 

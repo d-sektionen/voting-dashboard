@@ -6,7 +6,9 @@ export const getVotes = () => fetchAPI(votingURL)
 
 export const getVote = voteID => fetchAPI(`${votingURL}${voteID}/`)
 
-export const createVote = (question, meeting, alternatives) => postAPI(votingURL, { question, meeting, alternatives })
+export const createVote = (meetingID, question, open, alternatives) => postAPI(votingURL, {
+  meetingID, question, open, alternatives,
+})
 
 export const updateVote = (voteID, question, open, alternatives) => updateAPI(
   `${votingURL}${voteID}`,

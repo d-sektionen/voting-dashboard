@@ -12,10 +12,11 @@ const usersFilter = (childItem, textFilter) => {
 
 class Users extends React.Component {
   componentDidMount() {
-    this.props.getUsers(this.props.currentMeeting)
+    // this.props.getUsers(this.props.currentMeeting)
   }
 
   render() {
+    console.log(this.props)
     return (
       <React.Fragment>
         <Panel
@@ -27,7 +28,7 @@ class Users extends React.Component {
             filter={usersFilter}
             noItemsText='Inga personer hittades'
           >
-            {this.props.users.map(user => (
+            {this.props.attendants.map(user => (
               <a
                 // onClick={() => this.props.handleSelectMeetings(meeting.id)}
                 key={user.id}
@@ -49,7 +50,7 @@ class Users extends React.Component {
           <ListContainer
             noItemsText='Inga scanner hittades'
           >
-            {this.props.users.map(scanner => (
+            {this.props.attendants.map(scanner => (
               JSON.stringify(scanner)
             // <a
               //   // onClick={() => this.props.handleSelectMeetings(meeting.id)}
@@ -70,9 +71,9 @@ class Users extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  users: state.user,
+  attendants: state.attendants,
   scanners: state.scanners,
-  currentMeeting: state.meeting.current,
+  currentMeeting: state.meetings.current,
 })
 
 const mapDispatchToProps = dispatch => ({

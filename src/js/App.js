@@ -6,7 +6,7 @@ import { loginURL } from 'config'
 import Header from 'containers/Header'
 import Meetings from 'containers/Meetings'
 import Votes from 'containers/Votes'
-import Users from 'containers/Users'
+import Attendants from 'containers/Attendants'
 
 const app = props => (
   <React.Fragment>
@@ -21,10 +21,10 @@ const app = props => (
           <Meetings />
         </div>
         <div className='col s12 m5 l6'>
-          <Votes />
+          {/* <Votes /> */}
         </div>
         <div className='col s12 m4 l3'>
-          <Users />
+          {/* <Attendants /> */}
         </div>
       </div>
     :
@@ -40,7 +40,7 @@ const app = props => (
 )
 
 const mapStateToProps = state => ({
-  currentSectionName: state.userInfo.currentSection.name,
+  currentSectionName: state.sections.current.name,
   token: state.token,
 })
 

@@ -10,9 +10,6 @@ export const set = (key, value) => localStorage.setItem(key, JSON.stringify(valu
 
 export const remove = key => localStorage.removeItem(key)
 
-// Check if object has no properties
-export const isEmpty = obj => Object.keys(obj).length === 0 && obj.constructor === Object
-
 // Generates random IDs, used for the textField component
 export const randomID = () => `id${Math.random().toString(36).substr(5)}${Date.now().toString().substr(9)}`
 

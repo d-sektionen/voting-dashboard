@@ -1,5 +1,11 @@
+import { get } from 'utils'
 import { socketURL } from 'config'
 import { ReconnectingWebSocket } from 'ReconnectingWebSocket'
 
-const socket = new ReconnectingWebSocket(socketURL)
+let socket
 
+export const subscribeToMeeting = meetingID => {
+  const token = get('token')
+
+  socket = new ReconnectingWebSocket(`${socketURL}/${meetingID}/?token=${token}`)
+}

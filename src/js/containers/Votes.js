@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createVote, setCurrentVote, updateVote } from 'state'
-import { isEmpty } from 'utils'
 import Panel from 'components/Panel'
 import ListContainer from 'components/ListContainer'
 import ListItem from 'components/ListItem'
@@ -24,9 +23,7 @@ class Votes extends React.Component {
       >
 
         {/* If alternativs.length > 0 ? */}
-        {isEmpty(this.props.currentVote) ?
-          <div className='empty-box' />
-            :
+        {this.props.currentVote ?
           <form>
             <TextInput text='Fråga' />
             <div className='section'>
@@ -47,6 +44,8 @@ class Votes extends React.Component {
               </button>
             </div>
           </form>
+          :
+          <div className='empty-box' />
         }
         <div className='divider' />
         <ListContainer noItemsText='Inga omröstningar skapde än'>
@@ -69,9 +68,9 @@ class Votes extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentVote: state.vote.current,
-  votes: state.vote.all,
-  currentMeeting: state.meeting.current,
+  currentVote: state.votes.current,
+  votes: state.votes.all,
+  currentMeeting: state.meetings.current,
 })
 
 const mapDispatchToProps = dispatch => ({

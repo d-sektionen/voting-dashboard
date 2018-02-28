@@ -4,11 +4,11 @@ import {
 } from 'api'
 
 // action types
-const SET_CURRENT_MEETING = 'SET_CURRENT_MEETING'
+const SET_CURRENT_MEETING_ID = 'SET_CURRENT_MEETING_ID'
 const SET_MEETINGS = 'SET_MEETINGS'
 
 // action creators
-export const setCurrentMeeting = meetingID => ({ type: SET_CURRENT_MEETING, payload: meetingID })
+export const setCurrentMeetingID = meetingID => ({ type: SET_CURRENT_MEETING_ID, payload: meetingID })
 const setMeetings = meetingList => ({ type: SET_MEETINGS, payload: meetingList })
 
 export const getMeetings = () => dispatch => {
@@ -17,10 +17,9 @@ export const getMeetings = () => dispatch => {
     .then(json => dispatch(setMeetings(json.reverse())))
 }
 
-
 export const createMeeting = (name, section) => dispatch => {
   createMeetingAPI(name, section)
-    .then(response => {
+    .then(createdMeeting => {
       dispatch(getMeetings())
     })
 }
@@ -31,9 +30,9 @@ const initialState = {
   all: [],
 }
 
-export const meetingReducer = (state = initialState, action) => {
+export const meetingsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_CURRENT_MEETING:
+    case SET_CURRENT_MEETING_ID:
       return {
         ...state,
         current: action.payload,

@@ -11,9 +11,10 @@ const SectionSelection = props => (
         src={getImagePath(section.name)}
         alt={section.name}
         title={section.name}
-        className={classNames('responsive-img', 'section-logo', { grayscale: props.currentSection.id && props.currentSection.id !== section.id })}
+        // Make logo grey if it's not the currently selected section
+        className={classNames('responsive-img', 'section-logo', { grayscale: props.currentSection.id !== section.id })}
         key={section.name}
-        onClick={() => props.handleSetSection(section)}
+        onClick={() => props.setSection(section)}
       />
     ))}
   </div>
@@ -21,12 +22,12 @@ const SectionSelection = props => (
 
 
 const mapStateToProps = state => ({
-  currentSection: state.userInfo.currentSection,
-  sections: state.userInfo.sections,
+  currentSection: state.sections.current,
+  sections: state.sections.all,
 })
 
 const mapDispatchToProps = dispatch => ({
-  handleSetSection: (section) => dispatch(setCurrentSection(section)),
+  setSection: (section) => dispatch(setCurrentSection(section)),
 })
 
 export default connect(

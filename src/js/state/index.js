@@ -3,16 +3,20 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
 import { tokenReducer } from 'state/token'
-import { meetingReducer } from 'state/meeting'
-import { voteReducer } from 'state/vote'
-import { userReducer } from 'state/user'
+import { meetingsReducer } from 'state/meetings'
+import { votesReducer } from 'state/votes'
+import { attendantsReducer } from 'state/attendants'
+import { scannersReducer } from 'state/scanners'
 import { userInfoReducer } from 'state/userInfo'
+import { sectionsReducer } from 'state/sections'
 
 export * from 'state/token'
-export * from 'state/meeting'
-export * from 'state/vote'
-export * from 'state/user'
+export * from 'state/meetings'
+export * from 'state/votes'
+export * from 'state/attendants'
+export * from 'state/scanners'
 export * from 'state/userInfo'
+export * from 'state/sections'
 
 const logger = createLogger({
   duration: true,
@@ -22,10 +26,12 @@ const logger = createLogger({
 export const store = createStore(
   combineReducers({
     token: tokenReducer,
-    meeting: meetingReducer,
-    vote: voteReducer,
-    user: userReducer,
+    meetings: meetingsReducer,
+    votes: votesReducer,
+    attendants: attendantsReducer,
+    scanners: scannersReducer,
     userInfo: userInfoReducer,
+    sections: sectionsReducer,
   }),
   applyMiddleware(thunk, logger)
 )
