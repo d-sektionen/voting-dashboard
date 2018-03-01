@@ -1,4 +1,4 @@
-import { json, get } from 'utils'
+import { get } from 'utils'
 import { apiURL } from 'config'
 
 const headers = token => ({
@@ -13,7 +13,12 @@ const doRequest = (endpoint, init) => {
       headers: headers(token),
       ...init,
     })
-      .then(json)
+      .then(response => {
+        if (init.method !== 'DELETE') {
+          return response.json()
+        }
+        return Promise.resolve({})
+      })
   )
 }
 

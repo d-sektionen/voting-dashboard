@@ -9,8 +9,8 @@ export const setScanners = scanners => ({ type: SET_SCANNERS, payload: scanners 
 export const addScanner = scanner => ({ type: ADD_SCANNER, payload: scanner })
 
 // async action creators
-export const getScanners = () => dispatch => {
-  getScannersAPI()
+export const getScanners = meetingID => dispatch => {
+  getScannersAPI(meetingID)
     .then(scanners => dispatch(setScanners(scanners)))
 }
 

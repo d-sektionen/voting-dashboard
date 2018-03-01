@@ -24,7 +24,7 @@ const app = props => (
           {/* <Votes /> */}
         </div>
         <div className='col s12 m4 l3'>
-          {/* <Attendants /> */}
+          <Attendants />
         </div>
       </div>
     :

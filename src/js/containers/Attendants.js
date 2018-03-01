@@ -1,87 +1,170 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getUsers, addUser, removeUser, getScanners, addSacnner, removeScanner } from 'state'
+import { getAttendants, getScanners } from 'state'
+import { addAttendant, addScanner } from 'api'
 import ListContainer from 'components/ListContainer'
 import Panel from 'components/Panel'
-
-const usersFilter = (childItem, textFilter) => {
-  const test = childItem.props.children.toLowerCase()
-  const filter = textFilter.trim().toLowerCase()
-  return test.includes(filter)
-}
+import TextSubmit from 'components/TextSubmit'
+import M from 'materialize-css'
+import { removeAttendant } from '../api/attendants'
+import { removeScanner } from '../api/scanners'
 
 class Users extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.handleNewAttendant = this.handleNewAttendant.bind(this)
+  }
+
   componentDidMount() {
-    // this.props.getUsers(this.props.currentMeeting)
+    const meetingID = this.props.currentMeetingID
+
+    if (this.props.token && meetingID) {
+      this.props.getAttendants(meetingID)
+      this.props.getScanners(meetingID)
+      // update socket
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const oldMeetingID = this.props.currentMeetingID
+    const newMeetingID = nextProps.currentMeetingID
+
+    if (nextProps.token && newMeetingID && newMeetingID !== oldMeetingID) {
+      this.props.getAttendants(newMeetingID)
+      this.props.getScanners(newMeetingID)
+      // update socket
+    }
+  }
+
+  handleNewAttendant(liuID) {
+    if (this.props.currentMeetingID) {
+      addAttendant(liuID, this.props.currentMeetingID)
+      return true
+    }
+
+    M.toast({ html: 'Inget möte valt!' })
+    return false
+  }
+
+  handleNewScanner(liuID) {
+    if (this.props.currentMeetingID) {
+      addScanner(liuID, this.props.currentMeetingID)
+      return true
+    }
+
+    M.toast({ html: 'Inget möte valt!' })
+    return false
+  }
+
+  handleRemoveAttendant(attendantID) {
+    removeAttendant(attendantID, this.props.currentMeetingID)
+  }
+
+  handleRemoveScanner(scannerID) {
+    removeScanner(scannerID, this.props.currentMeetingID)
   }
 
   render() {
-    console.log(this.props)
+    const allUsers = []
+
+    this.props.attendants.forEach(attendant => {
+      const userObject = {
+        attendantID: attendant.id,
+        user: attendant.user,
+      }
+
+      allUsers.push(userObject)
+    })
+
+    this.props.scanners.forEach(scanner => {
+      const userID = scanner.user.id
+      let userObj = allUsers.find(user => user.user.id === userID)
+
+      if (!userObj) {
+        userObj = {
+          user: scanner.user,
+        }
+        allUsers.push(userObj)
+      }
+
+      userObj.scannerID = scanner.id
+    })
+
     return (
-      <React.Fragment>
-        <Panel
-          title='Registrerade'
-          newItemText='Nytt LiU-ID'
-          onAddItem={liuID => this.props.addUser(liuID, this.props.currentMeeting)}
-        >
-          <ListContainer
-            filter={usersFilter}
-            noItemsText='Inga personer hittades'
-          >
-            {this.props.attendants.map(user => (
-              <a
-                // onClick={() => this.props.handleSelectMeetings(meeting.id)}
-                key={user.id}
-                className={`collection-item ${user.id === 69 ? 'active' : ''}`}
-                role='button'
-                style={{ cursor: 'pointer' }}
-              >
-                {user.user.username}
-                <i className='material-icons right'>phone_android</i>
-              </a>
-        ))}
-          </ListContainer>
-        </Panel>
-        <Panel
-          title='Scanner'
-          newItemText='Ny scanner'
-          onAddItem={liuID => this.props.addUser(liuID, this.props.currentMeeting)}
-        >
-          <ListContainer
-            noItemsText='Inga scanner hittades'
-          >
-            {this.props.attendants.map(scanner => (
-              JSON.stringify(scanner)
-            // <a
-              //   // onClick={() => this.props.handleSelectMeetings(meeting.id)}
-              //   key={user.id}
-              //   className={`collection-item ${user.id === 69 ? 'active' : ''}`}
-              //   role='button'
-              //   style={{ cursor: 'pointer' }}
-              // >
-              //   {user.user.username}
-              //   <i className='material-icons right'>phone_android</i>
-              // </a>
-            ))}
-          </ListContainer>
-        </Panel>
-      </React.Fragment>
+      <Panel title='Personer'>
+        <TextSubmit
+          text='Nytt LiU-ID för deltagare'
+          pattern='^([A-Za-z]){4,5}([0-9]){3}$'
+          onSubmit={this.handleNewAttendant}
+        />
+        <TextSubmit
+          text='Nytt LiU-ID för scanner'
+          pattern='^([A-Za-z]){4,5}([0-9]){3}$'
+          onSubmit={this.handleNewScanner}
+        />
+        <ListContainer noItemsText='Inga personer hittades'>
+          {allUsers.map(userObj => (
+            <div
+              key={`user${userObj.user.id}`}
+              className='collection-item user-item'
+            >
+              {`${userObj.user.first_name} ${userObj.user.last_name} (${userObj.user.username})`}
+              <i className='material-icons right' style={{ marginLeft: 0 }}>
+                {userObj.scannerID ?
+                  <a
+                    onClick={() => this.handleRemoveScanner(userObj.scannerID)}
+                    title='Ta bort som scanner'
+                    style={{ color: 'green', cursor: 'pointer' }}
+                    role='button'
+                  >phone_android
+                  </a>
+                  :
+                  <a
+                    onClick={() => this.handleNewScanner(userObj.user.username)}
+                    title='Lägg till som scanner'
+                    style={{ color: 'grey', cursor: 'pointer' }}
+                    role='button'
+                  >phone_android
+                  </a>
+                }
+                <span style={{ marginRight: '6px' }} />
+                {userObj.attendantID ?
+                  <a
+                    onClick={() => this.handleRemoveAttendant(userObj.attendantID)}
+                    title='Ta bort som deltagare'
+                    style={{ color: '#E53935', cursor: 'pointer' }}
+                    role='button'
+                  >clear
+                  </a>
+                  :
+                  <a
+                    onClick={() => this.handleNewAttendant(userObj.user.username)}
+                    title='Lägg till som deltagare'
+                    style={{ color: 'grey', cursor: 'pointer' }}
+                    role='button'
+                  >add
+                  </a>
+                }
+              </i>
+            </div>
+          ))}
+        </ListContainer>
+      </Panel>
     )
   }
 }
 
 const mapStateToProps = state => ({
+  token: state.token,
   attendants: state.attendants,
   scanners: state.scanners,
-  currentMeeting: state.meetings.current,
+  currentMeetingID: state.meetings.current,
 })
 
 const mapDispatchToProps = dispatch => ({
-  addUser: (liuID, meeting) => dispatch(addUser(liuID, meeting)),
-  removeUser: (liuID, meeting) => dispatch(removeUser(liuID, meeting)),
-  getUsers: meeting => dispatch(getUsers(meeting)),
-  addScanner: (liuID, meeting) => 1,
-  removeScanner: (liuID, meeting) => 1,
+  getAttendants: meeting => dispatch(getAttendants(meeting)),
+  getScanners: meeting => dispatch(getScanners(meeting)),
 })
 
 

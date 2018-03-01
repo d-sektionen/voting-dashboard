@@ -3,18 +3,13 @@ import { connect } from 'react-redux'
 import { getMeetings, createMeeting, setCurrentMeetingID } from 'state'
 import ListContainer from 'components/ListContainer'
 import ListItem from 'components/ListItem'
-import TextInput from 'components/TextInput'
+import TextSubmit from 'components/TextSubmit'
 import Panel from 'components/Panel'
 
 class Meetings extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      newMeetingName: '',
-    }
-
-    this.handleTextChange = this.handleTextChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -31,19 +26,11 @@ class Meetings extends React.Component {
     }
   }
 
-  handleTextChange(text) {
-    this.setState({ newMeetingName: text })
-  }
-
-  handleSubmit(event) {
-    event.preventDefault()
-
-    const meetingName = this.state.newMeetingName.trim()
+  handleSubmit(meetingName) {
     const section = this.props.currentSection
 
-    if (meetingName !== '' && section.id) {
+    if (section.id) {
       this.props.createMeeting(meetingName, section)
-      this.setState({ newMeetingName: '' })
     }
   }
 
@@ -52,9 +39,7 @@ class Meetings extends React.Component {
 
     return (
       <Panel title='Möten'>
-        <form onSubmit={this.handleSubmit}>
-          <TextInput text='Nytt möte' onChange={this.handleTextChange} />
-        </form>
+        <TextSubmit text='Nytt möte' onSubmit={this.handleSubmit} />
         <ListContainer noItemsText='Inga möten hittades'>
           {
           filteredMeetngs.map(meeting => (

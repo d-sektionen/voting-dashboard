@@ -9,8 +9,8 @@ export const setAttendants = attendants => ({ type: SET_ATTENDANTS, payload: att
 export const addAttendant = attendant => ({ type: ADD_ATTENDANT, payload: attendant })
 
 // async action creators
-export const getAttendants = meeting => dispatch => {
-  getAttendantsAPI(meeting)
+export const getAttendants = meetingID => dispatch => {
+  getAttendantsAPI(meetingID)
     .then(attendants => dispatch(setAttendants(attendants)))
 }
 

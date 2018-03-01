@@ -30,6 +30,8 @@ export default class TextInput extends React.Component {
           value={this.props.value}
           placeholder={this.props.placeholder}
           type='text'
+          autoComplete='off'
+          pattern={this.props.pattern}
         />
         {this.props.text &&
           <label htmlFor={this.id} className='text-label'>{this.props.text}</label>
