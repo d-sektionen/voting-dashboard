@@ -2,6 +2,7 @@ import {
   getMeetings as getMeetingsAPI,
   createMeeting as createMeetingAPI,
 } from 'api'
+import { updateSocket } from 'state/socket'
 
 // action types
 const SET_CURRENT_MEETING_ID = 'SET_CURRENT_MEETING_ID'
@@ -33,6 +34,7 @@ const initialState = {
 export const meetingsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CURRENT_MEETING_ID:
+      updateSocket(action.payload)
       return {
         ...state,
         current: action.payload,

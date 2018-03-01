@@ -14,6 +14,9 @@ class Users extends React.Component {
     super(props)
 
     this.handleNewAttendant = this.handleNewAttendant.bind(this)
+    this.handleNewScanner = this.handleNewScanner.bind(this)
+    this.handleRemoveAttendant = this.handleRemoveAttendant.bind(this)
+    this.handleRemoveScanner = this.handleRemoveScanner.bind(this)
   }
 
   componentDidMount() {
@@ -22,7 +25,6 @@ class Users extends React.Component {
     if (this.props.token && meetingID) {
       this.props.getAttendants(meetingID)
       this.props.getScanners(meetingID)
-      // update socket
     }
   }
 
@@ -33,13 +35,12 @@ class Users extends React.Component {
     if (nextProps.token && newMeetingID && newMeetingID !== oldMeetingID) {
       this.props.getAttendants(newMeetingID)
       this.props.getScanners(newMeetingID)
-      // update socket
     }
   }
 
   handleNewAttendant(liuID) {
     if (this.props.currentMeetingID) {
-      addAttendant(liuID, this.props.currentMeetingID)
+      addAttendant(liuID.toLowerCase(), this.props.currentMeetingID)
       return true
     }
 
@@ -49,7 +50,7 @@ class Users extends React.Component {
 
   handleNewScanner(liuID) {
     if (this.props.currentMeetingID) {
-      addScanner(liuID, this.props.currentMeetingID)
+      addScanner(liuID.toLowerCase(), this.props.currentMeetingID)
       return true
     }
 
@@ -109,7 +110,11 @@ class Users extends React.Component {
               key={`user${userObj.user.id}`}
               className='collection-item user-item'
             >
-              {`${userObj.user.first_name} ${userObj.user.last_name} (${userObj.user.username})`}
+              {userObj.user.first_name !== '' ?
+                `${userObj.user.first_name} ${userObj.user.last_name} (${userObj.user.username})`
+                :
+                userObj.user.username
+              }
               <i className='material-icons right' style={{ marginLeft: 0 }}>
                 {userObj.scannerID ?
                   <a

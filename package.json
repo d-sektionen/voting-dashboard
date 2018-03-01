@@ -14,13 +14,13 @@
     "clean": "rm -r node_modules && rm package-lock.json"
   },
   "dependencies": {
-    "ReconnectingWebSocket": "git+ssh://git@github.com/joewalnes/reconnecting-websocket.git",
     "classnames": "^2.2.5",
     "materialize-css": "^1.0.0-alpha.3",
     "query-string": "^5.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
+    "reconnectingwebsocket": "^1.0.0",
     "redux": "^3.7.2",
     "redux-batched-actions": "^0.2.1",
     "redux-logger": "^3.0.6",

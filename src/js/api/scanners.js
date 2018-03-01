@@ -4,6 +4,6 @@ const userURL = '/voting/scanners/'
 
 export const getScanners = meetingID => fetchAPI(`${userURL}?meeting=${meetingID}`)
 
-export const addScanner = (liuID, meeting) => postAPI(userURL, { username: liuID, meeting })
+export const addScanner = (liuID, meetingID) => postAPI(userURL, { username: liuID, meeting: meetingID })
 
 export const removeScanner = (scanner, meetingID) => deleteAPI(`${userURL}${scanner}/?meeting=${meetingID}`)
