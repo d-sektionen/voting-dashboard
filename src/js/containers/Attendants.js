@@ -40,7 +40,7 @@ class Users extends React.Component {
 
   handleNewAttendant(liuID) {
     if (this.props.currentMeetingID) {
-      addAttendant(liuID.toLowerCase(), this.props.currentMeetingID)
+      addAttendant(liuID, this.props.currentMeetingID)
       return true
     }
 
@@ -50,7 +50,7 @@ class Users extends React.Component {
 
   handleNewScanner(liuID) {
     if (this.props.currentMeetingID) {
-      addScanner(liuID.toLowerCase(), this.props.currentMeetingID)
+      addScanner(liuID, this.props.currentMeetingID)
       return true
     }
 
