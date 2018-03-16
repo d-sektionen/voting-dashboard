@@ -1,82 +1,92 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createVote, setCurrentVote, updateVote } from 'state'
+import { getVotes, getVote, removeVote, setEditedVote } from 'state'
 import Panel from 'components/Panel'
 import ListContainer from 'components/ListContainer'
 import ListItem from 'components/ListItem'
-import TextInput from 'components/TextInput'
-import ToggleBox from 'components/ToggleBox'
+import VoteModal from 'containers/VoteModal'
+import M from 'materialize-css'
+
 
 class Votes extends React.Component {
-  // read off props
-  // push to state (current vote)
-  componentDidMount() {
-
+  handleNewEditedVote(vote) {
+    this.props.setEditedVote(vote)
+    // find a better way of doing this
+    const modalElement = document.getElementById('voteModal')
+    const modalInstance = M.Modal.getInstance(modalElement)
+    modalInstance.open()
   }
 
   render() {
     return (
-      <Panel
-        title='Omröstning'
-        newItemText='Ny omröstning'
-        onAddItem={question => this.props.createVote(question, this.props.currentMeeting)}
-      >
-
-        {/* If alternativs.length > 0 ? */}
-        {this.props.currentVote ?
-          <form>
-            <TextInput text='Fråga' />
-            <div className='section'>
-              <TextInput text='Alternativ 1' placeholder='Namn 1' />
-              <TextInput text='Alternativ 2' placeholder='Namn 2' />
-              <div className='right-align'>
-                <a className='waves-effect waves-light btn grey lighten-1 right-align'>
-                  Lägg till alternativ
-                  <i className='material-icons right'>add</i>
-                </a>
-              </div>
-            </div>
-            <ToggleBox className='right-align' onText='Öppna frågan' offText='Stäng frågan' />
+      <Panel title='Omröstning'>
+        {
+        this.props.currentMeeting ?
+          <React.Fragment>
             <div className='section right-align'>
-              <button className='btn waves-effect waves-light add-alternative-button green' type='submit' name='action'>
-                Spara
-                <i className='material-icons right'>save</i>
-              </button>
+              <VoteModal />
             </div>
-          </form>
+            <div className='divider' />
+            {this.props.selectedVote.id &&
+            <div className='section'>
+              <h5>{this.props.selectedVote.question}</h5>
+              <ul>
+                {
+              this.props.selectedVote.alternatives.sort((alt1, alt2) => alt1.num_votes > alt2.num_votes).map(vote => (
+                <li key={`vote${vote.id}`}>
+                  {vote.text}, {vote.num_votes}
+                </li>
+              ))
+              }
+              </ul>
+
+            </div>
+
+            }
+            <ListContainer noItemsText='Inga omröstningar skapde än'>
+              {
+              this.props.votes.filter(vote => vote.meeting === this.props.currentMeeting)
+                .map(vote => (
+                  <ListItem
+                    active={vote.id === this.props.selectedVote.id}
+                    onClick={() => this.props.getVote(vote.id)}
+                    key={`vote${vote.id}`}
+                  >
+                    {vote.question}
+                    <i className='material-icons right'>
+                      <a
+                        onClick={() => this.handleNewEditedVote(vote)}
+                        title='Redigera omrösting'
+                        role='button'
+                      >
+                        edit
+                      </a>
+                    </i>
+                  </ListItem>
+                ))
+              }
+            </ListContainer>
+          </React.Fragment>
           :
-          <div className='empty-box' />
+          <p>Inget möte valt</p>
         }
-        <div className='divider' />
-        <ListContainer noItemsText='Inga omröstningar skapde än'>
-          {
-            this.props.votes.filter(vote => vote.meeting === this.props.currentMeeting)
-              .map(vote => (
-                <ListItem
-                  active={vote.id === this.props.currentVote.id}
-                  onClick={() => this.props.setCurrentVote(vote.id)}
-                  key={`vote${vote.id}`}
-                >
-                  {vote.question}
-                </ListItem>
-            ))
-          }
-        </ListContainer>
       </Panel>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  currentVote: state.votes.current,
+  selectedVote: state.votes.selectedVote,
   votes: state.votes.all,
   currentMeeting: state.meetings.current,
+  token: state.token,
 })
 
 const mapDispatchToProps = dispatch => ({
-  createVote: (question, currentMeeting) => dispatch(createVote(question, currentMeeting)),
-  updateVote: (voteID, question, open, alternatives) => dispatch(updateVote(voteID, question, open, alternatives)),
-  setCurrentVote: voteID => dispatch(setCurrentVote(voteID)),
+  getVote: voteID => dispatch(getVote(voteID)),
+  getVotes: voteID => dispatch(getVotes(voteID)),
+  removeVote: voteID => dispatch(removeVote(voteID)),
+  setEditedVote: vote => dispatch(setEditedVote(vote)),
 })
 
 export default connect(

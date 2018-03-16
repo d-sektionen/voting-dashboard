@@ -28,7 +28,7 @@ export const updateSocket = meetingID => {
         store.dispatch(setScanners(data))
         break
       default:
-        console.log('Unkowned socket data: ', type, data)
+        console.error('Unkowned socket data: ', type, data)
     }
 
     console.log(type, data)

@@ -19,43 +19,14 @@ class Users extends React.Component {
     this.handleRemoveScanner = this.handleRemoveScanner.bind(this)
   }
 
-  componentDidMount() {
-    const meetingID = this.props.currentMeetingID
-
-    if (this.props.token && meetingID) {
-      this.props.getAttendants(meetingID)
-      this.props.getScanners(meetingID)
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const oldMeetingID = this.props.currentMeetingID
-    const newMeetingID = nextProps.currentMeetingID
-
-    if (nextProps.token && newMeetingID && newMeetingID !== oldMeetingID) {
-      this.props.getAttendants(newMeetingID)
-      this.props.getScanners(newMeetingID)
-    }
-  }
-
   handleNewAttendant(liuID) {
-    if (this.props.currentMeetingID) {
-      addAttendant(liuID, this.props.currentMeetingID)
-      return true
-    }
-
-    M.toast({ html: 'Inget möte valt!' })
-    return false
+    addAttendant(liuID, this.props.currentMeetingID)
+    return true
   }
 
   handleNewScanner(liuID) {
-    if (this.props.currentMeetingID) {
-      addScanner(liuID, this.props.currentMeetingID)
-      return true
-    }
-
-    M.toast({ html: 'Inget möte valt!' })
-    return false
+    addScanner(liuID, this.props.currentMeetingID)
+    return true
   }
 
   handleRemoveAttendant(attendantID) {
@@ -94,67 +65,75 @@ class Users extends React.Component {
 
     return (
       <Panel title='Personer'>
-        <TextSubmit
-          text='Nytt LiU-ID för deltagare'
-          pattern='^([A-Za-z]){4,5}([0-9]){3}$'
-          onSubmit={this.handleNewAttendant}
-        />
-        <TextSubmit
-          text='Nytt LiU-ID för scanner'
-          pattern='^([A-Za-z]){4,5}([0-9]){3}$'
-          onSubmit={this.handleNewScanner}
-        />
-        <ListContainer noItemsText='Inga personer hittades'>
-          {allUsers.map(userObj => (
-            <div
-              key={`user${userObj.user.id}`}
-              className='collection-item user-item'
-            >
-              {userObj.user.first_name !== '' ?
-                `${userObj.user.first_name} ${userObj.user.last_name} (${userObj.user.username})`
-                :
-                userObj.user.username
-              }
-              <i className='material-icons right' style={{ marginLeft: 0 }}>
-                {userObj.scannerID ?
-                  <a
-                    onClick={() => this.handleRemoveScanner(userObj.scannerID)}
-                    title='Ta bort som scanner'
-                    style={{ color: 'green', cursor: 'pointer' }}
-                    role='button'
-                  >phone_android
-                  </a>
-                  :
-                  <a
-                    onClick={() => this.handleNewScanner(userObj.user.username)}
-                    title='Lägg till som scanner'
-                    style={{ color: 'grey', cursor: 'pointer' }}
-                    role='button'
-                  >phone_android
-                  </a>
-                }
-                <span style={{ marginRight: '6px' }} />
-                {userObj.attendantID ?
-                  <a
-                    onClick={() => this.handleRemoveAttendant(userObj.attendantID)}
-                    title='Ta bort som deltagare'
-                    style={{ color: '#E53935', cursor: 'pointer' }}
-                    role='button'
-                  >clear
-                  </a>
-                  :
-                  <a
-                    onClick={() => this.handleNewAttendant(userObj.user.username)}
-                    title='Lägg till som deltagare'
-                    style={{ color: 'grey', cursor: 'pointer' }}
-                    role='button'
-                  >add
-                  </a>
-                }
-              </i>
-            </div>
-          ))}
-        </ListContainer>
+        {
+        this.props.currentMeetingID ?
+          <React.Fragment>
+            <TextSubmit
+              text='Nytt LiU-ID för deltagare'
+              pattern='^([A-Za-z]){4,5}([0-9]){3}$'
+              onSubmit={this.handleNewAttendant}
+            />
+            <TextSubmit
+              text='Nytt LiU-ID för scanner'
+              pattern='^([A-Za-z]){4,5}([0-9]){3}$'
+              onSubmit={this.handleNewScanner}
+            />
+            <ListContainer noItemsText='Inga personer hittades'>
+              {allUsers.map(userObj => (
+                <li
+                  key={`user${userObj.user.id}`}
+                  className='collection-item user-item'
+                >
+                  {userObj.user.first_name !== '' ?
+                    `${userObj.user.first_name} ${userObj.user.last_name} (${userObj.user.username})`
+                    :
+                    userObj.user.username
+                  }
+                  <i className='material-icons right' style={{ marginLeft: 0 }}>
+                    {
+                    userObj.scannerID ?
+                      <a
+                        onClick={() => this.handleRemoveScanner(userObj.scannerID)}
+                        title='Ta bort som scanner'
+                        style={{ color: 'green', cursor: 'pointer' }}
+                      >
+                        phone_android
+                      </a>
+                      :
+                      <a
+                        onClick={() => this.handleNewScanner(userObj.user.username)}
+                        title='Lägg till som scanner'
+                        style={{ color: 'grey', cursor: 'pointer' }}
+                      >phone_android
+                      </a>
+                    }
+                    <span style={{ marginRight: '6px' }} />
+                    {
+                    userObj.attendantID ?
+                      <a
+                        onClick={() => this.handleRemoveAttendant(userObj.attendantID)}
+                        title='Ta bort som deltagare'
+                        style={{ color: '#E53935', cursor: 'pointer' }}
+                      >
+                      clear
+                      </a>
+                      :
+                      <a
+                        onClick={() => this.handleNewAttendant(userObj.user.username)}
+                        title='Lägg till som deltagare'
+                        style={{ color: 'grey', cursor: 'pointer' }}
+                      >
+                      add
+                      </a>
+                    }
+                  </i>
+                </li>
+            ))}
+            </ListContainer>
+          </React.Fragment>
+        :
+          <p>Inget möte valt</p>
+    }
       </Panel>
     )
   }

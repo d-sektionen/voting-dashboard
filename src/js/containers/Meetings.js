@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getMeetings, createMeeting, setCurrentMeetingID } from 'state'
+import { getMeetings, createMeeting, setCurrentMeeting } from 'state'
 import ListContainer from 'components/ListContainer'
 import ListItem from 'components/ListItem'
 import TextSubmit from 'components/TextSubmit'
@@ -67,7 +67,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   createMeeting: (meetingName, section) => dispatch(createMeeting(meetingName, section)),
-  setCurrentMeeting: meetingID => dispatch(setCurrentMeetingID(meetingID)),
+  setCurrentMeeting: meetingID => dispatch(setCurrentMeeting(meetingID)),
   getMeetings: () => dispatch(getMeetings()),
 })
 

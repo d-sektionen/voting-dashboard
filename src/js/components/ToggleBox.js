@@ -11,7 +11,9 @@ export default class ToggleBox extends React.Component {
   }
 
   onChange(event) {
-    this.props.onChange(event.target.value)
+    if (this.props.onChange) {
+      this.props.onChange(!this.props.value)
+    }
   }
 
   render() {

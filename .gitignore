@@ -11,3 +11,6 @@
 
 # vscode
 .vscode
+
+# Maybe I should not block this one
+yarn.lock

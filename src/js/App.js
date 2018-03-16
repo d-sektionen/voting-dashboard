@@ -21,7 +21,7 @@ const app = props => (
           <Meetings />
         </div>
         <div className='col s12 m5 l6'>
-          {/* <Votes /> */}
+          <Votes />
         </div>
         <div className='col s12 m4 l3'>
           <Attendants />
