@@ -90,7 +90,8 @@ module.exports = {
         to: 'images/',
       },
     ]),
-    new HtmlWebpackPlugin({ // Stoppa in referencer till de kompilerade JS och CSS-filerna i vår index.html
+    // Stoppa in referencer till de kompilerade JS och CSS-filerna i vår index.html
+    new HtmlWebpackPlugin({
       template: 'src/index.html',
       favicon: 'src/images/favicon.ico',
     }),

@@ -4,6 +4,7 @@ const common = require('./webpack.common.js')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = merge(common, {
+  devtool: 'source-map',
   plugins: [
     // Samma sak som att köra 'webpack -p', där p = production
     // Detta förminskar filerna avsevärt
