@@ -13,7 +13,8 @@ module.exports = merge(common, {
   devtool: 'cheap-module-eval-source-map',
 
   devServer: {
-    port: process.env.PORT,
+    host: '0.0.0.0',
+    port: process.env.PORT || 80,
   },
   plugins: [
     // Indikera för frontend om vi är i development eller production-mode.
