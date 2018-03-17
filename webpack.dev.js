@@ -13,7 +13,6 @@ module.exports = merge(common, {
   devtool: 'cheap-module-eval-source-map',
 
   devServer: {
-    host: '0.0.0.0',
     port: process.env.PORT || 80,
   },
   plugins: [
