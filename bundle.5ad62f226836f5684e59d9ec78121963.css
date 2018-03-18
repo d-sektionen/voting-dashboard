@@ -1,17 +1,17 @@
-.d .collection .collection-item.active {
+.D-sektionen .collection .collection-item.active {
   background: #E5398D;
   color: #F7E623; }
 
-.d .collection a.collection-item {
+.D-sektionen .collection a.collection-item {
   color: #20407C; }
 
-.d input[type=text]:not(.browser-default):focus:not([readonly]) {
+.D-sektionen input[type=text]:not(.browser-default):focus:not([readonly]) {
   border-bottom-color: #20407C; }
 
-.d input[type=text]:not(.browser-default):focus:not([readonly]) + label {
+.D-sektionen input[type=text]:not(.browser-default):focus:not([readonly]) + label {
   color: #20407C; }
 
-.d .add-alternative-button {
+.D-sektionen .add-alternative-button {
   background-color: #E5398D; }
 
 .i .collection .collection-item.active {
@@ -95,6 +95,10 @@ nav {
   max-height: 518px;
   overflow-y: auto; }
 
+li.collection-item {
+  list-style: none;
+  cursor: pointer; }
+
 .collection .collection-item.active {
   font-weight: bold; }
 
@@ -107,3 +111,10 @@ nav {
 
 .input-field > .text-label {
   left: 7px; }
+
+.collection .user-item {
+  overflow: auto;
+  font-size: 13px;
+  padding: 10px 10px; }
+
+/*# sourceMappingURL=bundle.5ad62f226836f5684e59d9ec78121963.css.map*/
