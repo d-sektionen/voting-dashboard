@@ -19,11 +19,13 @@ class VoteModal extends React.Component {
 
     this.modalID = 'voteModal'
 
+    // Stupid binding of 'this' that javascript require
     this.handleNewVote = this.handleNewVote.bind(this)
     this.handleUpdatedVote = this.handleUpdatedVote.bind(this)
     this.handleAlternativeChange = this.handleAlternativeChange.bind(this)
     this.handleNewAlternative = this.handleNewAlternative.bind(this)
     this.handleAlternativeRemoval = this.handleAlternativeRemoval.bind(this)
+    this.openVoteModal = this.openVoteModal.bind(this)
   }
 
   componentDidMount() {
@@ -53,7 +55,8 @@ class VoteModal extends React.Component {
     this.props.setEditedVoteAlternatives(alternatives)
   }
 
-  handleAlternativeRemoval(index) {
+  handleAlternativeRemoval(event, index) {
+    event.preventDefault()
     const alternatives = [...this.props.editedVote.alternatives]
     alternatives.splice(index, 1)
 
@@ -83,15 +86,24 @@ class VoteModal extends React.Component {
               />
               <div className='section'>
                 {
-                this.props.editedVote.alternatives.map((alternative, i) => (
-                  <TextInput
-                    text={`Alternativ ${i + 1}`}
-                    placeholder={`Namn ${i + 1}`}
-                    value={alternative.text}
-                    onChange={text => this.handleAlternativeChange(i, text)}
-                    key={`alternative${i}`}
-                  />
-                ))
+                  this.props.editedVote.alternatives.map((alternative, i) => (
+                    <div className='row'>
+                      <div className='col s10'>
+                        <TextInput
+                          text={`Alternativ ${i + 1}`}
+                          placeholder={`Namn ${i + 1}`}
+                          value={alternative.text}
+                          onChange={text => this.handleAlternativeChange(i, text)}
+                          key={`alternative${i}`}
+                        />
+                      </div>
+                      <div className='col s2'>
+                        <button className='waves-effect waves-light btn red remove-alternative' onClick={event => this.handleAlternativeRemoval(event, i)}>
+                          <i className='material-icons'>clear</i>
+                        </button>
+                      </div>
+                    </div>
+                  ))
                 }
                 <div className='right-align'>
                   <button onClick={this.handleNewAlternative} className='waves-effect waves-light btn grey lighten-1 right-align'>

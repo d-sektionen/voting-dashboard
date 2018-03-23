@@ -33,6 +33,7 @@ export const createMeeting = (name, section) => dispatch => {
   createMeetingAPI(name, section)
     .then(createdMeeting => {
       dispatch(getMeetings())
+      dispatch(setCurrentMeeting(createdMeeting.id))
     })
 }
 
