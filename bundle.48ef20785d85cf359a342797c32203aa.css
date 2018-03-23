@@ -115,6 +115,13 @@ li.collection-item {
 .collection .user-item {
   overflow: auto;
   font-size: 13px;
-  padding: 10px 10px; }
+  padding: 10px 10px;
+  cursor: auto; }
 
-/*# sourceMappingURL=bundle.5ad62f226836f5684e59d9ec78121963.css.map*/
+.modal .modal-content {
+  padding-bottom: 10px; }
+
+.remove-alternative {
+  margin-top: 17px; }
+
+/*# sourceMappingURL=bundle.48ef20785d85cf359a342797c32203aa.css.map*/
