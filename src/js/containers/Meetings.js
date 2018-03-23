@@ -30,7 +30,7 @@ class Meetings extends React.Component {
     const section = this.props.currentSection
 
     if (section.id) {
-      this.props.createMeeting(meetingName, section)
+      this.props.createMeeting(meetingName, section.id)
     }
   }
 

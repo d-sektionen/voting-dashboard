@@ -19,6 +19,7 @@ export const tokenReducer = (state = initialState, action) => {
       return action.payload
     case DELETE_TOKEN:
       remove(tokenStoreKey)
+      window.location.reload()
       return null
     default:
       return state

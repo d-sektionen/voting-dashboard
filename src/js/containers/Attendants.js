@@ -19,6 +19,13 @@ class Users extends React.Component {
     this.handleRemoveScanner = this.handleRemoveScanner.bind(this)
   }
 
+  // sortAttendants(users) {
+  //   return users.sort((userA, userB) => {
+  //     if()
+  //   })
+
+  // }
+
   handleNewAttendant(liuID) {
     addAttendant(liuID, this.props.currentMeetingID)
     return true

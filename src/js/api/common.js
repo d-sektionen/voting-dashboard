@@ -1,5 +1,6 @@
 import { get } from 'utils'
 import { apiURL } from 'config'
+import M from 'materialize-css'
 
 const headers = token => ({
   Authorization: `JWT ${token}`,
@@ -14,6 +15,14 @@ const doRequest = (endpoint, init) => {
       ...init,
     })
       .then(response => {
+        if (!response.ok) {
+          response.json()
+            .then(body =>
+              M.toast({ html: body.error }))
+          return Promise.resolve({})
+        }
+
+
         if (init.method !== 'DELETE') {
           return response.json()
         }

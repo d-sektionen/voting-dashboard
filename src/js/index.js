@@ -19,8 +19,7 @@ ReactDOM.render(
 // Collect the token from the url after the user logged in from LiU
 const { token } = queryString.parse(window.location.search)
 
-
 if (token) {
   store.dispatch(setToken(token))
-  window.history.pushState(null, null, '/dashboard')
+  window.history.replaceState(null, null, window.location.pathname)
 }

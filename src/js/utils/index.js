@@ -15,4 +15,4 @@ export const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1)
 // sort by LiU-ID
 export const liuIdSort = arr => arr.sort((a, b) => a.user.username.localeCompare(b.user.username))
 
-export const getImagePath = section => `/dashboard/images/sections/${section}.png`
+export const getImagePath = section => `images/sections/${section}.png`

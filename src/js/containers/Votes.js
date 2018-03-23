@@ -39,7 +39,6 @@ class Votes extends React.Component {
               ))
               }
               </ul>
-
             </div>
 
             }

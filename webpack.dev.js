@@ -11,10 +11,6 @@ module.exports = merge(common, {
   // Tex är detta ett läge som är en relativt snabbt men som
   // bara visar den rad som erroret kom på.
   devtool: 'cheap-module-eval-source-map',
-
-  devServer: {
-    port: process.env.PORT || 80,
-  },
   plugins: [
     // Indikera för frontend om vi är i development eller production-mode.
     // Används i config-filen för att bestämma vilken url vi ska använda för API:t.
