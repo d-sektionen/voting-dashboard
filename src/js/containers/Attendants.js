@@ -19,13 +19,6 @@ class Users extends React.Component {
     this.handleRemoveScanner = this.handleRemoveScanner.bind(this)
   }
 
-  // sortAttendants(users) {
-  //   return users.sort((userA, userB) => {
-  //     if()
-  //   })
-
-  // }
-
   handleNewAttendant(liuID) {
     addAttendant(liuID, this.props.currentMeetingID)
     return true
@@ -70,6 +63,8 @@ class Users extends React.Component {
       userObj.scannerID = scanner.id
     })
 
+    const sortedUsers = allUsers.sort((a, b) => a.user.username.localeCompare(b.user.username))
+
     return (
       <Panel title='Personer'>
         {
@@ -86,7 +81,7 @@ class Users extends React.Component {
               onSubmit={this.handleNewScanner}
             />
             <ListContainer noItemsText='Inga personer hittades'>
-              {allUsers.map(userObj => (
+              {sortedUsers.map(userObj => (
                 <li
                   key={`user${userObj.user.id}`}
                   className='collection-item user-item'
