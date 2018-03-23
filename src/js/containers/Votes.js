@@ -7,7 +7,6 @@ import ListItem from 'components/ListItem'
 import VoteModal from 'containers/VoteModal'
 import M from 'materialize-css'
 
-
 class Votes extends React.Component {
   handleNewEditedVote(vote) {
     this.props.setEditedVote(vote)
@@ -29,16 +28,25 @@ class Votes extends React.Component {
             <div className='divider' />
             {this.props.selectedVote.id &&
             <div className='section'>
-              <h5>{this.props.selectedVote.question}</h5>
-              <ul>
-                {
-              this.props.selectedVote.alternatives.sort((alt1, alt2) => alt1.num_votes > alt2.num_votes).map(vote => (
-                <li key={`vote${vote.id}`}>
-                  {vote.text}, {vote.num_votes}
-                </li>
-              ))
-              }
-              </ul>
+              <h5>Fråga: {this.props.selectedVote.question}</h5>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Alternativ</th>
+                    <th>Röster</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                  this.props.selectedVote.alternatives.sort((alt1, alt2) => alt1.num_votes > alt2.num_votes).map(vote => (
+                    <tr key={`vote${vote.id}`}>
+                      <td>{vote.text}</td>
+                      <td>{vote.num_votes}</td>
+                    </tr>
+                  ))
+                  }
+                </tbody>
+              </table>
             </div>
 
             }

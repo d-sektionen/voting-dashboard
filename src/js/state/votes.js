@@ -58,7 +58,8 @@ export const createVote = (meetingID, question, open, alternatives) => dispatch 
   createVoteAPI(meetingID, question, open, alternatives)
     .then(createdVote => {
       dispatch(getVotes())
-      dispatch(setSelectedVote(createdVote))
+      // dispatch(setSelectedVote(createdVote))
+      dispatch(getVote(createdVote.id))
       dispatch(setEditedVote(defaultVote))
     })
 }
