@@ -1,5 +1,4 @@
 import React from 'react'
-import TextInput from 'components/TextInput'
 
 const listContainer = props => {
   let { children } = props
@@ -10,11 +9,11 @@ const listContainer = props => {
 
   return (
     <React.Fragment>
-      {children.length > 0 ?
+      {children && children.length > 0 ?
         <div className='collection list-collection'>
           {children}
         </div>
-            :
+        :
         <p style={{ marginLeft: '7px' }}>{props.noItemsText}</p>
       }
     </React.Fragment>

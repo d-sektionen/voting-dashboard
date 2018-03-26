@@ -7,6 +7,7 @@ import Header from 'containers/Header'
 import Meetings from 'containers/Meetings'
 import Votes from 'containers/Votes'
 import Attendants from 'containers/Attendants'
+import Scanners from 'containers/Scanners'
 
 const app = props => (
   <React.Fragment>
@@ -25,6 +26,7 @@ const app = props => (
         </div>
         <div className='col s12 m4 l3'>
           <Attendants />
+          <Scanners />
         </div>
       </div>
     :

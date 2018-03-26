@@ -13,3 +13,6 @@ export const randomID = () => `id${Math.random().toString(36).substr(5)}${Date.n
 export const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1)
 
 export const getImagePath = section => `images/sections/${section}.png`
+
+// Sort a list by LiU-ID
+export const liuIDSort = (a, b) => a.user.username.localeCompare(b.user.username)
