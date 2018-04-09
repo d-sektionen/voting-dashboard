@@ -1,16 +1,6 @@
-# dependencies
-/node_modules
+node_modules
 
-# build folder
-/dist
-
-
-# intellij
 .idea
 /.idea
-
-# vscode
 .vscode
-
-# Maybe I should not block this one
-yarn.lock
+*.log
