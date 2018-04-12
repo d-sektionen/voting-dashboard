@@ -1,4 +1,4 @@
-import { get } from 'utils'
+import { get, deleteToken } from 'utils'
 import { apiURL } from 'config'
 import M from 'materialize-css'
 
@@ -16,16 +16,20 @@ const doRequest = (endpoint, init) => {
     })
       .then(response => {
         if (!response.ok) {
-          response.json()
-            .then(body =>
-              M.toast({ html: body.error }))
-          return Promise.resolve({})
+          if (response.status === 401) {
+            deleteToken()
+          } else {
+            response.json()
+              .then(body =>
+                M.toast({ html: body.error }))
+            return Promise.resolve()
+          }
         }
 
-        if (init.method !== 'DELETE') {
-          return response.json()
+        if (init.method === 'DELETE') {
+          return Promise.resolve()
         }
-        return Promise.resolve({})
+        return response.json()
       })
   )
 }
