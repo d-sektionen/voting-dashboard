@@ -1,61 +1,38 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import {
-  setEditedVote,
-  createVote,
-  updateVote,
-  defaultVote,
-  setEditedVoteQuestion,
-  setEditedVoteAlternatives,
-  setEditVoteOpen
-} from 'state'
-import TextInput from 'components/TextInput'
-import ToggleBox from 'components/ToggleBox'
+import { connect } from 'utils'
+import TextInput from 'components/common/TextInput'
+import ToggleBox from 'components/common/ToggleBox'
 import M from 'materialize-css'
 
 class VoteModal extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.modalID = 'voteModal'
-
-    // Stupid binding of 'this' that javascript require
-    this.handleNewVote = this.handleNewVote.bind(this)
-    this.handleUpdatedVote = this.handleUpdatedVote.bind(this)
-    this.handleAlternativeChange = this.handleAlternativeChange.bind(this)
-    this.handleNewAlternative = this.handleNewAlternative.bind(this)
-    this.handleAlternativeRemoval = this.handleAlternativeRemoval.bind(this)
-    this.openVoteModal = this.openVoteModal.bind(this)
-  }
-
   componentDidMount () {
-    const modalElement = document.getElementById(this.modalID)
-    this.instance = M.Modal.init(modalElement, {})
+    const modalElement = document.getElementById('voteModal')
+    this.instance = M.Modal.init(modalElement)
   }
 
-  openVoteModal () {
-    this.props.setEditedVote(defaultVote)
+  openVoteModal = () => {
+    this.props.resetEditedVote()
     this.instance.open()
   }
 
-  handleNewVote (event) {
+  handleNewVote = (event) => {
     event.preventDefault()
     this.props.createVote(this.props.editedVote, this.props.currentMeeting)
   }
 
-  handleUpdatedVote (event) {
+  handleUpdatedVote = (event) => {
     event.preventDefault()
     this.props.updateVote(this.props.editedVote)
   }
 
-  handleAlternativeChange (index, alternativeText) {
+  handleAlternativeChange = (index, alternativeText) => {
     const alternatives = [...this.props.editedVote.alternatives]
     alternatives[index] = { text: alternativeText }
 
     this.props.setEditedVoteAlternatives(alternatives)
   }
 
-  handleAlternativeRemoval (event, index) {
+  handleAlternativeRemoval = (event, index) => {
     event.preventDefault()
     const alternatives = [...this.props.editedVote.alternatives]
     alternatives.splice(index, 1)
@@ -63,7 +40,7 @@ class VoteModal extends React.Component {
     this.props.setEditedVoteAlternatives(alternatives)
   }
 
-  handleNewAlternative (e) {
+  handleNewAlternative = (e) => {
     e.preventDefault()
     const alternatives = [...this.props.editedVote.alternatives]
     alternatives.push({ text: '' })
@@ -154,21 +131,4 @@ class VoteModal extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  editedVote: state.votes.editedVote,
-  currentMeeting: state.meetings.current
-})
-
-const mapDispatchToProps = dispatch => ({
-  createVote: (vote, meeting) => dispatch(createVote(meeting, vote.question, vote.open, vote.alternatives)),
-  updateVote: vote => dispatch(updateVote(vote.id, vote.question, vote.open, vote.alternatives)),
-  setEditedVote: vote => dispatch(setEditedVote(vote)),
-  setEditedVoteQuestion: question => dispatch(setEditedVoteQuestion(question)),
-  setEditedVoteAlternatives: alternatives => dispatch(setEditedVoteAlternatives(alternatives)),
-  setEditVoteOpen: open => dispatch(setEditVoteOpen(open))
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VoteModal)
+export default connect(VoteModal)

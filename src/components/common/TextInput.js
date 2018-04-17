@@ -1,6 +1,5 @@
 import React from 'react'
 import M from 'materialize-css'
-import classNames from 'classnames'
 import { randomID } from 'utils'
 
 export default class TextInput extends React.Component {
@@ -8,14 +7,13 @@ export default class TextInput extends React.Component {
     super(props)
 
     this.id = randomID()
-    this.onChange = this.onChange.bind(this)
   }
 
   componentDidMount () {
     M.updateTextFields()
   }
 
-  onChange (event) {
+  onChange = (event) => {
     if (this.props.onChange) {
       this.props.onChange(event.target.value)
     }
@@ -23,7 +21,7 @@ export default class TextInput extends React.Component {
 
   render () {
     return (
-      <div className={classNames('input-field', 'text-input', { inline: this.props.inline })}>
+      <div className={`input-field text-input ${this.props.inline ? 'inline' : ''}`}>
         <input
           onChange={this.onChange}
           id={this.id}

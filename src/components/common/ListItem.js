@@ -1,11 +1,7 @@
 import React from 'react'
-import classNames from 'classnames'
 
 export default props => (
-  <li
-    onClick={props.onClick}
-    className={classNames('collection-item', { active: props.active })}
-  >
+  <a onClick={props.onClick} className={`collection-item ${props.className} ${props.active ? 'active' : ''}`}>
     {props.children}
-  </li>
+  </a>
 )

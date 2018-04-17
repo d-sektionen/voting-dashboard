@@ -1,15 +1,9 @@
 import React from 'react'
 
 export default props => (
-  <div className='card-panel panel'>
-    <div>
-      {props.title &&
-        <React.Fragment>
-          <h4 className='center panel-header'>{props.title}</h4>
-          <div className='divider' />
-        </React.Fragment>
-      }
-      {props.children}
-    </div>
+  <div className='card-panel'>
+    <h5 className='center panel-header'>{props.title}</h5>
+    <div className='divider' />
+    {props.children}
   </div>
 )

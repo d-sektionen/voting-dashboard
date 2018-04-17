@@ -1,23 +1,16 @@
 import React from 'react'
-import TextInput from 'components/TextInput'
+import TextInput from 'components/common/TextInput'
 
 export default class TextSubmit extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      inputText: ''
-    }
-
-    this.handleTextChange = this.handleTextChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+  state = {
+    inputText: ''
   }
 
-  handleTextChange (text) {
+  handleTextChange = text => {
     this.setState({ inputText: text })
   }
 
-  handleSubmit (event) {
+  handleSubmit = event => {
     event.preventDefault()
 
     const inputText = this.state.inputText.trim()

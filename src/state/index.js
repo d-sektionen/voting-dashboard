@@ -1,27 +1,26 @@
 import { Container } from 'unstated'
 import ReconnectingWebSocket from 'reconnectingwebsocket'
-import { get, set } from 'utils'
+import { getToken as getStoredToken, liuIDSort } from 'utils'
 import { socketURL } from 'config'
 import {
-  getMeetings as getMeetingsAPI,
-  createMeeting as createMeetingAPI,
-  getScanners as getScannersAPI,
-  getAttendants as getAttendantsAPI,
+  getMeetings as getMeetingsAPI, createMeeting as createMeetingAPI,
+  getAttendants as getAttendantsAPI, addAttendant as addAttendantAPI, removeAttendant as removeAttendantAPI,
+  getScanners as getScannersAPI, addScanner as addScannerAPI, removeScanner as removeScannerAPI,
   getVotes as getVotesAPI,
-  getVote as getVoteAPI,
-  getUserInfo as getUserInfoAPI,
-  createdVote as createVoteAPI,
-  updatedVote as updateVoteAPI
+  getVote as getVoteAPI, createdVote as createVoteAPI, updatedVote as updateVoteAPI,
+  getUserInfo as getUserInfoAPI
 } from 'api'
-import queryString from 'query-string'
 
 let socket
 
 // TODO: split into multiple containers
 export default class StateContainer extends Container {
   state = {
-    currentMeeting: undefined,
-    currentVote: undefined,
+    currentMeetingID: undefined,
+    currentVote: {
+      id: undefined,
+      alternatives: []
+    },
     meetings: [],
     scanners: [],
     attendants: [],
@@ -29,88 +28,79 @@ export default class StateContainer extends Container {
     token: undefined,
     editedVote: defaultVote,
     sections: [],
-    currentSection: undefined,
+    currentSectionID: undefined,
     userName: undefined,
     firstName: undefined,
     lastName: undefined
   }
 
-  getToken () {
-    let { token } = queryString.parse(window.location.search)
+  getToken = () => this.setState({token: getStoredToken()})
 
-    if (token !== undefined) {
-      window.history.replaceState(null, null, window.location.pathname)
-    } else {
-      token = get('token')
-    }
-
-    set('token', token)
-    this.setState({token})
-  }
-
-  getUserInfo () {
-    getUserInfoAPI()
-      .then(userInfo => {
-        this.setState({
-          userName: userInfo.username,
-          firstName: userInfo.first_name,
-          lastName: userInfo.last_name,
-          sections: userInfo.sections,
-          currentSection: userInfo.sections[0]
-        })
-      })
-  }
-
-  setCurrentSection (sectionObject) {
-    this.setState({current: sectionObject})
-  }
-
-  setCurrentMeeting (meetingID) {
-    this.setState({currentMeeting: meetingID})
-    this.getAttendants(meetingID)
-    this.getScanners(meetingID)
-    this.getVotes()
-  }
-
-  getScanners (meetingID) {
-    getScannersAPI(meetingID).then(scanners => this.setState({scanners}))
-  }
-
-  getAttendants (meetingID) {
-    getAttendantsAPI(meetingID).then(attendants => this.setState(({attendants})))
-  }
-
-  getVotes () {
-    getVotesAPI().then(votes => this.setState({votes}))
-  }
-
-  getVote (voteID) {
-    getVoteAPI(voteID)
-      .then(currentVote => this.setState({currentVote}))
-  }
-
-  getMeetings () {
-    getMeetingsAPI().then(meetings => {
-      const sortedMeetings = meetings.reverse()
-      this.setState({
-        meetings: sortedMeetings,
-        currentMeeting: sortedMeetings[0]
-      })
+  getUserInfo = () => {
+    getUserInfoAPI().then(({userName, firstName, lastName, sections}) => {
+      this.setState({userName, firstName, lastName, sections})
+      if (sections.length > 0) {
+        this.setCurrentSection(sections[0].id)
+      }
     })
   }
 
-  createMeeting (name, section) {
-    createMeetingAPI(name, section)
-      .then(createdMeeting => {
-        this.getMeetings()
-      })
+  setCurrentSection = currentSectionID => {
+    this.setState({currentSectionID})
+    this.getMeetings()
   }
 
-  setEditedVote (editedVote) {
-    this.setState({editedVote})
+  setCurrentMeeting = (meetingID) => {
+    this.setState({currentMeetingID: meetingID})
+    this.getAttendants(meetingID)
+    this.getScanners(meetingID)
+    this.getVotes()
+    this.updateSocket(meetingID)
   }
 
-  createVote (meetingID, question, open, alternatives) {
+  createMeeting = name => createMeetingAPI(name, this.state.currentSectionID).then(createdMeeting => this.getMeetings())
+
+  getAttendants = meetingID => {
+    this.setState({attendants: []})
+    getAttendantsAPI(meetingID).then(attendants => {
+      attendants.sort(liuIDSort)
+      this.setState({attendants})
+    })
+  }
+
+  addAttendant = liuID => addAttendantAPI(liuID, this.state.currentMeetingID)
+  removeAttendant = attendantID => removeAttendantAPI(attendantID, this.state.currentMeetingID)
+  removeAllAttendants = () => this.state.attendants.forEach(attendant => this.removeAttendant(attendant.id))
+
+  getScanners = meetingID => {
+    this.setState({scanners: []})
+    getScannersAPI(meetingID).then(scanners => {
+      scanners.sort(liuIDSort)
+      this.setState({scanners})
+    })
+  }
+  addScanner = liuID => addScannerAPI(liuID, this.state.currentMeetingID)
+  removeScanner = scannerID => removeScannerAPI(scannerID, this.state.currentMeetingID)
+
+  getVotes = () => getVotesAPI().then(votes => this.setState({votes}))
+  getVote = voteID => getVoteAPI(voteID).then(currentVote => this.setState({currentVote}))
+
+  getMeetings = () => {
+    getMeetingsAPI().then(meetings => {
+      const sortedMeetings = meetings.reverse()
+
+      this.setState({meetings: sortedMeetings})
+
+      if (sortedMeetings.length > 0) {
+        this.setCurrentMeeting(sortedMeetings[0].id)
+      }
+    })
+  }
+
+  setEditedVote = editedVote => this.setState({editedVote})
+  resetEditedVote = () => this.setState({editedVote: defaultVote})
+
+  createVote = (meetingID, question, open, alternatives) => {
     createVoteAPI(meetingID, question, open, alternatives)
       .then(createdVote => {
         // dispatch(getVotes())
@@ -120,7 +110,7 @@ export default class StateContainer extends Container {
       })
   }
 
-  updateVote (voteID, question, open, alternatives) {
+  updateVote = (voteID, question, open, alternatives) => {
     updateVoteAPI(voteID, question, open, alternatives)
       .then(updatedVote => {
       // dispatch(getVotes())
@@ -129,10 +119,8 @@ export default class StateContainer extends Container {
       })
   }
 
-  updateSocket (meetingID) {
-    const token = get('token')
-
-    if (meetingID === undefined || token === undefined) {
+  updateSocket = (meetingID) => {
+    if (meetingID === undefined || this.state.token === undefined) {
       return
     }
 
@@ -141,17 +129,19 @@ export default class StateContainer extends Container {
       socket.close()
     }
 
-    socket = new ReconnectingWebSocket(`${socketURL}/meeting/${meetingID}/?token=${token}`)
+    socket = new ReconnectingWebSocket(`${socketURL}/meeting/${meetingID}/?token=${this.state.token}`)
 
     socket.onmessage = message => {
       const { type, data } = JSON.parse(message.data)
 
       if (type === 'attendants_list') {
+        data.sort(liuIDSort)
         this.setState({attendants: data})
       } else if (type === 'scanner_list') {
+        data.sort(liuIDSort)
         this.setState({scanners: data})
-      } else {
-        console.error('Unkowned socket data: ', type, data)
+      } else if (type === 'vote_details') {
+        this.setState({currentVote: data})
       }
     }
   }

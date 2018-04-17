@@ -1,13 +1,40 @@
-$black: #000
-$white: #fff
+html
+  font-size: 12px
+  
+p
+  font-size: 12px
 
-//@import sections/d
-//@import sections/i
-//@import sections/m
-//@import sections/y
+// Header stuff
+nav 
+  padding: 0 12px
 
-@import header
+.login-button
+  margin-left: 10px
+
+.btn
+  font-size: 10px
+
+select.browser-default
+  background: transparent
+  border: 0
+  color: white
+  margin: 12px 0 0
+
+.main
+  margin-top: 4px
+
+// Input-fileds
+.text-input
+  margin-bottom: 0
+
+input[type=text]:not(.browser-default)
+  font-size: 14px
+
+.input-field > label
+  font-size: 11px
+
+.user-item
+  cursor: pointer
+
 @import panels
-@import input
-@import attendants
 @import voting

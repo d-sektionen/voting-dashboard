@@ -1,48 +1,51 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import classNames from 'classnames'
 import { loginURL } from 'config'
-// Containers
-import Header from 'containers/Header'
-import Meetings from 'containers/Meetings'
-import Votes from 'containers/Votes'
-import Attendants from 'containers/Attendants'
-import Scanners from 'containers/Scanners'
+import Header from 'components/Header'
+import {connect} from 'utils'
+import Meetings from 'components/Meetings'
+import Votes from 'components/votes'
+import Attendants from 'components/Attendants'
+import Scanners from 'components/Scanners'
 
-const app = props => (
-  <React.Fragment>
-    <Header
-      title='Dashboard för D-Cide'
-      className='grey darken-4'
-    />
-    {props.token
-      // Logged in, show meetings, votes and user
-      ? <div className={classNames('row', 'section', props.currentSectionName)}>
-        <div className='col s12 m3'>
-          <Meetings />
-        </div>
-        <div className='col s12 m5 l6'>
-          <Votes />
-        </div>
-        <div className='col s12 m4 l3'>
-          <Attendants />
-          <Scanners />
-        </div>
-      </div>
-      // Logged out, show login text
-      : <div>
-        <h5 className='center-align'>
-          <a href={loginURL}>Logga in </a>
-           för använda D-Cides Dashboard
-        </h5>
-      </div>
+class App extends React.Component {
+  componentDidMount () {
+    this.props.getToken()
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.token === undefined && nextProps.token !== undefined) {
+      this.props.getUserInfo()
     }
-  </React.Fragment>
-)
+  }
 
-const mapStateToProps = state => ({
-  currentSectionName: state.sections.current.name,
-  token: state.token
-})
+  render () {
+    return (
+      <React.Fragment>
+        <Header />
+        {this.props.token
+          ? <div className='row main'>
+            <div className='col s12 m3'>
+              <Meetings />
+            </div>
+            <div className='col s12 m5 l6'>
+              <Votes />
+            </div>
+            <div className='col s12 m4 l3'>
+              <Attendants />
+              <Scanners />
+            </div>
+          </div>
+          // Logged out, show login text
+          : <div>
+            <h5 className='center-align'>
+              <a href={loginURL}>Logga in </a>
+              för använda D-Cides Dashboard
+            </h5>
+          </div>
+        }
+      </React.Fragment>
+    )
+  }
+}
 
-export default connect(mapStateToProps)(app)
+export default connect(App)

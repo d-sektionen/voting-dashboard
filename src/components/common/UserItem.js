@@ -1,27 +1,14 @@
 import React from 'react'
 
-const userItem = props => (
-  <li
-    key={`user${props.user.user.id}`}
-    className='collection-item user-item'
-  >
+export default props => (
+  <a className='collection-item'>
     {
-      props.user.user.first_name !== ''
-        ? `${props.user.user.first_name} ${props.user.user.last_name} (${props.user.user.username})`
-        : props.user.user.username
+      props.user.first_name !== ''
+        ? `${props.user.first_name} ${props.user.last_name} (${props.user.username})`
+        : props.user.username
     }
-    <i className='material-icons right' style={{ marginLeft: 0 }}>
-      <span style={{ marginRight: '6px' }} />
-      <a
-        onClick={() => props.remove(props.user.id)}
-        title={props.removeString}
-        style={{ color: '#E53935', cursor: 'pointer' }}
-        role='button'
-      >
-        clear
-      </a>
-    </i>
-  </li>
+    <a onClick={props.onRemove} title={props.removeString} className='secondary-content red-text user-item'>
+      <i className='material-icons'>delete</i>
+    </a>
+  </a>
 )
-
-export default userItem
