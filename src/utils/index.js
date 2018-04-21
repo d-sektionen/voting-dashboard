@@ -21,6 +21,16 @@ export const randomID = () => `id${Math.random().toString(36).substr(5)}${Date.n
 // Sort a list by LiU-ID
 export const liuIDSort = (a, b) => a.user.username.localeCompare(b.user.username)
 
+export const idSort = (a, b) => {
+  if (a.id < b.id) {
+    return 1
+  } else if (a.id > b.id) {
+    return -1
+  }
+
+  return 0
+}
+
 export const alternativeSort = (a, b) => {
   if (a.num_votes < b.num_votes) {
     return 1

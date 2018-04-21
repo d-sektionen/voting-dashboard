@@ -1,13 +1,13 @@
 import { Container } from 'unstated'
 import ReconnectingWebSocket from 'reconnectingwebsocket'
-import { getToken as getStoredToken, liuIDSort } from 'utils'
+import { getToken as getStoredToken, liuIDSort, idSort } from 'utils'
 import { socketURL } from 'config'
 import {
   getMeetings as getMeetingsAPI, createMeeting as createMeetingAPI,
   getAttendants as getAttendantsAPI, addAttendant as addAttendantAPI, removeAttendant as removeAttendantAPI,
   getScanners as getScannersAPI, addScanner as addScannerAPI, removeScanner as removeScannerAPI,
   getVotes as getVotesAPI,
-  getVote as getVoteAPI, createdVote as createVoteAPI, updatedVote as updateVoteAPI,
+  getVote as getVoteAPI, createVote as createVoteAPI, updateVote as updateVoteAPI,
   getUserInfo as getUserInfoAPI
 } from 'api'
 
@@ -17,16 +17,13 @@ let socket
 export default class StateContainer extends Container {
   state = {
     currentMeetingID: undefined,
-    currentVote: {
-      id: undefined,
-      alternatives: []
-    },
+    currentVote: defaultCurrentVote,
     meetings: [],
     scanners: [],
     attendants: [],
     votes: [],
     token: undefined,
-    editedVote: defaultVote,
+    editedVote: defaultEditedVote,
     sections: [],
     currentSectionID: undefined,
     userName: undefined,
@@ -82,8 +79,15 @@ export default class StateContainer extends Container {
   addScanner = liuID => addScannerAPI(liuID, this.state.currentMeetingID)
   removeScanner = scannerID => removeScannerAPI(scannerID, this.state.currentMeetingID)
 
-  getVotes = () => getVotesAPI().then(votes => this.setState({votes}))
-  getVote = voteID => getVoteAPI(voteID).then(currentVote => this.setState({currentVote}))
+  getVotes = () => getVotesAPI().then(votes => {
+    votes.sort(idSort)
+    this.setState({votes})
+  })
+
+  setCurrentVote = voteID => {
+    this.setState({currentVote: defaultEditedVote})
+    getVoteAPI(voteID).then(currentVote => this.setState({currentVote}))
+  }
 
   getMeetings = () => {
     getMeetingsAPI().then(meetings => {
@@ -98,24 +102,22 @@ export default class StateContainer extends Container {
   }
 
   setEditedVote = editedVote => this.setState({editedVote})
-  resetEditedVote = () => this.setState({editedVote: defaultVote})
+  resetEditedVote = () => this.setState({editedVote: defaultEditedVote})
 
-  createVote = (meetingID, question, open, alternatives) => {
-    createVoteAPI(meetingID, question, open, alternatives)
+  createVote = () => {
+    const {question, open, alternatives} = this.state.editedVote
+    createVoteAPI(this.state.currentMeetingID, question, open, alternatives)
       .then(createdVote => {
-        // dispatch(getVotes())
-        // dispatch(setSelectedVote(createdVote))
-        // dispatch(getVote(createdVote.id))
-        // dispatch(setEditedVote(defaultVote))
+        this.getVotes()
       })
   }
 
-  updateVote = (voteID, question, open, alternatives) => {
-    updateVoteAPI(voteID, question, open, alternatives)
+  updateVote = () => {
+    const {id, question, open, alternatives} = this.state.editedVote
+
+    updateVoteAPI(id, question, open, alternatives)
       .then(updatedVote => {
-      // dispatch(getVotes())
-      // dispatch(setSelectedVote(updatedVote))
-      // dispatch(setEditedVote(defaultVote))
+        this.getVotes()
       })
   }
 
@@ -129,6 +131,7 @@ export default class StateContainer extends Container {
       socket.close()
     }
 
+    console.log('asdfasdf')
     socket = new ReconnectingWebSocket(`${socketURL}/meeting/${meetingID}/?token=${this.state.token}`)
 
     socket.onmessage = message => {
@@ -147,7 +150,7 @@ export default class StateContainer extends Container {
   }
 }
 
-const defaultVote = Object.freeze({
+const defaultEditedVote = Object.freeze({
   question: '',
   alternatives: [
     { text: '' },
@@ -156,4 +159,9 @@ const defaultVote = Object.freeze({
   open: true,
   id: null,
   meeting: null
+})
+
+const defaultCurrentVote = Object.freeze({
+  id: undefined,
+  alternatives: []
 })

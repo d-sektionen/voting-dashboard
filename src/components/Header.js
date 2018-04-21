@@ -6,11 +6,14 @@ const Header = props => (
   <nav className='grey darken-4'>
     <div className='nav-wrapper'>
       <div className='left'>
-        <select onChange={event => props.setCurrentSection(event.target.value)} className='browser-default grey darken-4' >
-          {props.sections.map(section => (
-            <option key={`section${section.id}`} value={section.id} className='grey darken-4'>{section.name}</option>
-          ))}
-        </select>
+        {
+          props.sections.length !== 0 &&
+          <select onChange={event => props.setCurrentSection(event.target.value)} className='browser-default grey darken-4' >
+            {props.sections.map(section => (
+              <option key={`section${section.id}`} value={section.id} className='grey darken-4'>{section.name}</option>
+            ))}
+          </select>
+        }
       </div>
       <a href='./' className='brand-logo center hide-on-med-and-down'>D-Cide - Dashboard</a>
       <div className='right'>

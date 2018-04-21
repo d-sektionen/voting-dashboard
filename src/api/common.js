@@ -1,4 +1,4 @@
-import { get, deleteToken } from 'utils'
+import { get, logOut } from 'utils'
 import { apiURL } from 'config'
 import M from 'materialize-css'
 
@@ -17,7 +17,7 @@ const doRequest = (endpoint, init) => {
       .then(response => {
         if (!response.ok) {
           if (response.status === 401) {
-            deleteToken()
+            logOut()
           } else {
             response.json()
               .then(body =>

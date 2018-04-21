@@ -3,7 +3,7 @@ import { loginURL } from 'config'
 import Header from 'components/Header'
 import {connect} from 'utils'
 import Meetings from 'components/Meetings'
-import Votes from 'components/votes'
+import Votes from 'components/Votes'
 import Attendants from 'components/Attendants'
 import Scanners from 'components/Scanners'
 
@@ -24,15 +24,23 @@ class App extends React.Component {
         <Header />
         {this.props.token
           ? <div className='row main'>
-            <div className='col s12 m3'>
+            <div className='col s12 m4'>
               <Meetings />
             </div>
-            <div className='col s12 m5 l6'>
-              <Votes />
+            <div className='col s12 m4'>
+              {
+                this.props.currentMeetingID &&
+                <Votes />
+              }
             </div>
-            <div className='col s12 m4 l3'>
-              <Attendants />
-              <Scanners />
+            <div className='col s12 m4'>
+              {
+                this.props.currentMeetingID &&
+                <React.Fragment>
+                  <Attendants />
+                  <Scanners />
+                </React.Fragment>
+              }
             </div>
           </div>
           // Logged out, show login text

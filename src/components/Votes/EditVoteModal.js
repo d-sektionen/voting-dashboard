@@ -5,61 +5,82 @@ import ToggleBox from 'components/common/ToggleBox'
 import M from 'materialize-css'
 
 class VoteModal extends React.Component {
-  componentDidMount () {
-    const modalElement = document.getElementById('voteModal')
-    this.instance = M.Modal.init(modalElement)
+  openModal = () => {
+    const modalElement = document.getElementById('editVoteModal')
+    const instance = M.Modal.init(modalElement)
+    instance.open()
   }
 
-  openVoteModal = () => {
+  updateVote = change => {
+    this.props.setEditedVote({
+      ...this.props.editedVote,
+      ...change
+    })
+  }
+
+  openNewVote = () => {
     this.props.resetEditedVote()
-    this.instance.open()
+    this.openModal()
   }
 
-  handleNewVote = (event) => {
+  handleNewVote = event => {
     event.preventDefault()
-    this.props.createVote(this.props.editedVote, this.props.currentMeeting)
+    this.props.createVote()
   }
 
-  handleUpdatedVote = (event) => {
+  handleUpdatedVote = event => {
     event.preventDefault()
-    this.props.updateVote(this.props.editedVote)
+    this.props.updateVote()
   }
 
-  handleAlternativeChange = (index, alternativeText) => {
+  updateQuestion = question => {
+    this.updateVote({question})
+  }
+
+  updateAlternative = (index, alternativeText) => {
     const alternatives = [...this.props.editedVote.alternatives]
     alternatives[index] = { text: alternativeText }
 
-    this.props.setEditedVoteAlternatives(alternatives)
+    this.updateVote({alternatives})
   }
 
-  handleAlternativeRemoval = (event, index) => {
+  removeAlternative = (event, i) => {
     event.preventDefault()
     const alternatives = [...this.props.editedVote.alternatives]
-    alternatives.splice(index, 1)
+    alternatives.splice(i, 1)
 
-    this.props.setEditedVoteAlternatives(alternatives)
+    this.updateVote({alternatives})
   }
 
-  handleNewAlternative = (e) => {
-    e.preventDefault()
-    const alternatives = [...this.props.editedVote.alternatives]
-    alternatives.push({ text: '' })
+  addAlternative = event => {
+    event.preventDefault()
 
-    this.props.setEditedVoteAlternatives(alternatives)
+    const alternatives = [
+      ...this.props.editedVote.alternatives,
+      {text: ''}
+    ]
+
+    this.updateVote({alternatives})
+  }
+
+  setVoteOpen = open => {
+    this.updateVote({open})
   }
 
   render () {
     return (
       <React.Fragment>
-        <button className='btn' onClick={this.openVoteModal}>Ny omröstning</button>
-        <div id={this.modalID} className='modal'>
-          <div className='modal-content'>
+        <div className='section right-align'>
+          <button className='waves-effect waves-light btn' onClick={this.openNewVote}>Ny omröstning</button>
+        </div>
+        <div id='editVoteModal' className='modal'>
+          <div className='modal-content edit-modal'>
             <form>
               <TextInput
                 text='Fråga'
                 placeholder=''
                 value={this.props.editedVote.question}
-                onChange={question => this.props.setEditedVoteQuestion(question)}
+                onChange={question => this.updateQuestion(question)}
               />
               <div className='section'>
                 {
@@ -70,12 +91,14 @@ class VoteModal extends React.Component {
                           text={`Alternativ ${i + 1}`}
                           placeholder={`Namn ${i + 1}`}
                           value={alternative.text}
-                          onChange={text => this.handleAlternativeChange(i, text)}
+                          onChange={text => this.updateAlternative(i, text)}
                           key={`alternative${i}`}
                         />
                       </div>
                       <div className='col s2'>
-                        <button className='waves-effect waves-light btn red remove-alternative' onClick={event => this.handleAlternativeRemoval(event, i)}>
+                        <button
+                          className='waves-effect waves-light btn red remove-alternative' tabIndex='-1'
+                          onClick={event => this.removeAlternative(event, i)}>
                           <i className='material-icons'>clear</i>
                         </button>
                       </div>
@@ -83,7 +106,7 @@ class VoteModal extends React.Component {
                   ))
                 }
                 <div className='right-align'>
-                  <button onClick={this.handleNewAlternative} className='waves-effect waves-light btn grey lighten-1 right-align'>
+                  <button onClick={event => this.addAlternative(event)} className='waves-effect waves-light btn grey lighten-1 right-align'>
                     <i className='material-icons left'>add</i>
                     Lägg till alternativ
                   </button>
@@ -95,7 +118,7 @@ class VoteModal extends React.Component {
                   value={this.props.editedVote.open}
                   onText='Öppna frågan'
                   offText='Stäng frågan'
-                  onChange={open => this.props.setEditVoteOpen(open)}
+                  onChange={open => this.setVoteOpen(open)}
                 />
               </div>
               <div className='modal-footer right-align'>
