@@ -6,7 +6,7 @@ import TextSubmit from 'components/common/TextSubmit'
 import UserItem from 'components/common/UserItem'
 
 const Attendants = props => (
-  <Panel title='Deltagare'>
+  <Panel title='Deltagare' className='attendants-panel'>
     <TextSubmit
       text='Nytt LiU-ID för deltagare'
       pattern='^([A-Za-z]){4,5}([0-9]){3}$'

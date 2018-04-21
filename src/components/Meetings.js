@@ -9,7 +9,7 @@ const Meetings = props => {
   const filteredMeetngs = props.meetings.filter(meeting => meeting.section.id === props.currentSectionID)
 
   return (
-    <Panel title='Möten'>
+    <Panel title='Möten' className='meetings-panel'>
       <TextSubmit text='Nytt möte' onSubmit={meeting => props.createMeeting(meeting)} />
       <ListContainer noItemsText='Inga möten skapade än'>
         {

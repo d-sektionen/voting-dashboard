@@ -24,16 +24,16 @@ class App extends React.Component {
         <Header />
         {this.props.token
           ? <div className='row main'>
-            <div className='col s12 m4'>
+            <div className='col col-main s12 m4'>
               <Meetings />
             </div>
-            <div className='col s12 m4'>
+            <div className='col col-main s12 m4'>
               {
                 this.props.currentMeetingID &&
                 <Votes />
               }
             </div>
-            <div className='col s12 m4'>
+            <div className='col col-main s12 m4'>
               {
                 this.props.currentMeetingID &&
                 <React.Fragment>

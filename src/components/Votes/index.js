@@ -31,7 +31,7 @@ class Votes extends React.Component {
 
   render () {
     return (
-      <Panel title='Omröstningar'>
+      <Panel title='Omröstningar' className='votes-panel'>
         <VoteModal />
         <ResultModal />
         <div className='divider' />
