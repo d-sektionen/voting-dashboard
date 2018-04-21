@@ -12,6 +12,8 @@ const Attendants = props => (
       pattern='^([A-Za-z]){4,5}([0-9]){3}$'
       onSubmit={liuID => props.addAttendant(liuID)}
     />
+    <div className='vote-length'>Röstlängd: {props.attendants.length}</div>
+    <div className='divider' />
     <ListContainer noItemsText='Inga personer hittades'>
       {
         props.attendants.map(attendant => (
