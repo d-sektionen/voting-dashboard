@@ -1,10 +1,6 @@
 # dependencies
 /node_modules
 
-# build folder
-/dist
-
-
 # intellij
 .idea
 /.idea
