@@ -44,51 +44,19 @@ export default class StateContainer extends Container {
     })
   }
 
+  // -------------------- SECTIONS --------------------
   setCurrentSection = currentSectionID => {
     this.setState({currentSectionID})
     this.getMeetings()
   }
 
+  // -------------------- MEETINGS --------------------
   setCurrentMeeting = (meetingID) => {
     this.setState({currentMeetingID: meetingID})
     this.getAttendants(meetingID)
     this.getScanners(meetingID)
     this.getVotes()
     this.updateSocket(meetingID)
-  }
-
-  createMeeting = name => createMeetingAPI(name, this.state.currentSectionID).then(createdMeeting => this.getMeetings())
-
-  getAttendants = meetingID => {
-    this.setState({attendants: []})
-    getAttendantsAPI(meetingID).then(attendants => {
-      attendants.sort(liuIDSort)
-      this.setState({attendants})
-    })
-  }
-
-  addAttendant = liuID => addAttendantAPI(liuID, this.state.currentMeetingID)
-  removeAttendant = attendantID => removeAttendantAPI(attendantID, this.state.currentMeetingID)
-  removeAllAttendants = () => this.state.attendants.forEach(attendant => this.removeAttendant(attendant.id))
-
-  getScanners = meetingID => {
-    this.setState({scanners: []})
-    getScannersAPI(meetingID).then(scanners => {
-      scanners.sort(liuIDSort)
-      this.setState({scanners})
-    })
-  }
-  addScanner = liuID => addScannerAPI(liuID, this.state.currentMeetingID)
-  removeScanner = scannerID => removeScannerAPI(scannerID, this.state.currentMeetingID)
-
-  getVotes = () => getVotesAPI().then(votes => {
-    votes.sort(idSort)
-    this.setState({votes})
-  })
-
-  setCurrentVote = voteID => {
-    this.setState({currentVote: defaultEditedVote})
-    getVoteAPI(voteID).then(currentVote => this.setState({currentVote}))
   }
 
   getMeetings = () => {
@@ -103,11 +71,65 @@ export default class StateContainer extends Container {
     })
   }
 
+  createMeeting = name => createMeetingAPI(name, this.state.currentSectionID).then(createdMeeting => this.getMeetings())
+
+  // -------------------- ATTENDANTS --------------------
+  getAttendants = meetingID => {
+    this.setState({attendants: []})
+    getAttendantsAPI(meetingID).then(attendants => {
+      attendants.sort(liuIDSort)
+      this.setState({attendants})
+    })
+  }
+
+  addAttendant = liuID => addAttendantAPI(liuID, this.state.currentMeetingID)
+  removeAttendant = attendantID => removeAttendantAPI(attendantID, this.state.currentMeetingID)
+  removeAllAttendants = () => this.state.attendants.forEach(attendant => this.removeAttendant(attendant.id))
+
+  // -------------------- SCANNERS --------------------
+  getScanners = meetingID => {
+    this.setState({scanners: []})
+    getScannersAPI(meetingID).then(scanners => {
+      scanners.sort(liuIDSort)
+      this.setState({scanners})
+    })
+  }
+
+  addScanner = liuID => addScannerAPI(liuID, this.state.currentMeetingID)
+  removeScanner = scannerID => removeScannerAPI(scannerID, this.state.currentMeetingID)
+
+  // -------------------- DISPLAYING VOTES --------------------
+  getVotes = () => getVotesAPI().then(votes => {
+    votes.sort(idSort)
+    this.setState({votes})
+  })
+
+  // -------------------- MODAL --------------------
   setEditedVote = editedVote => this.setState({editedVote})
-  resetEditedVote = () => this.setState({editedVote: defaultEditedVote})
+  editVote = (vote = defaultEditedVote) => {
+    this.setState({
+      modalOpen: true,
+      modalEditMode: true,
+      editedVote: vote
+    })
+  }
+
+  closeModal = () => this.setState({modalOpen: false})
+
+  showResults = voteID => {
+    this.setState({
+      modalEditMode: false,
+      modalOpen: true,
+      currentVote: defaultEditedVote
+    })
+
+    getVoteAPI(voteID).then(currentVote => this.setState({currentVote}))
+  }
 
   createVote = () => {
+    this.setState({modalOpen: false})
     const {question, open, alternatives} = this.state.editedVote
+
     createVoteAPI(this.state.currentMeetingID, question, open, alternatives)
       .then(createdVote => {
         this.getVotes()
@@ -115,6 +137,7 @@ export default class StateContainer extends Container {
   }
 
   updateVote = () => {
+    this.setState({modalOpen: false})
     const {id, question, open, alternatives} = this.state.editedVote
 
     updateVoteAPI(id, question, open, alternatives)

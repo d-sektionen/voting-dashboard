@@ -5,7 +5,6 @@
   top: 0
   left: 0
   background-color: rgba($primary, 0.6)
-  display: none
 
   .modal-body
     background-color: #151515
@@ -19,11 +18,18 @@
     top: 200px
     flex-direction: column
 
+    h4, td, th
+      color: $light-grey
+
     .alternative
       display: flex
 
+      input
+        width: 100%
+
       button
         margin-left: 10px
+        
         
     .new-alternative
       margin-top: 20px
@@ -34,5 +40,6 @@
       span
         font-weight: bold
 
-.modal .active
-  display: block
+
+.blur
+  filter: blur(2px)

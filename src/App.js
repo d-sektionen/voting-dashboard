@@ -6,6 +6,7 @@ import Meetings from 'components/Meetings'
 import Votes from 'components/Votes'
 import Attendants from 'components/Attendants'
 import Scanners from 'components/Scanners'
+import VoteModal from 'components/VoteModal'
 
 class App extends React.Component {
   componentDidMount () {
@@ -21,27 +22,28 @@ class App extends React.Component {
   render () {
     return (
       <React.Fragment>
-        <Header />
-        {this.props.token
-          ? <div id='main'>
-            <Meetings />
-            {
-              this.props.currentMeetingID &&
-              <React.Fragment>
-                <Votes />
-                <Attendants />
-                <Scanners />
-              </React.Fragment>
-            }
-          </div>
-          // Logged out, show login text
-          : <div>
-            <h5 className='center-align'>
-              <a href={loginURL}>Logga in </a>
-              för använda D-Cides Dashboard
-            </h5>
-          </div>
-        }
+        <div className={this.props.modalOpen ? 'blur' : ''}>
+          <Header />
+          {this.props.token
+            ? <div id='main'>
+              <Meetings />
+              {
+                this.props.currentMeetingID &&
+                <React.Fragment>
+                  <Votes />
+                  <Attendants />
+                  <Scanners />
+
+                </React.Fragment>
+              }
+            </div>
+            // Logged out, show login text
+            : <div className='login'>
+              <a href={loginURL}>Logga in</a>
+            </div>
+          }
+        </div>
+        <VoteModal />
       </React.Fragment>
     )
   }

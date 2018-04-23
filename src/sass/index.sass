@@ -1,7 +1,24 @@
 @import colors
+$mobile: "only screen and (max-width : 950px)"
+$a-hover: 'a:active, a:hover'
 
-html, body
-  background-color: $light-grey
+html, body, #app
+  background-color: rgba($primary, 0.7)
+  height: 100%
+
+.login
+  text-align: center
+  margin-top: 50px
+  
+  a
+    font-size: 5rem
+    color: $background
+
+  #{$a-hover}
+    color: $light-grey
+
+  labmda
+    font-size: 20rem
 
 span
   color: $light-grey
@@ -15,14 +32,8 @@ input[type="text"]
 form, ul, input
   margin: 0
 
-
-#main
-  padding: 10px
-  display: flex
-  justify-content: center 
-
 hr
-  margin: 1.6rem 0  
+  margin: 1.6rem 0
 
 
 @import header

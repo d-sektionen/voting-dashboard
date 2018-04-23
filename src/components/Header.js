@@ -1,6 +1,5 @@
 import React from 'react'
 import { logOut, connect } from 'utils'
-import { loginURL } from 'config'
 
 const Header = props => (
   <nav id='header'>
@@ -17,15 +16,14 @@ const Header = props => (
         </select>
       }
       {
-        props.token
-          ? <React.Fragment>
-            {
-              props.userName &&
-              <span>{`${props.firstName} ${props.lastName} (${props.userName})`}</span>
-            }
-            <button className='button-primary' onClick={() => logOut()}>Logga ut</button>
-          </React.Fragment>
-          : <a href={loginURL} className='button'>Logga in</a>
+        props.token &&
+        <React.Fragment>
+          {
+            props.userName &&
+            <span>{`${props.firstName} ${props.lastName} (${props.userName})`}</span>
+          }
+          <button className='button-primary' onClick={() => logOut()}>Logga ut</button>
+        </React.Fragment>
       }
     </div>
   </nav>
