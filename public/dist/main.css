@@ -145,6 +145,9 @@ hr {
   width: 100%;
   margin-top: 1rem; }
 
+#attendants {
+  min-width: 230px; }
+
 .modal {
   width: 100%;
   height: 100%;
