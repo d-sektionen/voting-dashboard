@@ -134,7 +134,7 @@ hr {
   font-size: 12px;
   cursor: auto; }
   .user-item span {
-    color: #151515; }
+    color: #555; }
   .user-item .material-icons {
     cursor: pointer; }
   .user-item .material-icons:hover {
