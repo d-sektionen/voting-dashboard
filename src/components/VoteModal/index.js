@@ -13,20 +13,6 @@ class VoteModal extends React.Component {
     })
   }
 
-  openNewVote = () => {
-    this.props.resetEditedVote()
-  }
-
-  handleNewVote = event => {
-    event.preventDefault()
-    this.props.createVote()
-  }
-
-  handleUpdatedVote = event => {
-    event.preventDefault()
-    this.props.updateVote()
-  }
-
   updateQuestion = question => {
     this.updateVote({question})
   }
@@ -58,7 +44,7 @@ class VoteModal extends React.Component {
   }
 
   setVoteOpen = open => {
-    console.log(open)
+    // console.log(open)
     this.updateVote({open})
   }
 
@@ -117,10 +103,10 @@ class VoteModal extends React.Component {
                 <hr />
                 {
                   this.props.editedVote.id === null
-                    ? <button onClick={event => this.handleNewVote(event)} className='button-primary'>
+                    ? <button onClick={event => this.props.createVote()} className='button-primary'>
                         Skapa ny omröstning
                     </button>
-                    : <button onClick={event => this.handleUpdatedVote(event)} className='button-primary'>
+                    : <button onClick={event => this.props.updateVote()} className='button-primary'>
                       Spara
                     </button>
                 }
