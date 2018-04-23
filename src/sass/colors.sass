@@ -1,0 +1,31 @@
+// "Half-life" orange
+$primary: #fb7e14
+$primary-hover: darken($primary, 10%)
+// Dark grey
+$background: #151515
+
+// Dark blue used for dangerous buttons
+$warning: #1E46A9
+$secondary: #E5AB35
+
+// Used for background and text-input 
+$light-grey: #f1f1f1
+
+button.button-primary, button.button-primary:focus
+  background-color: $primary
+  color: $background
+  border: 0
+
+button.button-primary:hover
+  background-color: $primary-hover
+  color: $background
+  border: 0
+
+input[type="text"], button
+  background-color: $light-grey
+
+button:hover
+  background-color: darken($light-grey, 10%)  
+  
+input[type="text"]:focus
+  border: 1px solid $primary

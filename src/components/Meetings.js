@@ -1,31 +1,32 @@
 import React from 'react'
-import ListContainer from 'components/common/ListContainer'
-import ListItem from 'components/common/ListItem'
 import TextSubmit from 'components/common/TextSubmit'
-import Panel from 'components/common/Panel'
+import ListContainer from 'components/common/ListContainer'
 import {connect} from 'utils'
 
 const Meetings = props => {
   const filteredMeetngs = props.meetings.filter(meeting => meeting.section.id === props.currentSectionID)
 
   return (
-    <Panel title='Möten' className='meetings-panel'>
-      <TextSubmit text='Nytt möte' onSubmit={meeting => props.createMeeting(meeting)} />
+    <div className='panel' id='meetings'>
+      <h4>Möten</h4>
+      <hr />
+      <TextSubmit placeholder='Nytt möte' onSubmit={meeting => props.createMeeting(meeting)} />
+      <hr />
       <ListContainer noItemsText='Inga möten skapade än'>
         {
           filteredMeetngs.map(meeting => (
-            <ListItem
-              className='pointer'
-              active={meeting.id === props.currentMeetingID}
+            <button
               onClick={() => props.setCurrentMeeting(meeting.id)}
+              className={meeting.id === props.currentMeetingID ? 'button-primary' : ''}
+              title={meeting.name}
               key={`meeting${meeting.id}`}
             >
               {meeting.name}
-            </ListItem>
+            </button>
           ))
         }
       </ListContainer>
-    </Panel>
+    </div>
   )
 }
 

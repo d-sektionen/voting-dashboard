@@ -28,7 +28,9 @@ export default class StateContainer extends Container {
     currentSectionID: undefined,
     userName: undefined,
     firstName: undefined,
-    lastName: undefined
+    lastName: undefined,
+    modalOpen: false,
+    modalEditMode: false
   }
 
   getToken = () => this.setState({token: getStoredToken()})

@@ -3,31 +3,30 @@ import { logOut, connect } from 'utils'
 import { loginURL } from 'config'
 
 const Header = props => (
-  <nav className='grey darken-4'>
-    <div className='nav-wrapper'>
-      <div className='left'>
-        {
-          props.sections.length !== 0 &&
-          <select onChange={event => props.setCurrentSection(event.target.value)} className='browser-default grey darken-4' >
-            {props.sections.map(section => (
-              <option key={`section${section.id}`} value={section.id} className='grey darken-4'>{section.name}</option>
-            ))}
-          </select>
-        }
-      </div>
-      <a href='./' className='brand-logo center hide-on-med-and-down'>D-Cide - Dashboard</a>
-      <div className='right'>
-        {
-          props.token
-            ? <React.Fragment>
-              {props.userName &&
-                `${props.firstName} ${props.lastName} (${props.userName})`
-              }
-              <button onClick={() => logOut()} className='waves-effect waves-light btn red darken-1 login-button'>Logga ut</button>
-            </React.Fragment>
-            : <a href={loginURL} className='waves-effect waves-light btn green login-button'>Logga in</a>
-        }
-      </div>
+  <nav id='header'>
+    <h3 id='header-title'>
+      <a href='./'>Dashboard för D-CIDE</a>
+    </h3>
+    <div>
+      {
+        props.sections.length !== 0 &&
+        <select onChange={event => props.setCurrentSection(event.target.value)}>
+          {props.sections.map(section => (
+            <option key={`section${section.id}`} value={section.id}>{section.name}</option>
+          ))}
+        </select>
+      }
+      {
+        props.token
+          ? <React.Fragment>
+            {
+              props.userName &&
+              <span>{`${props.firstName} ${props.lastName} (${props.userName})`}</span>
+            }
+            <button className='button-primary' onClick={() => logOut()}>Logga ut</button>
+          </React.Fragment>
+          : <a href={loginURL} className='button'>Logga in</a>
+      }
     </div>
   </nav>
 )

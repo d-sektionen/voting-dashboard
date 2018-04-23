@@ -1,17 +1,19 @@
 import React from 'react'
 import { connect } from 'utils'
-import Panel from 'components/common/Panel'
 import ListContainer from 'components/common/ListContainer'
 import TextSubmit from 'components/common/TextSubmit'
 import UserItem from 'components/common/UserItem'
 
 const Scanners = props => (
-  <Panel title='Scanners' className='scanners-panel'>
+  <div className='panel' id='scanners'>
+    <h4>Scanners</h4>
+    <hr />
     <TextSubmit
-      text='Nytt LiU-ID för scanner'
+      placeholder='Nytt LiU-ID för scanner'
       pattern='^([A-Za-z]){4,5}([0-9]){3}$'
       onSubmit={liuID => props.addScanner(liuID)}
     />
+    <hr />
     <ListContainer noItemsText='Inga personer hittades'>
       {
         props.scanners.map(scanner => (
@@ -24,7 +26,7 @@ const Scanners = props => (
         ))
       }
     </ListContainer>
-  </Panel>
+  </div>
 )
 
 export default connect(Scanners)

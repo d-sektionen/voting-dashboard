@@ -16,7 +16,9 @@ export default class TextSubmit extends React.Component {
     const inputText = this.state.inputText.trim()
 
     if (this.props.onSubmit && inputText !== '') {
-      if (this.props.onSubmit(inputText)) {
+      const success = this.props.onSubmit(inputText)
+
+      if (success) {
         this.setState({ inputText: '' })
       }
     }
@@ -27,7 +29,8 @@ export default class TextSubmit extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <TextInput
           value={this.state.inputText}
-          text={this.props.text}
+          label={this.props.label}
+          placeholder={this.props.placeholder}
           pattern={this.props.pattern}
           onChange={this.handleTextChange}
         />

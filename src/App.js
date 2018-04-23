@@ -23,25 +23,16 @@ class App extends React.Component {
       <React.Fragment>
         <Header />
         {this.props.token
-          ? <div className='row main'>
-            <div className='col col-main s12 m4'>
-              <Meetings />
-            </div>
-            <div className='col col-main s12 m4'>
-              {
-                this.props.currentMeetingID &&
+          ? <div id='main'>
+            <Meetings />
+            {
+              this.props.currentMeetingID &&
+              <React.Fragment>
                 <Votes />
-              }
-            </div>
-            <div className='col col-main s12 m4'>
-              {
-                this.props.currentMeetingID &&
-                <React.Fragment>
-                  <Attendants />
-                  <Scanners />
-                </React.Fragment>
-              }
-            </div>
+                <Attendants />
+                <Scanners />
+              </React.Fragment>
+            }
           </div>
           // Logged out, show login text
           : <div>

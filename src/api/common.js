@@ -1,6 +1,5 @@
 import { get, logOut } from 'utils'
 import { apiURL } from 'config'
-import M from 'materialize-css'
 
 const headers = token => ({
   Authorization: `JWT ${token}`,
@@ -19,9 +18,7 @@ const doRequest = (endpoint, init) => {
           if (response.status === 401) {
             logOut()
           } else {
-            response.json()
-              .then(body =>
-                M.toast({ html: body.error }))
+            response.json().then(body => console.error(body.error))
             return Promise.resolve()
           }
         }

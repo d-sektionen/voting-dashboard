@@ -1,1 +1,146 @@
-html{font-size:12px}html,body,#app{height:100%}p{font-size:12px}nav{padding:0 12px}.login-button{margin-left:10px}.btn{font-size:10px;height:29px;line-height:29px}.material-icons{font-size:19px}select.browser-default{background:transparent;border:0;color:white;margin:15px 0 0}.main{margin-top:4px;height:80%;min-height:500px}.text-input{margin-bottom:0}input[type=text]:not(.browser-default){font-size:14px}.input-field>label{font-size:11px}.user-item{cursor:pointer}.panel-container{height:800px}.card-panel{padding:16px}.panel-header{margin-top:0;margin-bottom:7px}.red-button{font-size:10px;width:100%}.col-main{height:100%}.meetings-panel,.votes-panel{height:100%}.attendants-panel{height:60%;margin-bottom:0}.scanners-panel{height:39%}.card-panel{display:flex;flex-direction:column}.list-collection{margin-bottom:4px;overflow-y:auto}.collection .collection-item{padding:7px 8px;font-size:10px}.pointer{cursor:pointer}.collection .collection-item.active{font-weight:bold}.edit-modal{padding-bottom:10px}.remove-alternative{margin-top:19px}.vote-item{display:inline-block;width:80%;cursor:pointer}.vote-length{margin:3px 0}
+button.button-primary, button.button-primary:focus {
+  background-color: #fb7e14;
+  color: #151515;
+  border: 0; }
+
+button.button-primary:hover {
+  background-color: #d86504;
+  color: #151515;
+  border: 0; }
+
+input[type="text"], button {
+  background-color: #f1f1f1; }
+
+button:hover {
+  background-color: #d8d8d8; }
+
+input[type="text"]:focus {
+  border: 1px solid #fb7e14; }
+
+html, body {
+  background-color: #f1f1f1; }
+
+span {
+  color: #f1f1f1; }
+
+.button, button, select {
+  border-radius: 1px; }
+
+input[type="text"] {
+  border-radius: 2px; }
+
+form, ul, input {
+  margin: 0; }
+
+#main {
+  padding: 10px;
+  display: flex;
+  justify-content: center; }
+
+hr {
+  margin: 1.6rem 0; }
+
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #151515;
+  color: white;
+  padding: 8px 14px 8px 8px; }
+  #header #header-title {
+    margin-bottom: 0; }
+    #header #header-title a {
+      text-decoration: none;
+      color: #fb7e14; }
+  #header select {
+    background: #151515;
+    margin-bottom: 0;
+    color: #fb7e14;
+    border: 1px solid #fb7e14; }
+  #header span {
+    margin-left: 9px;
+    color: white; }
+  #header button {
+    margin-bottom: 0;
+    margin-left: 11px; }
+
+.panel {
+  padding: 20px;
+  width: 234px;
+  border-radius: 3px;
+  min-height: 700px;
+  margin: 0 12px;
+  background: #151515; }
+  .panel input[type="text"] {
+    width: 100%; }
+  .panel h4 {
+    margin: 0;
+    text-align: center;
+    color: #fb7e14; }
+  .panel .panel-list {
+    max-height: 525px;
+    overflow-y: auto; }
+    .panel .panel-list button {
+      width: 100%;
+      margin-bottom: 0.5rem;
+      height: auto;
+      white-space: normal;
+      padding: 0 12px; }
+
+.new-vote {
+  width: 100%;
+  margin: 0; }
+
+.user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 9px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 12px;
+  cursor: auto; }
+  .user-item span {
+    color: #151515; }
+  .user-item .material-icons {
+    cursor: pointer; }
+  .user-item .material-icons:hover {
+    color: #fb7e14; }
+
+.remove-all-attendants {
+  padding: 0 11px;
+  width: 100%;
+  margin-top: 1rem; }
+
+.modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(251, 126, 20, 0.6);
+  display: none; }
+  .modal .modal-body {
+    background-color: #151515;
+    padding: 45px 65px;
+    display: flex;
+    min-width: 350px;
+    max-width: 500px;
+    margin: 161px auto 0;
+    border-radius: 2px;
+    width: 70%;
+    top: 200px;
+    flex-direction: column; }
+    .modal .modal-body .alternative {
+      display: flex; }
+      .modal .modal-body .alternative button {
+        margin-left: 10px; }
+    .modal .modal-body .new-alternative {
+      margin-top: 20px; }
+    .modal .modal-body label {
+      color: #f1f1f1; }
+      .modal .modal-body label span {
+        font-weight: bold; }
+
+.modal .active {
+  display: block; }

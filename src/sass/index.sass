@@ -1,53 +1,32 @@
-html
-  font-size: 12px
+@import colors
 
-html, body, #app
-  height: 100%
-  
-p
-  font-size: 12px
+html, body
+  background-color: $light-grey
 
-// Header stuff
-nav 
-  padding: 0 12px
+span
+  color: $light-grey
 
-.login-button
-  margin-left: 10px
+.button, button, select
+  border-radius: 1px
 
-.btn
-  font-size: 10px
-  height: 29px
-  line-height: 29px
+input[type="text"]
+  border-radius: 2px
 
-.material-icons
-  font-size: 19px
+form, ul, input
+  margin: 0
 
-select.browser-default
-  background: transparent
-  border: 0
-  color: white
-  margin: 15px 0 0
 
-.main
-  margin-top: 4px
-  height: 80%
-  min-height: 500px
+#main
+  padding: 10px
+  display: flex
+  justify-content: center 
 
-// Input-fileds
-.text-input
-  margin-bottom: 0
+hr
+  margin: 1.6rem 0  
 
-input[type=text]:not(.browser-default)
-  font-size: 14px
 
-.input-field > label
-  font-size: 11px
-
-.user-item
-  cursor: pointer
-
-.panel-container
-  height: 800px
-
-@import panels
-@import voting
+@import header
+@import panel
+@import votes
+@import attendants
+@import modal
