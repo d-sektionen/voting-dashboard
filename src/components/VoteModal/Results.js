@@ -24,6 +24,7 @@ const ResultModal = props => (
         }
       </tbody>
     </table>
+    <button title='Redigera omröstning' onClick={() => props.editVote(props.currentVote)}>Redigera omröstning</button>
   </React.Fragment>
 
 )

@@ -8,7 +8,7 @@ const Meetings = props => {
 
   return (
     <div className='panel' id='meetings'>
-      <h4>Möten</h4>
+      <h4 title='Alla möten som du är admin för'>Möten</h4>
       <hr />
       <TextSubmit placeholder='Nytt möte' onSubmit={meeting => props.createMeeting(meeting)} />
       <hr />

@@ -22,7 +22,7 @@ const Header = props => (
             props.userName &&
             <span>{`${props.firstName} ${props.lastName} (${props.userName})`}</span>
           }
-          <button className='button-primary' onClick={() => logOut()}>Logga ut</button>
+          <button title='Logga ut' className='button-primary' onClick={() => logOut()}>Logga ut</button>
         </React.Fragment>
       }
     </div>

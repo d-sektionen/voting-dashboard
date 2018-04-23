@@ -25,12 +25,17 @@ html, body, #app {
   text-align: center;
   margin-top: 50px; }
   .login a {
+    text-decoration: none;
     font-size: 5rem;
     color: #151515; }
   .login a:active, .login a:hover {
-    color: #f1f1f1; }
-  .login labmda {
-    font-size: 20rem; }
+    text-decoration: underline; }
+  .login #lambda {
+    font-size: 30rem;
+    display: none;
+    color: #151515; }
+  .login a:hover + #lambda {
+    display: block; }
 
 span {
   color: #f1f1f1; }
@@ -112,7 +117,8 @@ hr {
       margin-bottom: 0.5rem;
       height: auto;
       white-space: normal;
-      padding: 0 12px; }
+      padding: 0 12px;
+      text-align: left; }
 
 .new-vote {
   width: 100%;
@@ -152,6 +158,7 @@ hr {
     display: flex;
     min-width: 350px;
     max-width: 500px;
+    min-height: 280px;
     margin: 161px auto 0;
     border-radius: 2px;
     width: 70%;

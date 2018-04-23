@@ -11,6 +11,12 @@ import VoteModal from 'components/VoteModal'
 class App extends React.Component {
   componentDidMount () {
     this.props.getToken()
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
+        this.props.closeModal()
+      }
+    })
   }
 
   componentWillReceiveProps (nextProps) {
@@ -24,23 +30,25 @@ class App extends React.Component {
       <React.Fragment>
         <div className={this.props.modalOpen ? 'blur' : ''}>
           <Header />
-          {this.props.token
-            ? <div id='main'>
-              <Meetings />
-              {
-                this.props.currentMeetingID &&
-                <React.Fragment>
-                  <Votes />
-                  <Attendants />
-                  <Scanners />
+          {
+            this.props.token
+              ? <div id='main'>
+                <Meetings />
+                {
+                  this.props.currentMeetingID &&
+                  <React.Fragment>
+                    <Votes />
+                    <Attendants />
+                    <Scanners />
 
-                </React.Fragment>
-              }
-            </div>
-            // Logged out, show login text
-            : <div className='login'>
-              <a href={loginURL}>Logga in</a>
-            </div>
+                  </React.Fragment>
+                }
+              </div>
+              // Logged out, show login text
+              : <div className='login'>
+                <a href={loginURL}>Logga in</a>
+                <div id='lambda'>λ</div>
+              </div>
           }
         </div>
         <VoteModal />

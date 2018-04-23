@@ -11,20 +11,27 @@ html, body, #app
   margin-top: 50px
   
   a
+    text-decoration: none
     font-size: 5rem
     color: $background
 
   #{$a-hover}
-    color: $light-grey
+    text-decoration: underline
 
-  labmda
-    font-size: 20rem
+  #lambda
+    font-size: 30rem
+    display: none
+    color: $background
+
+  a:hover + #lambda
+    display: block
 
 span
   color: $light-grey
 
 .button, button, select
   border-radius: 1px
+
 
 input[type="text"]
   border-radius: 2px

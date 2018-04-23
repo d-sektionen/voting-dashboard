@@ -6,7 +6,7 @@ import UserItem from 'components/common/UserItem'
 
 const Scanners = props => (
   <div className='panel' id='scanners'>
-    <h4>Scanners</h4>
+    <h4 title='Alla personer som får lägga till deltagare till det valda mötet'>Scanners</h4>
     <hr />
     <TextSubmit
       placeholder='Nytt LiU-ID för scanner'

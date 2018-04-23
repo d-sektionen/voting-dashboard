@@ -4,9 +4,9 @@ import ListContainer from 'components/common/ListContainer'
 
 const Votes = props => (
   <div className='panel' id='votes'>
-    <h4>Omröstningar</h4>
+    <h4 title='Alla omröstningar som finns tillgängliga för det valda mötet'>Omröstningar</h4>
     <hr />
-    <button className='new-vote' onClick={() => props.editVote()}>Ny Omröstning</button>
+    <button title='Skapa en ny omröstning' className='new-vote' onClick={() => props.editVote()}>Ny Omröstning</button>
     <hr />
     <ListContainer noItemsText='Inga omröstningar skapde än'>
       {

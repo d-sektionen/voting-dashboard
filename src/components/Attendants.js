@@ -6,7 +6,7 @@ import UserItem from 'components/common/UserItem'
 
 const Attendants = props => (
   <div className='panel' id='attendants'>
-    <h4>Deltagare</h4>
+    <h4 title='Alla personer som får rösta på det valda mötet'>Deltagare</h4>
     <hr />
     <TextSubmit
       placeholder='Nytt LiU-ID för deltagare'
@@ -28,7 +28,7 @@ const Attendants = props => (
         ))
       }
     </ListContainer>
-    <button className='button-primary remove-all-attendants' onClick={() => props.removeAllAttendants()}>
+    <button title='Ta bort alla deltagare' className='button-primary remove-all-attendants' onClick={() => props.removeAllAttendants()}>
       Ta bort alla deltagare
     </button>
   </div>

@@ -58,6 +58,7 @@ class VoteModal extends React.Component {
   }
 
   setVoteOpen = open => {
+    console.log(open)
     this.updateVote({open})
   }
 
@@ -69,6 +70,8 @@ class VoteModal extends React.Component {
   }
 
   render () {
+    // console.log('New props:', this.props.editedVote.open)
+
     if (!this.props.modalOpen) {
       return null
     }
@@ -90,17 +93,15 @@ class VoteModal extends React.Component {
                 <hr />
                 {
                   this.props.editedVote.alternatives.map((alternative, i) => (
-                    <React.Fragment>
-                      <Alternative
-                        label={`Alternativ ${i + 1}`}
-                        placeholder={`Namn ${i + 1}`}
-                        value={alternative.text}
-                        id={`alternative${i}`}
-                        onChange={text => this.updateAlternative(i, text)}
-                        onDelete={event => this.removeAlternative(event, i)}
-                        key={`alternative${i}`}
-                      />
-                    </React.Fragment>
+                    <Alternative
+                      label={`Alternativ ${i + 1}`}
+                      placeholder={`Namn ${i + 1}`}
+                      value={alternative.text}
+                      id={`alternative${i}`}
+                      onChange={text => this.updateAlternative(i, text)}
+                      onDelete={event => this.removeAlternative(event, i)}
+                      key={`alternative${i}`}
+                    />
                   ))
                 }
                 <button onClick={event => this.addAlternative(event)} className='button-primary new-alternative'>
@@ -109,7 +110,8 @@ class VoteModal extends React.Component {
                 <hr />
                 <ToggleBox
                   value={this.props.editedVote.open}
-                  text='Håll frågan öppen'
+                  text='Nuvarande fråga'
+                  id='currentQuestion'
                   onChange={open => this.setVoteOpen(open)}
                 />
                 <hr />
