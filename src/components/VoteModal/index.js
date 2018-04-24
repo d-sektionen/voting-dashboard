@@ -12,13 +12,13 @@ class VoteModal extends React.Component {
     })
   }
 
-  updateQuestion = question => this.updateVote({question})
+  updateQuestion = question => this.updateVote({ question })
 
   updateAlternative = (index, alternativeText) => {
     const alternatives = [...this.props.editedVote.alternatives]
     alternatives[index] = { text: alternativeText }
 
-    this.updateVote({alternatives})
+    this.updateVote({ alternatives })
   }
 
   removeAlternative = (event, i) => {
@@ -26,7 +26,7 @@ class VoteModal extends React.Component {
     const alternatives = [...this.props.editedVote.alternatives]
     alternatives.splice(i, 1)
 
-    this.updateVote({alternatives})
+    this.updateVote({ alternatives })
   }
 
   addAlternative = event => {
@@ -34,13 +34,13 @@ class VoteModal extends React.Component {
 
     const alternatives = [
       ...this.props.editedVote.alternatives,
-      {text: ''}
+      { text: '' }
     ]
 
-    this.updateVote({alternatives})
+    this.updateVote({ alternatives })
   }
 
-  setVoteOpen = open => this.updateVote({open})
+  setVoteOpen = open => this.updateVote({ open })
 
   closeModal = event => {
     if (event.target === event.currentTarget) {
@@ -97,7 +97,7 @@ class VoteModal extends React.Component {
                 {
                   this.props.editedVote.id === null
                     ? <button onClick={event => this.props.createVote()} className='button-primary'>
-                        Skapa ny omröstning
+                      Skapa ny omröstning
                     </button>
                     : <button onClick={event => this.props.updateVote()} className='button-primary'>
                       Spara
