@@ -156,7 +156,6 @@ export default class StateContainer extends Container {
       socket.close()
     }
 
-    console.log('asdfasdf')
     socket = new ReconnectingWebSocket(`${socketURL}/meeting/${meetingID}/?token=${this.state.token}`)
 
     socket.onmessage = message => {

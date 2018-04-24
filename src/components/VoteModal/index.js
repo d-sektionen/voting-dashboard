@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'utils'
 import TextInput from 'components/common/TextInput'
-import ToggleBox from 'components/common/ToggleBox'
 import Alternative from './Alternative'
 import Results from './Results'
 
@@ -13,9 +12,7 @@ class VoteModal extends React.Component {
     })
   }
 
-  updateQuestion = question => {
-    this.updateVote({question})
-  }
+  updateQuestion = question => this.updateVote({question})
 
   updateAlternative = (index, alternativeText) => {
     const alternatives = [...this.props.editedVote.alternatives]
@@ -43,21 +40,15 @@ class VoteModal extends React.Component {
     this.updateVote({alternatives})
   }
 
-  setVoteOpen = open => {
-    // console.log(open)
-    this.updateVote({open})
-  }
+  setVoteOpen = open => this.updateVote({open})
 
   closeModal = event => {
-    event.preventDefault()
     if (event.target === event.currentTarget) {
       this.props.closeModal()
     }
   }
 
   render () {
-    // console.log('New props:', this.props.editedVote.open)
-
     if (!this.props.modalOpen) {
       return null
     }
@@ -94,12 +85,10 @@ class VoteModal extends React.Component {
                   Lägg till alternativ
                 </button>
                 <hr />
-                <ToggleBox
-                  value={this.props.editedVote.open}
-                  text='Nuvarande fråga'
-                  id='currentQuestion'
-                  onChange={open => this.setVoteOpen(open)}
-                />
+                <label>
+                  <input checked={this.props.editedVote.open} onChange={event => this.setVoteOpen(event.target.checked)} type='checkbox' />
+                  <span className='label-body'>Nuvarande frågan</span>
+                </label>
                 <hr />
                 {
                   this.props.editedVote.id === null

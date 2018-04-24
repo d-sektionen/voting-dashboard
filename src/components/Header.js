@@ -3,9 +3,9 @@ import { logOut, connect } from 'utils'
 
 const Header = props => (
   <nav id='header'>
-    <h3 id='header-title'>
+    <h4 id='header-title'>
       <a href='./'>Dashboard för D-CIDE</a>
-    </h3>
+    </h4>
     <div>
       {
         props.sections.length !== 0 &&
