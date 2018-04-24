@@ -32,10 +32,11 @@ html, body, #app {
     text-decoration: underline; }
   .login #lambda {
     font-size: 30rem;
-    display: none;
+    opacity: 0;
+    transition: opacity 0.3s;
     color: #151515; }
   .login a:hover + #lambda {
-    display: block; }
+    opacity: 1; }
 
 span {
   color: #f1f1f1; }
@@ -181,6 +182,9 @@ hr {
       color: #f1f1f1; }
       .modal .modal-body label span {
         font-weight: bold; }
+
+.blur-container {
+  transition: filter 0.3s; }
 
 .blur {
   filter: blur(2px); }
