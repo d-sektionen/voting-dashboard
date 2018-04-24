@@ -19,7 +19,7 @@ cd voting-dashboard
 npm install
 ```
 
-Starta en lokal server med
+Starta en lokal server och gå in på `localhost:8080` i valfri browser:
 
 ```bash
 npm start
@@ -31,7 +31,7 @@ npm run sass-watch
 ```
 
 ## Linting
-Liting används för att analysera kod och hitta potentialla fel. Detta är i princip nödvädigt om du vill utveckla JavaScript då den fångar väldigt många dumma fel samt formaterar all kod åt en. För detta projekt används [StandardJS](https://standardjs.com/) (som kör ESLint i bakgrunden). Linting-programmet installerades automatiskt när du körde `npm install`. För att att sedan köra linten kan du använda något plugin för din editor / IDE. För VSCode finns det [denna skönhet](https://marketplace.visualstudio.com/items?itemName=chenxsan.vscode-standardjs).
+Linting används för att analysera kod och hitta potentialla fel. Detta är i princip nödvädigt om du vill utveckla JavaScript då den fångar väldigt många dumma fel samt formaterar all kod åt en. För detta projekt används [StandardJS](https://standardjs.com/) (som kör ESLint i bakgrunden). Linting-programmet installerades automatiskt när du körde `npm install`. För att att sedan köra lintern kan du använda något plugin för din editor / IDE. För VSCode finns det [denna skönhet](https://marketplace.visualstudio.com/items?itemName=chenxsan.vscode-standardjs).
 
 För andra miljöer kolla: https://standardjs.com/#are-there-text-editor-plugins.
 

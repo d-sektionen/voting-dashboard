@@ -28,7 +28,12 @@ const Attendants = props => (
         ))
       }
     </ListContainer>
-    <button title='Ta bort alla deltagare' className='button-primary remove-all-attendants' onClick={() => props.removeAllAttendants()}>
+    <button title='Ta bort alla deltagare' className='button-primary remove-all-attendants' onClick={() => {
+      if (window.confirm('Är du säker på att du vill ta bort alla deltagare?')) {
+        props.removeAllAttendants()
+      }
+    }
+    }>
       Ta bort alla deltagare
     </button>
   </div>
