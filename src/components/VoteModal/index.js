@@ -86,7 +86,11 @@ class VoteModal extends React.Component {
                 </button>
                 <hr />
                 <label>
-                  <input checked={this.props.editedVote.open} onChange={event => this.setVoteOpen(event.target.checked)} type='checkbox' />
+                  <input
+                    checked={this.props.editedVote.open}
+                    onChange={event => this.setVoteOpen(event.target.checked)}
+                    type='checkbox'
+                  />
                   <span className='label-body'>Nuvarande frågan</span>
                 </label>
                 <hr />

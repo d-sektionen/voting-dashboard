@@ -14,17 +14,18 @@ html, body, #app
     text-decoration: none
     font-size: 5rem
     color: $background
-
+    
   #{$a-hover}
     text-decoration: underline
 
   #lambda
     font-size: 30rem
-    display: none
+    opacity: 0
+    transition: opacity 0.3s
     color: $background
 
   a:hover + #lambda
-    display: block
+    opacity: 1
 
 span
   color: $light-grey

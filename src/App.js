@@ -28,7 +28,7 @@ class App extends React.Component {
   render () {
     return (
       <React.Fragment>
-        <div className={this.props.modalOpen ? 'blur' : ''}>
+        <div className={`blur-container ${this.props.modalOpen ? 'blur' : ''}`}>
           <Header />
           {
             this.props.token
