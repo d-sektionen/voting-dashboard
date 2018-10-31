@@ -1,42 +1,58 @@
 import React from 'react'
 import { connect } from '../common'
-import ListContainer from './common/ListContainer'
-import TextSubmit from './common/TextSubmit'
-import UserItem from './common/UserItem'
 
-const Attendants = props => (
-  <div className='panel' id='attendants'>
-    <h4 title='Alla personer som får rösta på det valda mötet'>Deltagare</h4>
-    <hr />
-    <TextSubmit
-      placeholder='Nytt LiU-ID för deltagare'
-      pattern='^([A-Za-z]){4,5}([0-9]){3}$'
-      onSubmit={liuID => props.addAttendant(liuID)}
-    />
-    <hr />
-    <span>Röstlängd: {props.attendants.length}</span>
-    <hr />
-    <ListContainer noItemsText='Inga personer hittades'>
-      {
-        props.attendants.map(attendant => (
-          <UserItem
-            {...attendant}
-            onRemove={() => props.removeAttendant(attendant.id)}
-            removeString='Ta bort som deltagare'
-            key={`attendant${attendant.id}`}
-          />
-        ))
-      }
-    </ListContainer>
-    <button title='Ta bort alla deltagare' className='button-primary remove-all-attendants' onClick={() => {
-      if (window.confirm('Är du säker på att du vill ta bort alla deltagare?')) {
-        props.removeAllAttendants()
-      }
-    }
-    }>
+function deleteAllAttendants (props) {
+  if (window.confirm('Är du säker på att du vill ta bort alla deltagare?')) {
+    props.removeAllAttendants()
+  }
+}
+
+function addAttendant (props) {
+  const liuID = prompt('LiU-ID för den nya deltagaren, t.ex. "jeswr740"')
+
+  if (liuID != null) {
+    props.addAttendant(liuID)
+  }
+}
+
+// this.props.currentMeetingID IMPORTANT
+function Attendants (props) {
+  if (props.currentMeetingID === undefined) {
+    return <h2>Deltagare</h2>
+  }
+
+  return (
+    <React.Fragment>
+      <h2>Deltagare</h2>
+      <button onClick={() => addAttendant(props)}>Lägg till deltagare</button>
+      <hr />
+      <span>Röstlängd: {props.attendants.length}</span>
+      <table>
+        <thead>
+          <tr>
+            <th>Namn</th>
+            <th>LiU-ID</th>
+            <th>Ta bort</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            props.attendants.map(attendant => (
+              <tr key={`attendant${attendant.id}`}>
+                <td>{attendant.user.first_name ? `${attendant.user.first_name} ${attendant.user.last_name}` : ''}</td>
+                <td style={{ fontFamily: 'monospace' }}>{attendant.user.username}</td>
+                <td >Ta bort</td>
+                {/* <td><button onClick={() => props.removeAttendant(attendant.id)}>Ta bort</button></td> */}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      <button title='Ta bort alla deltagare' onClick={() => deleteAllAttendants(props)}>
       Ta bort alla deltagare
-    </button>
-  </div>
-)
+      </button>
+    </React.Fragment>
+  )
+}
 
 export default connect(Attendants)

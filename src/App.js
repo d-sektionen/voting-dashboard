@@ -3,16 +3,16 @@ import React from 'react'
 import { loginURL } from './config'
 import Header from './components/Header'
 import { connect } from './common'
-import Meetings from './components/Meetings'
 import Votes from './components/Votes'
 import Attendants from './components/Attendants'
-import Scanners from './components/Scanners'
 import VoteModal from './components/VoteModal'
+import SectionMeetingScanner from './components/SectionMeetingScanner'
 
 class App extends React.Component {
   componentDidMount () {
     this.props.getToken()
 
+    // Register global listner for closing modals via keyboard
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) {
         this.props.closeModal()
@@ -20,6 +20,8 @@ class App extends React.Component {
     })
   }
 
+  // If token a token is found, try to get info about user (sections, name)
+  // This will start a chain of getting other resources like meetings, votes, attendants, etc.
   componentWillReceiveProps (nextProps) {
     if (this.props.token === undefined && nextProps.token !== undefined) {
       this.props.getUserInfo()
@@ -29,15 +31,15 @@ class App extends React.Component {
   render () {
     const loggedIn = (
       <div id='main'>
-        <Meetings />
-        {
-          this.props.currentMeetingID &&
-          <React.Fragment>
-            <Votes />
-            <Attendants />
-            <Scanners />
-          </React.Fragment>
-        }
+        <div className='panel' style={{ maxWidth: '25%' }}>
+          <SectionMeetingScanner />
+        </div>
+        <div className='panel'>
+          <Votes />
+        </div>
+        <div className='panel' style={{ border: 0 }}>
+          <Attendants />
+        </div>
       </div>
     )
 

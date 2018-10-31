@@ -147,30 +147,30 @@ export default class StateContainer extends Container {
   }
 
   updateSocket = (meetingID) => {
-    if (meetingID === undefined || this.state.token === undefined) {
-      return
-    }
+    // if (meetingID === undefined || this.state.token === undefined) {
+    //   return
+    // }
 
-    // Clean up old socket
-    if (socket !== undefined) {
-      socket.close()
-    }
+    // // Clean up old socket
+    // if (socket !== undefined) {
+    //   socket.close()
+    // }
 
-    socket = new ReconnectingWebSocket(`${socketURL}/meeting/${meetingID}/?token=${this.state.token}`)
+    // socket = new ReconnectingWebSocket(`${socketURL}/meeting/${meetingID}/?token=${this.state.token}`)
 
-    socket.onmessage = message => {
-      const { type, data } = JSON.parse(message.data)
+    // socket.onmessage = message => {
+    //   const { type, data } = JSON.parse(message.data)
 
-      if (type === 'attendants_list') {
-        data.sort(liuIDSort)
-        this.setState({ attendants: data })
-      } else if (type === 'scanner_list') {
-        data.sort(liuIDSort)
-        this.setState({ scanners: data })
-      } else if (type === 'vote_details') {
-        this.setState({ currentVote: data })
-      }
-    }
+    //   if (type === 'attendants_list') {
+    //     data.sort(liuIDSort)
+    //     this.setState({ attendants: data })
+    //   } else if (type === 'scanner_list') {
+    //     data.sort(liuIDSort)
+    //     this.setState({ scanners: data })
+    //   } else if (type === 'vote_details') {
+    //     this.setState({ currentVote: data })
+    //   }
+    // }
   }
 }
 
