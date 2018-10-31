@@ -6,27 +6,6 @@ html, body, #app
   background-color: rgba($primary, 0.7)
   height: 100%
 
-.login
-  text-align: center
-  margin-top: 50px
-  
-  a
-    text-decoration: none
-    font-size: 5rem
-    color: $background
-    
-  #{$a-hover}
-    text-decoration: underline
-
-  #lambda
-    font-size: 30rem
-    opacity: 0
-    transition: opacity 0.3s
-    color: $background
-
-  a:hover + #lambda
-    opacity: 1
-
 span
   color: $light-grey
 
@@ -45,6 +24,7 @@ hr
 
 
 @import header
+@import login
 @import panel
 @import votes
 @import attendants
