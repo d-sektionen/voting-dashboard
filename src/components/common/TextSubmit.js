@@ -1,5 +1,5 @@
 import React from 'react'
-import TextInput from 'components/common/TextInput'
+import TextInput from './TextInput'
 
 export default class TextSubmit extends React.Component {
   state = {

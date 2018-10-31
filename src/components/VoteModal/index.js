@@ -1,6 +1,6 @@
 import React from 'react'
-import { connect } from 'utils'
-import TextInput from 'components/common/TextInput'
+import { connect } from '../../common'
+import TextInput from '../common/TextInput'
 import Alternative from './Alternative'
 import Results from './Results'
 

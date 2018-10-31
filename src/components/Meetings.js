@@ -1,7 +1,7 @@
 import React from 'react'
-import TextSubmit from 'components/common/TextSubmit'
-import ListContainer from 'components/common/ListContainer'
-import {connect} from 'utils'
+import { connect } from '../common'
+import TextSubmit from './common/TextSubmit'
+import ListContainer from './common/ListContainer'
 
 const Meetings = props => {
   const filteredMeetngs = props.meetings.filter(meeting => meeting.section.id === props.currentSectionID)

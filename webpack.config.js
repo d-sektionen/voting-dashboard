@@ -8,12 +8,6 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist')
   },
-  resolve: {
-    modules: [
-      path.resolve(__dirname, 'src'),
-      'node_modules'
-    ]
-  },
   module: {
     rules: [
       {

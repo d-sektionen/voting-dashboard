@@ -1,11 +1,11 @@
 import React from 'react'
-import { logOut, connect } from 'utils'
+import { logOut, connect } from '../common'
 
 const Header = props => (
   <nav id='header'>
-    <h4 id='header-title'>
+    <h3 id='header-title'>
       <a href='./'>Dashboard för D-CIDE</a>
-    </h4>
+    </h3>
     <div>
       {
         props.sections.length !== 0 &&

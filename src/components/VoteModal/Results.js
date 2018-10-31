@@ -1,5 +1,5 @@
 import React from 'react'
-import { connect, alternativeSort } from 'utils'
+import { connect, alternativeSort } from '../../common'
 
 const ResultModal = props => (
 

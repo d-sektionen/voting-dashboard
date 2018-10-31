@@ -1,8 +1,8 @@
 import React from 'react'
-import { connect } from 'utils'
-import ListContainer from 'components/common/ListContainer'
-import TextSubmit from 'components/common/TextSubmit'
-import UserItem from 'components/common/UserItem'
+import { connect } from '../common'
+import ListContainer from './common/ListContainer'
+import TextSubmit from './common/TextSubmit'
+import UserItem from './common/UserItem'
 
 const Attendants = props => (
   <div className='panel' id='attendants'>

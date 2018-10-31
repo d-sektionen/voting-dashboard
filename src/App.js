@@ -1,12 +1,13 @@
 import React from 'react'
-import { loginURL } from 'config'
-import Header from 'components/Header'
-import {connect} from 'utils'
-import Meetings from 'components/Meetings'
-import Votes from 'components/Votes'
-import Attendants from 'components/Attendants'
-import Scanners from 'components/Scanners'
-import VoteModal from 'components/VoteModal'
+
+import { loginURL } from './config'
+import Header from './components/Header'
+import { connect } from './common'
+import Meetings from './components/Meetings'
+import Votes from './components/Votes'
+import Attendants from './components/Attendants'
+import Scanners from './components/Scanners'
+import VoteModal from './components/VoteModal'
 
 class App extends React.Component {
   componentDidMount () {
@@ -26,30 +27,32 @@ class App extends React.Component {
   }
 
   render () {
+    const loggedIn = (
+      <div id='main'>
+        <Meetings />
+        {
+          this.props.currentMeetingID &&
+          <React.Fragment>
+            <Votes />
+            <Attendants />
+            <Scanners />
+          </React.Fragment>
+        }
+      </div>
+    )
+
+    const loggedOut = (
+      <div className='login'>
+        <a href={loginURL}>Logga in</a>
+        <div id='lambda'>λ</div>
+      </div>
+    )
+
     return (
       <React.Fragment>
         <div className={`blur-container ${this.props.modalOpen ? 'blur' : ''}`}>
           <Header />
-          {
-            this.props.token
-              ? <div id='main'>
-                <Meetings />
-                {
-                  this.props.currentMeetingID &&
-                  <React.Fragment>
-                    <Votes />
-                    <Attendants />
-                    <Scanners />
-
-                  </React.Fragment>
-                }
-              </div>
-              // Logged out, show login text
-              : <div className='login'>
-                <a href={loginURL}>Logga in</a>
-                <div id='lambda'>λ</div>
-              </div>
-          }
+          {this.props.token ? loggedIn : loggedOut}
         </div>
         <VoteModal />
       </React.Fragment>

@@ -1,6 +1,6 @@
 import React from 'react'
-import {connect} from 'utils'
-import ListContainer from 'components/common/ListContainer'
+import { connect } from '../common'
+import ListContainer from './common/ListContainer'
 
 const Votes = props => (
   <div className='panel' id='votes'>

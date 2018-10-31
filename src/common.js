@@ -1,7 +1,8 @@
 import React from 'react'
 import { Subscribe } from 'unstated'
-import StateContainer from 'state'
 import queryString from 'query-string'
+
+import StateContainer from './state'
 
 // Retrieve, store and delete stuff in the local storage
 export const get = (key, defaultValue = undefined) => {

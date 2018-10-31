@@ -1,4 +1,4 @@
-import { get, logOut } from '../utils'
+import { get, logOut } from '../common'
 import { apiURL } from '../config'
 
 // Super function for making a requests to the API
@@ -12,7 +12,7 @@ function doRequest (endpoint, init) {
 
   return (
     fetch(`${apiURL}${endpoint}`, {
-      headers: headers(token),
+      headers,
       ...init
     })
       .then(response => {
@@ -39,11 +39,11 @@ function doRequest (endpoint, init) {
 
 // Helper methods for making all the different kinds of requests
 export function fetchAPI (endpoint) {
-  doRequest(endpoint, {})
+  return doRequest(endpoint, {})
 }
 
 export function deleteAPI (endpoint) {
-  doRequest(endpoint, { method: 'DELETE' })
+  return doRequest(endpoint, { method: 'DELETE' })
 }
 
 // For creating new stuff
