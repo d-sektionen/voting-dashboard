@@ -5,4 +5,4 @@ node_modules
 .vscode
 *.log
 
-public/dist
+dist/main.js

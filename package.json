@@ -15,8 +15,8 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
-    "sass-build": "node-sass src/sass/index.sass public/dist/main.css",
-    "sass-watch": "node-sass --watch src/sass/index.sass public/dist/main.css"
+    "sass-build": "node-sass src/sass/index.sass dist/main.css",
+    "sass-watch": "node-sass --watch src/sass/index.sass dist/main.css"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
