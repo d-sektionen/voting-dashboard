@@ -1,6 +1,6 @@
 {
   "name": "d-sektionen_voting",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "private": true,
   "contributors": [
     "Daniel Roos",
@@ -12,7 +12,6 @@
       "browser": true
     }
   },
-  "main": "src/index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
@@ -20,25 +19,26 @@
     "sass-watch": "node-sass --watch src/sass/index.sass public/dist/main.css"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.0.0",
     "materialize-css": "^1.0.0-beta",
     "query-string": "^6.0.0",
-    "react": "^16.3.1",
+    "react": "^16.6.0",
     "react-dom": "^16.3.1",
     "reconnectingwebsocket": "^1.0.0",
-    "unstated": "^1.2.0"
+    "unstated": "^2.1.1"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.2",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "node-sass": "^4.8.3",
-    "standard": "^11.0.1",
-    "webpack": "^4.5.0",
-    "webpack-cli": "^2.0.14",
-    "webpack-dev-server": "^3.1.3"
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "node-sass": "^4.9.4",
+    "standard": "^12.0.1",
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
   }
 }
