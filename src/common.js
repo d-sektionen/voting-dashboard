@@ -1,5 +1,5 @@
 import React from 'react'
-import {Subscribe} from 'unstated'
+import { Subscribe } from 'unstated'
 import StateContainer from 'state'
 import queryString from 'query-string'
 
